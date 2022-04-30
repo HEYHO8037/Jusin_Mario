@@ -25,7 +25,7 @@ void CItem::Initialize(void)
 		m_tInfo.fCX = 30.f;
 		m_tInfo.fCY = 30.f;
 
-		m_fSpeed = 4.f; //성장아이템만 속도추가
+		m_tInfo.m_fSpeed = 4.f; //성장아이템만 속도추가
 	}
 
 	//총알 생성 아이템

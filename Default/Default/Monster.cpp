@@ -26,7 +26,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 35.f;
 		m_tInfo.fCY = 35.f;
 
-		m_fSpeed = 5.f; //성장아이템만 속도추가
+		m_tInfo.m_fSpeed = 5.f; //성장아이템만 속도추가
 	}
 
 	//총알 발사 몬스터
@@ -35,7 +35,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 70.f;
 
-		m_fSpeed = 3.f;
+		m_tInfo.m_fSpeed = 3.f;
 	}
 
 
@@ -52,13 +52,13 @@ int CMonster::Update(void)
 
 	if (m_eMonsterType == TYPE_MONSTER_MOVE)
 	{
-		m_tInfo.fX += m_fSpeed;
+		m_tInfo.fX += m_tInfo.m_fSpeed;
 	}
 
 	//총알 발사 몬스터
 	if (m_eMonsterType == TYPE_MONSTER_BULLET)
 	{
-		m_tInfo.fX += m_fSpeed;
+		m_tInfo.fX += m_tInfo.m_fSpeed;
 	}
 
 
@@ -72,7 +72,7 @@ void CMonster::Late_Update(void)
 	{
 		if (100 >= m_tRect.left || WINCX - 100 <= m_tRect.right)
 		{
-			m_fSpeed *= -1.f;
+			m_tInfo.m_fSpeed *= -1.f;
 		}
 	}
 
@@ -81,7 +81,7 @@ void CMonster::Late_Update(void)
 	{
 		if (100 >= m_tRect.left || WINCX - 100 <= m_tRect.right)
 		{
-			m_fSpeed *= -1.f;
+			m_tInfo.m_fSpeed *= -1.f;
 		}
 	}
 }

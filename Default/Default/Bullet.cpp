@@ -18,12 +18,13 @@ void CBullet::Initialize(void)
 	m_fSpeed = 5.f;
 }
 
-void CBullet::Update(void)
+int CBullet::Update(void)
 {
 	m_tInfo.fX += m_fSpeed;
 
 	Update_Rect();
 
+	return OBJ_NOEVENT;
 }
 
 void CBullet::Late_Update(void)
