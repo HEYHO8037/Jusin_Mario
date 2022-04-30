@@ -1,5 +1,5 @@
 #pragma once
-\
+
 #include "Obj.h"
 
 class CBullet : public CObj

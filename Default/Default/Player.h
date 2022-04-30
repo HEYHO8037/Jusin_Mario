@@ -14,6 +14,20 @@ public:
 	virtual void Late_Update(void);
 	virtual void Render(HDC hDC);
 
+public:
+	void Set_Weapon(TYPE _Weapon) 
+	{ 
+		if (_Weapon == TYPE_NO_WEAPON)
+		{ 
+			m_bWeapon = false; 
+		}
+		else if (_Weapon == TYPE_GUN_WEAPON)
+		{
+			m_bWeapon = true;
+		}
+	}
+
+	
 private:
 	void OffSet();
 	void Key_Update(void);
@@ -22,5 +36,6 @@ private:
 	bool m_bDoubleJump;
 	float m_fTime;
 	float m_fPower;
+	bool m_bWeapon;
 };
 

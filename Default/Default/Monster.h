@@ -20,5 +20,6 @@ public:
 
 private :
 	TYPE m_eMonsterType;
+	float m_fTemp;
 };
 
