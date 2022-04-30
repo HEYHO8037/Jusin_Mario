@@ -46,6 +46,15 @@
     <Filter Include="98. Design\LineMgr\Line">
       <UniqueIdentifier>{eb009377-3d7b-4bc5-8452-b207021c4621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ch">
+      <UniqueIdentifier>{8600bf22-e3e5-4b51-868d-549d29587a54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ch\Monster">
+      <UniqueIdentifier>{a750820f-bf49-4ced-9e9b-ce5cba44601a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ch\Item">
+      <UniqueIdentifier>{10d29f27-640e-4ba0-bbef-092a3ac2ca11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -105,6 +114,12 @@
     <ClInclude Include="LineMgr.h">
       <Filter>98. Design\LineMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ch\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>ch\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="LineMgr.cpp">
       <Filter>98. Design\LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ch\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>ch\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
