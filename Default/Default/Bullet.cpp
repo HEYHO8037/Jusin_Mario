@@ -5,6 +5,18 @@ CBullet::CBullet()
 {
 }
 
+CBullet::CBullet(float fX, float fY, BULLET_TYPE eType)
+{
+	m_tInfo.fX = fX;
+	m_tInfo.fY = fY;
+	m_eType = eType;
+}
+
+CBullet::CBullet(BULLET_TYPE eType)
+{
+	m_eType = eType;
+}
+
 CBullet::~CBullet()
 {
 	Release();
