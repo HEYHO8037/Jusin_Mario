@@ -15,12 +15,12 @@ void CBullet::Initialize(void)
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
 
-	m_fSpeed = 5.f;
+	m_tInfo.m_fSpeed = 5.f;
 }
 
 int CBullet::Update(void)
 {
-	m_tInfo.fX += m_fSpeed;
+	m_tInfo.fX += m_tInfo.m_fSpeed;
 
 	Update_Rect();
 
@@ -42,5 +42,5 @@ void CBullet::Render(HDC hDC)
 
 void CBullet::Release(void)
 {
-	m_fSpeed = 0.f;
+	m_tInfo.m_fSpeed = 0.f;
 }
