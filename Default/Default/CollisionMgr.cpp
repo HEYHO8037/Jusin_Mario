@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 
+CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 
 CCollisionMgr::CCollisionMgr()
 {
@@ -9,6 +10,11 @@ CCollisionMgr::CCollisionMgr()
 
 CCollisionMgr::~CCollisionMgr()
 {
+}
+
+void CCollisionMgr::SetObjList(const list<CObj*>(*pObjList)[OBJ_END])
+{
+	m_ObjList = pObjList;
 }
 
 bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * pY) //px와 pY의 주소값을 넘겨주어야 함수가 끝난후에도 변수에 대입한 값을 계속 쓸수있다
@@ -85,7 +91,7 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 						//Sour->Set_PosY(fY); // 충돌된 길이만큼 밑으로 내려가게 fY값을 넣는다
 					}
 				}
-				else // 좌우 충돌 fX < fY
+				else // 좌우 s충돌 fX < fY
 				{
 					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // 좌충돌(고정된물체가 움직이는 물체의 중점보다 오른쪽에 있으므로)
 					{
@@ -117,5 +123,86 @@ void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
 	}
 }
 
+void CCollisionMgr::Collision_Player_Monster()
+{
+	float fX, fY;
 
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_MONSTER]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_MONSTER]->end();
+	for (iter; iter != iterEnd; ++iter)
+	{
+		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		{
 
+		}
+	}
+}
+
+void CCollisionMgr::Collision_Player_Bullet()
+{
+	float fX, fY;
+
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_BULLET]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_BULLET]->end();
+	for (iter; iter != iterEnd; ++iter)
+	{
+		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		{
+			//충돌처리
+		}
+	}
+}
+
+void CCollisionMgr::Collision_Monster_Bullet()
+{
+	float fX, fY;
+
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_MONSTER]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_MONSTER]->end();
+	
+	for (iter; iter != iterEnd; ++iter)
+	{
+		list<CObj*>::const_iterator Biter = m_ObjList[OBJ_BULLET]->begin();
+		list<CObj*>::const_iterator BiterEnd = m_ObjList[OBJ_BULLET]->end();
+		
+		for (Biter; Biter != BiterEnd; ++Biter)
+		{
+			if (Check_Rect((*iter), (*Biter),&fX, &fY))
+			{
+				//충돌처리
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_Player_Item()
+{
+	float fX, fY;
+
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_ITEM]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_ITEM]->end();
+	
+	for (iter; iter != iterEnd; ++iter)
+	{
+		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		{
+			//충돌처리
+		}
+	}
+}
+
+void CCollisionMgr::Collision_Player_Huddle()
+{
+	float fX, fY;
+
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_HUDDLE]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_HUDDLE]->end();
+	
+	for (iter; iter != iterEnd; ++iter)
+	{
+		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		{
+			//충돌처리
+		}
+	}
+}
