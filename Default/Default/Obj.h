@@ -1,5 +1,8 @@
 #pragma once
+
+#include "stdafx.h"
 #include "Include.h"
+
 class CObj
 {
 public:
@@ -16,6 +19,7 @@ public:
 	
 	const INFO& Get_Info() { return m_tInfo; }
 	const RECT& Get_Rect() { return m_tRect; }
+	void Set_Dead() { m_bDead = true; }
 
 protected:
 	void Update_Rect();
@@ -23,6 +27,5 @@ protected:
 	INFO m_tInfo;
 	RECT m_tRect;
 	CObj* m_tTarget;
-	float m_fSpeed; //채현 추가
-	bool m_bDead; //채현 추가
+	bool m_bDead;
 };
