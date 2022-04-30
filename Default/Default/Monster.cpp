@@ -10,6 +10,8 @@ CMonster::CMonster()
 CMonster::CMonster(TYPE _eType)
 {
 	m_eMonsterType = _eType;
+	m_fTemp = m_tInfo.fX;
+
 }
 
 
@@ -20,12 +22,12 @@ CMonster::~CMonster()
 
 void CMonster::Initialize(void)
 {
+	m_bCheck = false;
 	//이동 몬스터
 	if (m_eMonsterType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fCX = 35.f;
 		m_tInfo.fCY = 35.f;
-
 		m_tInfo.m_fSpeed = 5.f; //성장아이템만 속도추가
 	}
 
@@ -34,8 +36,9 @@ void CMonster::Initialize(void)
 	{
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 70.f;
-
+		m_fTemp = m_tInfo.fX;
 		m_tInfo.m_fSpeed = 3.f;
+
 	}
 
 
@@ -88,16 +91,21 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
+
 	//이동몬스터 자기 중점에서 100이내로 움직이게 설정
 	if (m_eMonsterType == TYPE_MONSTER_MOVE)
 	{
 		//몬스터 생성시 인자값으로 넣어준 f, X값에서 - 100, +100
-		if ( 200 >= m_tRect.left || 600 <= m_tRect.right)
+		if (m_fTemp - 200 >= m_tRect.left)
+		{
+			m_tInfo.m_fSpeed *= -1.f;
+		}
+		else if (m_fTemp + 200 <= m_tRect.right)
 		{
 			m_tInfo.m_fSpeed *= -1.f;
 		}
 	}
-
+	Update_Rect();
 	//총알 발사 몬스터
 	if (m_eMonsterType == TYPE_MONSTER_BULLET)
 	{
