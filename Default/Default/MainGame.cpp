@@ -27,24 +27,8 @@ void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 
-#pragma region 복습
-
-	/*if (!m_pPlayer)
-	{
-		//m_pPlayer = new CPlayer;
-		//m_pPlayer->Initialize();
-		m_pPlayer = CAbstractFactory<CPlayer>::Create();
-	}
-	dynamic_cast<CPlayer*>(m_pPlayer)->Set_BulletList(&m_BulletList);*/
-
-#pragma endregion 복습
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-	
-	/*for (int i = 0; i < 5; ++i)
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(rand() % WINCX, rand() % WINCY));
-	}*/
 	CLineMgr::Get_Instance()->Initialize();
 }
 
