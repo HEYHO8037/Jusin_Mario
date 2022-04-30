@@ -6,6 +6,7 @@
 #include "LineMgr.h"
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
+#include "Player.h"
 
 
 CMainGame::CMainGame()
@@ -25,6 +26,7 @@ void CMainGame::Initialize(void)
 {
 	m_hDC = GetDC(g_hWnd);
 
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 
 //	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 	CLineMgr::Get_Instance()->Initialize();

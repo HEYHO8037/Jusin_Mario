@@ -46,6 +46,12 @@
     <Filter Include="98. Design\LineMgr\Line">
       <UniqueIdentifier>{eb009377-3d7b-4bc5-8452-b207021c4621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AHS">
+      <UniqueIdentifier>{c2713ef3-94ca-4063-8655-4686ead5e258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AHS\Player">
+      <UniqueIdentifier>{aa1ae58e-6ac3-4297-a9fc-0fef6d8b3f9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -105,6 +111,9 @@
     <ClInclude Include="LineMgr.h">
       <Filter>98. Design\LineMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>AHS\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="LineMgr.cpp">
       <Filter>98. Design\LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>AHS\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
