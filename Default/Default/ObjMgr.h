@@ -18,37 +18,38 @@
 class CObjMgr
 {
 private:
-CObjMgr();
-~CObjMgr();
+	CObjMgr();
+	~CObjMgr();
 
 public: // 맴버 함수
-void Add_Object(OBJID eID, CObj* pObj); // 인자로 받은 객체의 타입에따라 리스트에 추가해주는 함수
-void Release();
-int Update();
-void Late_Update();
-void Render(HDC hDC);
-public: // 전역 함수
-static CObjMgr* Get_Instance() // 인스턴스 정보를 얻어온다.
-{
-if (!m_pInstance)
-m_pInstance = new CObjMgr;
-return m_pInstance;
-}
+	void Add_Object(OBJID eID, CObj* pObj); // 인자로 받은 객체의 타입에따라 리스트에 추가해주는 함수
+	void Release();
+	int Update();
+	void Late_Update();
+	void Render(HDC hDC);
 
-static	void	Destroy_Instance(void) // 인스턴스 정보를 삭제한다.
-{
-if (m_pInstance)
-{
-delete m_pInstance;
-m_pInstance = nullptr;
-}
-}
+public: // 전역 함수
+	static CObjMgr* Get_Instance() // 인스턴스 정보를 얻어온다.
+	{
+		if (!m_pInstance)
+			m_pInstance = new CObjMgr;
+		return m_pInstance;
+	}
+
+	static	void	Destroy_Instance(void) // 인스턴스 정보를 삭제한다.
+	{
+		if (m_pInstance)
+		{
+			delete m_pInstance;
+			m_pInstance = nullptr;
+		}
+	}
 
 private: // 맴버 변수
-list<CObj*> m_ObjList[OBJ_END]; //CObj를 상속받는 객체들을 저장하는 리스트
+	list<CObj*> m_ObjList[OBJ_END]; //CObj를 상속받는 객체들을 저장하는 리스트
 
 private: // 전역 변수
-static CObjMgr* m_pInstance; // CObjMgr 인스턴스
+	static CObjMgr* m_pInstance; // CObjMgr 인스턴스
 
 };
 

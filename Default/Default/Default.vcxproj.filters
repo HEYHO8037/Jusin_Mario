@@ -28,9 +28,6 @@
     <Filter Include="01.Obj">
       <UniqueIdentifier>{3f45d211-7239-4487-bcde-45c55e8669bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="98. Design\CollisionMgr">
-      <UniqueIdentifier>{aafdcc25-91ca-4a01-9c1f-bf0e7a5ff4a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98. Design\KeyMgr">
       <UniqueIdentifier>{a9370666-7d45-4ecf-9126-7af03d7c017f}</UniqueIdentifier>
     </Filter>
@@ -46,11 +43,22 @@
     <Filter Include="98. Design\LineMgr\Line">
       <UniqueIdentifier>{eb009377-3d7b-4bc5-8452-b207021c4621}</UniqueIdentifier>
     </Filter>
+
+    <Filter Include="HEYHO">
+      <UniqueIdentifier>{cb712373-3de9-4e89-acf0-fdbc17a8c18d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HEYHO\99.Bullet">
+      <UniqueIdentifier>{8c5edb6b-0ac1-4502-8f6a-a69b9e11b8d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HEYHO\CollisionMgr">
+      <UniqueIdentifier>{aafdcc25-91ca-4a01-9c1f-bf0e7a5ff4a5}</UniqueIdentifier>
+
     <Filter Include="Jeongeun">
       <UniqueIdentifier>{9949d295-9db7-4542-b82b-8f5dd2860298}</UniqueIdentifier>
     </Filter>
     <Filter Include="Jeongeun\Hurdle">
       <UniqueIdentifier>{e924b9dc-d23e-4696-931d-07e05f7c9323}</UniqueIdentifier>
+
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +101,6 @@
     <ClInclude Include="Obj.h">
       <Filter>01.Obj</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionMgr.h">
-      <Filter>98. Design\CollisionMgr</Filter>
-    </ClInclude>
     <ClInclude Include="KeyMgr.h">
       <Filter>98. Design\KeyMgr</Filter>
     </ClInclude>
@@ -111,8 +116,16 @@
     <ClInclude Include="LineMgr.h">
       <Filter>98. Design\LineMgr</Filter>
     </ClInclude>
+
+    <ClInclude Include="CollisionMgr.h">
+      <Filter>HEYHO\CollisionMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>HEYHO\99.Bullet</Filter>
+
     <ClInclude Include="Hurdle.h">
       <Filter>Jeongeun\Hurdle</Filter>
+
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +140,6 @@
     </ClCompile>
     <ClCompile Include="Obj.cpp">
       <Filter>01.Obj</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionMgr.cpp">
-      <Filter>98. Design\CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="KeyMgr.cpp">
       <Filter>98. Design\KeyMgr</Filter>
@@ -146,8 +156,16 @@
     <ClCompile Include="LineMgr.cpp">
       <Filter>98. Design\LineMgr</Filter>
     </ClCompile>
+
+    <ClCompile Include="CollisionMgr.cpp">
+      <Filter>HEYHO\CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>HEYHO\99.Bullet</Filter>
+
     <ClCompile Include="Hurdle.cpp">
       <Filter>Jeongeun\Hurdle</Filter>
+
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

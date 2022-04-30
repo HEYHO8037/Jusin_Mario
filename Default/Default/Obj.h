@@ -1,5 +1,8 @@
 #pragma once
+
+#include "stdafx.h"
 #include "Include.h"
+
 class CObj
 {
 public:
