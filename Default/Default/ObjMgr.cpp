@@ -36,7 +36,7 @@ void CObjMgr::Release()
 	}
 }
 
-int CObjMgr::Update()
+void CObjMgr::Update()
 {
 
 	/*
@@ -54,37 +54,44 @@ int CObjMgr::Update()
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
-	for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-	{
-	(*iter)->Update();
-	++iter;
+		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
+		{
+			int Result = (*iter)->Update();
+
+			if (Result == OBJ_DEAD)
+			{
+				Safe_Delete(*iter);
+				iter = m_ObjList[i].erase(iter);
+			}
+			else
+			++iter;
+		}
 	}
-	}
-	return 0;
-	}
+	
+}
 
 	void CObjMgr::Late_Update()
 	{
 	for (int i = 0; i < OBJ_END; ++i)
-	{
-	for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-	{
-	(*iter)->Late_Update();
-	++iter;
-	}
-	}
+		{
+		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
+			{
+				(*iter)->Late_Update();
+				++iter;
+			}
+		}
 	}
 
 	void CObjMgr::Render(HDC hDC)
 	{
-	for (int i = 0; i < OBJ_END; ++i)
-	{
-	for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-	{
-	(*iter)->Render(hDC);
-	++iter;
-	}
-	}
+		for (int i = 0; i < OBJ_END; ++i)
+		{
+			for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
+			{
+				(*iter)->Render(hDC);
+				++iter;
+			}
+		}
 	}
 
 
