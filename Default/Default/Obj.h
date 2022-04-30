@@ -21,6 +21,8 @@ public:
 	const INFO& Get_Info() { return m_tInfo; }
 	const RECT& Get_Rect() { return m_tRect; }
 	void Set_Dead() { m_bDead = true; }
+	
+	const TYPE Get_Type() { return m_tType; }
 
 protected:
 	void Update_Rect();
@@ -28,6 +30,7 @@ protected:
 	INFO m_tInfo;
 	RECT m_tRect;
 	CObj* m_tTarget;
+	TYPE m_tType;
 	bool m_bDead;
 
 };

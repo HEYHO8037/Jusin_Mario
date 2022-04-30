@@ -3,15 +3,12 @@
 #include "ScrollMgr.h"
 
 CMonster::CMonster()
-	:m_eMonsterType(TYPE_END)
 {
 }
 
 CMonster::CMonster(TYPE _eType)
 {
-	m_eMonsterType = _eType;
-	m_fTemp = m_tInfo.fX;
-
+	m_tType = _eType;
 }
 
 
@@ -23,16 +20,16 @@ CMonster::~CMonster()
 void CMonster::Initialize(void)
 {
 	m_bCheck = false;
-	//ÀÌµ¿ ¸ó½ºÅÍ
-	if (m_eMonsterType == TYPE_MONSTER_MOVE)
+	//ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fCX = 35.f;
 		m_tInfo.fCY = 35.f;
-		m_tInfo.m_fSpeed = 5.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡
+		m_tInfo.m_fSpeed = 5.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½Óµï¿½ï¿½ß°ï¿½
 	}
 
-	//ÃÑ¾Ë ¹ß»ç ¸ó½ºÅÍ
-	if (m_eMonsterType == TYPE_MONSTER_BULLET)
+	//ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 70.f;
@@ -53,7 +50,7 @@ int CMonster::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_eMonsterType == TYPE_MONSTER_MOVE)
+	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
 
@@ -64,18 +61,18 @@ int CMonster::Update(void)
 		}
 	}
 
-	//ÃÑ¾Ë ¹ß»ç ¸ó½ºÅÍ, ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®°¡ ÀÏÁ¤ ¼öÄ¡¿¡ µé¾î¼­¸é Ãß°Ý
-	if (m_eMonsterType == TYPE_MONSTER_BULLET)
+	//ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 
-		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX; // µÎ ÁßÁ¡»çÀÌÀÇ ¹Øº¯
-		float fHeight = m_tTarget->Get_Info().fY - m_tInfo.fY; // µÎ ÁßÁ¡»çÀÌÀÇ ³ôÀÌ
+		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½
+		float fHeight = m_tTarget->Get_Info().fY - m_tInfo.fY; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-		float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); // ºøº¯
+		float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); // ï¿½ï¿½ï¿½ï¿½
 
-		float fRadian = acosf(fWidth / fDiagonal); //¶óµð¾È ±¸ÇÏ±â, °¢µµ °è¼Ó ±¸ÇØ¿À±âÀ§ÇÔ
+		float fRadian = acosf(fWidth / fDiagonal); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		
-		if (600.f > fDiagonal && 200.f <= fDiagonal) // µÎ Á¡ »çÀÌÀÇ °Å¸®°¡ 400ÀÌÇÏÀÏ¶§ ¸ó½ºÅÍ°¡ ¿òÁ÷ÀÓ
+		if (600.f > fDiagonal && 200.f <= fDiagonal) // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ 400ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			m_tInfo.fX -= m_tInfo.m_fSpeed;
 
@@ -87,7 +84,7 @@ int CMonster::Update(void)
 		}
 		
 		if( 200.f > fDiagonal)
-			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian); // µÎÁ¡ »çÀÌÀÇ °Å¸®°¡ 200 ¹Ì¸¸ÀÏ¶§ ÇÃ·¹ÀÌ¾î ÂÑ¾Æ´Ù´Ïµµ·Ï
+			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ 200 ï¿½Ì¸ï¿½ï¿½Ï¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ñ¾Æ´Ù´Ïµï¿½ï¿½ï¿½
 
 	}
 
@@ -97,11 +94,9 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-
-	//ÀÌµ¿¸ó½ºÅÍ ÀÚ±â ÁßÁ¡¿¡¼­ 100ÀÌ³»·Î ¿òÁ÷ÀÌ°Ô ¼³Á¤
-	if (m_eMonsterType == TYPE_MONSTER_MOVE)
+	if (m_tType == TYPE_MONSTER_MOVE)
 	{
-		//¸ó½ºÅÍ »ý¼º½Ã ÀÎÀÚ°ªÀ¸·Î ³Ö¾îÁØ f, X°ª¿¡¼­ - 100, +100
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ f, Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - 100, +100
 		if (m_fTemp - 200 >= m_tRect.left)
 		{
 			m_tInfo.m_fSpeed *= -1.f;
@@ -112,8 +107,8 @@ void CMonster::Late_Update(void)
 		}
 	}
 	Update_Rect();
-	//ÃÑ¾Ë ¹ß»ç ¸ó½ºÅÍ
-	if (m_eMonsterType == TYPE_MONSTER_BULLET)
+	//ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 	
 	}
@@ -125,11 +120,9 @@ void CMonster::Render(HDC hDC)
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
 
-	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-
-	switch (m_eMonsterType)
+	switch (m_tType)
 	{
-	case TYPE_MONSTER_MOVE: //ÀÌµ¿¸ó½ºÅÍ
+	case TYPE_MONSTER_MOVE: //ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
 		brush = CreateSolidBrush(RGB(255, 128, 64));
 		h_old_brush = SelectObject(hDC, brush);
 		Ellipse(hDC, m_tRect.left+iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
@@ -137,7 +130,7 @@ void CMonster::Render(HDC hDC)
 		DeleteObject(brush);
 		break;
 
-	case TYPE_MONSTER_BULLET: // ½î´Â ¸ó½ºÅÍ
+	case TYPE_MONSTER_BULLET: // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		brush = CreateSolidBrush(RGB(64, 128, 128));
 		h_old_brush = SelectObject(hDC, brush);
 		Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
