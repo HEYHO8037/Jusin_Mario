@@ -14,7 +14,7 @@ CObjMgr::~CObjMgr()
 	Release();
 }
 
-void CObjMgr::AddObject(OBJID eID, CObj* pObj)
+void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 {
 	if (pObj == nullptr) //인자로 들어온 객체가 쓰레기값이라면 함수종료
 		return;

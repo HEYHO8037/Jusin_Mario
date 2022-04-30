@@ -2,8 +2,6 @@
 
 #include "Include.h"
 
-#include "Player.h"
-
 class CMainGame
 {
 public:				// 생성자, 소멸자
@@ -22,11 +20,6 @@ public:
 // public, protected, private 변수
 private:
 	HDC		m_hDC;
-	/*CObj*	m_pPlayer;
-	list<CObj*>	m_BulletList;*/
-
-
-
 	TCHAR		m_szFPS[64];	// 멀티 바이트 기반에서는 CHAR로 유니 코드 기반에서는 유니코드로 처리해주는 매크로
 	int			m_iFPS;
 	DWORD		m_dwTime;

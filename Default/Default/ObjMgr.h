@@ -22,7 +22,7 @@ CObjMgr();
 ~CObjMgr();
 
 public: // 맴버 함수
-void AddObject(OBJID eID, CObj* pObj); // 인자로 받은 객체의 타입에따라 리스트에 추가해주는 함수
+void Add_Object(OBJID eID, CObj* pObj); // 인자로 받은 객체의 타입에따라 리스트에 추가해주는 함수
 void Release();
 int Update();
 void Late_Update();

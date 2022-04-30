@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "MainGame.h"
 #include "AbstractFactory.h"
-#include "Monster.h"
-#include "Mouse.h"
 #include "CollisionMgr.h"
 #include "ObjMgr.h"
 #include "LineMgr.h"
