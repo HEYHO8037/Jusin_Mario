@@ -6,7 +6,8 @@
 #include "LineMgr.h"
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
-
+#include "Item.h"
+#include "Monster.h"
 
 CMainGame::CMainGame()
 	: m_dwTime(GetTickCount())
@@ -27,7 +28,15 @@ void CMainGame::Initialize(void)
 
 
 //	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-	CLineMgr::Get_Instance()->Initialize();
+	
+	//아이템 생성
+	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(250.f, 200.f, TYPE_ITEM_BULLET));
+	//몬스터 생성
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(400.f, 600.f, TYPE_MONSTER_MOVE));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(450.f, 600.f, TYPE_MONSTER_BULLET));
+
+;	CLineMgr::Get_Instance()->Initialize();
 }
 
 void CMainGame::Update(void)
