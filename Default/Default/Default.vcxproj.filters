@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="소스 파일">
@@ -43,6 +43,15 @@
     <Filter Include="98. Design\LineMgr\Line">
       <UniqueIdentifier>{eb009377-3d7b-4bc5-8452-b207021c4621}</UniqueIdentifier>
     </Filter>
+
+    <Filter Include="ch">
+      <UniqueIdentifier>{8600bf22-e3e5-4b51-868d-549d29587a54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ch\Monster">
+      <UniqueIdentifier>{a750820f-bf49-4ced-9e9b-ce5cba44601a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ch\Item">
+      <UniqueIdentifier>{10d29f27-640e-4ba0-bbef-092a3ac2ca11}</UniqueIdentifier>
     <Filter Include="AHS">
       <UniqueIdentifier>{c2713ef3-94ca-4063-8655-4686ead5e258}</UniqueIdentifier>
     </Filter>
@@ -62,8 +71,6 @@
     </Filter>
     <Filter Include="Jeongeun\Hurdle">
       <UniqueIdentifier>{e924b9dc-d23e-4696-931d-07e05f7c9323}</UniqueIdentifier>
-
-
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,18 +128,23 @@
     <ClInclude Include="LineMgr.h">
       <Filter>98. Design\LineMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ch\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>ch\Monster</Filter>
+       </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>AHS\Player</Filter>
+       </ClInclude>
     <ClInclude Include="CollisionMgr.h">
       <Filter>HEYHO\CollisionMgr</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>HEYHO\99.Bullet</Filter>
-
+ </ClInclude>
     <ClInclude Include="Hurdle.h">
       <Filter>Jeongeun\Hurdle</Filter>
-
-
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -163,17 +175,23 @@
     <ClCompile Include="LineMgr.cpp">
       <Filter>98. Design\LineMgr</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ch\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>ch\Monster</Filter>
+</ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>AHS\Player</Filter>
-    <ClCompile Include="CollisionMgr.cpp">
+    </ClCompile>
+      <ClCompile Include="CollisionMgr.cpp">
       <Filter>HEYHO\CollisionMgr</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>HEYHO\99.Bullet</Filter>
-
+</ClCompile>
     <ClCompile Include="Hurdle.cpp">
       <Filter>Jeongeun\Hurdle</Filter>
-
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
