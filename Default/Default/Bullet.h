@@ -6,7 +6,6 @@ class CBullet : public CObj
 {
 public:
 	CBullet();
-	CBullet(float fX, float fY, BULLET_TYPE eType);
 	CBullet(BULLET_TYPE eType);
 	virtual ~CBullet();
 

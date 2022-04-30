@@ -56,6 +56,12 @@ int CMonster::Update(void)
 	if (m_eMonsterType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
+
+		if (m_fTemp -100 >= m_tInfo.fX || 600 < m_tInfo.fX)
+		{
+			m_tInfo.m_fSpeed *= -1.f;
+
+		}
 	}
 
 	//총알 발사 몬스터, 플레이어와의 거리가 일정 수치에 들어서면 추격
