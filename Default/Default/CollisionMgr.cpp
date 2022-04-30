@@ -60,6 +60,11 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj�
 		{
 			if (IntersectRect(&rc, &(Dest->Get_Rect()), &(Sour->Get_Rect())))
 			{
+				if (Sour->Get_Type() == TYPE_PBULLET)
+				{
+
+				}
+
 
 				//두 객체가 충돌되었을때 true를 반환한다
 				//true인 상태 = 두 객체가 충돌되었다는 것을 의미하므로 이때 원하는 행동을 하는 함수를 넣어주면된다
