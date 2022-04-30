@@ -19,15 +19,15 @@ CMonster::~CMonster()
 
 void CMonster::Initialize(void)
 {
-	//ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fCX = 35.f;
 		m_tInfo.fCY = 35.f;
-		m_tInfo.m_fSpeed = 5.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿?ï¿½Óµï¿½ï¿½ß°ï¿½
+		m_tInfo.m_fSpeed = 5.f;
+		m_fTemp = m_tInfo.fX;
+
 	}
 
-	//ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
 	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 		m_tInfo.fCX = 50.f;
@@ -37,7 +37,6 @@ void CMonster::Initialize(void)
 
 	}
 
-
 }
 
 void CMonster::Release(void)
@@ -46,32 +45,34 @@ void CMonster::Release(void)
 
 int CMonster::Update(void)
 {
+
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_tType == TYPE_MONSTER_MOVE)
+	if (m_tType == TYPE_MONSTER_MOVE) //ÀÌµ¿ ¸ó½ºÅÍ
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
-
-		if (m_fTemp -100 >= m_tInfo.fX || 600 < m_tInfo.fX)
+		
+		if (200 > m_tInfo.fX || 600 < m_tInfo.fX)
 		{
 			m_tInfo.m_fSpeed *= -1.f;
 
 		}
+	
 	}
 
-	//ï¿½Ñ¾ï¿½ ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½
-	if (m_tType == TYPE_MONSTER_BULLET)
+	else if (m_tType == TYPE_MONSTER_BULLET) // ÃÑ¾Ë ¸ó½ºÅÍ
 	{
 
-		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½
-		float fHeight = m_tTarget->Get_Info().fY - m_tInfo.fY; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX; 
+		float fHeight = m_tTarget->Get_Info().fY - m_tInfo.fY;
 
-		float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); // ï¿½ï¿½ï¿½ï¿½
+		float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); 
 
-		float fRadian = acosf(fWidth / fDiagonal); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿?ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		float fRadian = acosf(fWidth / fDiagonal); 
 		
-		if (600.f > fDiagonal && 200.f <= fDiagonal) // ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ 400ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//¹üÀ§ ´Ù½Ã ÁöÁ¤ÇØÁÖ±â
+		if ( 200.f <= fDiagonal && 600.f > fDiagonal)
 		{
 			m_tInfo.fX -= m_tInfo.m_fSpeed;
 
@@ -82,8 +83,8 @@ int CMonster::Update(void)
 			}
 		}
 		
-		if( 200.f > fDiagonal)
-			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ï¿½ï¿½ 200 ï¿½Ì¸ï¿½ï¿½Ï¶ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ñ¾Æ´Ù´Ïµï¿½ï¿½ï¿½
+		else if( 200.f > fDiagonal)
+			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
 
 	}
 
@@ -93,22 +94,15 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-	if (m_tType == TYPE_MONSTER_MOVE)
-	{
-		if (m_fTemp - 200 >= m_tRect.left)
-		{
-			m_tInfo.m_fSpeed *= -1.f;
-		}
-		else if (m_fTemp + 200 <= m_tRect.right)
-		{
-			m_tInfo.m_fSpeed *= -1.f;
-		}
-	}
-	Update_Rect();
-	if (m_tType == TYPE_MONSTER_BULLET)
-	{
+	//if (m_tType == TYPE_MONSTER_MOVE)
+	//{
+	//	if ( 200 >= m_tRect.left || 400 <= m_tRect.right)
+	//	{
+	//		m_tInfo.m_fSpeed *= -1.f;
+	//	}
+	//}
+
 	
-	}
 }
 
 void CMonster::Render(HDC hDC)
