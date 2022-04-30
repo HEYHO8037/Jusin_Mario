@@ -18,6 +18,7 @@ public:
 		return pObj;
 	}
 
+
 	static CObj*	Create(float _fX, float _fY, DIRECTION eDir = DIR_END)
 	{
 		CObj*	pObj = new T;
