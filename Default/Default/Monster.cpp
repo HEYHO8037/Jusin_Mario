@@ -19,13 +19,12 @@ CMonster::~CMonster()
 
 void CMonster::Initialize(void)
 {
-	m_bCheck = false;
 	//�̵� ����
 	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fCX = 35.f;
 		m_tInfo.fCY = 35.f;
-		m_tInfo.m_fSpeed = 5.f; //��������۸� �ӵ��߰�
+		m_tInfo.m_fSpeed = 5.f; //��������۸�?�ӵ��߰�
 	}
 
 	//�Ѿ� �߻� ����
@@ -70,7 +69,7 @@ int CMonster::Update(void)
 
 		float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); // ����
 
-		float fRadian = acosf(fWidth / fDiagonal); //���� ���ϱ�, ���� ��� ���ؿ�������
+		float fRadian = acosf(fWidth / fDiagonal); //���� ���ϱ�, ���� ���?���ؿ�������
 		
 		if (600.f > fDiagonal && 200.f <= fDiagonal) // �� �� ������ �Ÿ��� 400�����϶� ���Ͱ� ������
 		{
@@ -96,7 +95,6 @@ void CMonster::Late_Update(void)
 {
 	if (m_tType == TYPE_MONSTER_MOVE)
 	{
-		//���� ������ ���ڰ����� �־��� f, X������ - 100, +100
 		if (m_fTemp - 200 >= m_tRect.left)
 		{
 			m_tInfo.m_fSpeed *= -1.f;
@@ -107,7 +105,6 @@ void CMonster::Late_Update(void)
 		}
 	}
 	Update_Rect();
-	//�Ѿ� �߻� ����
 	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 	
@@ -120,9 +117,11 @@ void CMonster::Render(HDC hDC)
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
 
+	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+
 	switch (m_tType)
 	{
-	case TYPE_MONSTER_MOVE: //�̵�����
+	case TYPE_MONSTER_MOVE: 
 		brush = CreateSolidBrush(RGB(255, 128, 64));
 		h_old_brush = SelectObject(hDC, brush);
 		Ellipse(hDC, m_tRect.left+iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
@@ -130,7 +129,7 @@ void CMonster::Render(HDC hDC)
 		DeleteObject(brush);
 		break;
 
-	case TYPE_MONSTER_BULLET: // ��� ����
+	case TYPE_MONSTER_BULLET:
 		brush = CreateSolidBrush(RGB(64, 128, 128));
 		h_old_brush = SelectObject(hDC, brush);
 		Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
