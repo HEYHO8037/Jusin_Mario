@@ -153,6 +153,7 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Functor.h" />
+    <ClInclude Include="Hurdle.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="KeyMgr.h" />
     <ClInclude Include="Line.h" />
@@ -169,6 +170,7 @@
   <ItemGroup>
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Default.cpp" />
+    <ClCompile Include="Hurdle.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineMgr.cpp" />
