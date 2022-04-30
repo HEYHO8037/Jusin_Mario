@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ObjMgr.h"
 #include "Obj.h"
+#include "CollisionMgr.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -70,28 +71,32 @@ void CObjMgr::Update()
 	
 }
 
-	void CObjMgr::Late_Update()
-	{
+void CObjMgr::Late_Update()
+{
 	for (int i = 0; i < OBJ_END; ++i)
-		{
+	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-			{
-				(*iter)->Late_Update();
-				++iter;
-			}
+		{
+			(*iter)->Late_Update();
+			++iter;
 		}
 	}
 
-	void CObjMgr::Render(HDC hDC)
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+	
+	
+}
+
+void CObjMgr::Render(HDC hDC)
+{
+	for (int i = 0; i < OBJ_END; ++i)
 	{
-		for (int i = 0; i < OBJ_END; ++i)
+		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
-			for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-			{
-				(*iter)->Render(hDC);
-				++iter;
-			}
+			(*iter)->Render(hDC);
+			++iter;
 		}
 	}
+}
 
 

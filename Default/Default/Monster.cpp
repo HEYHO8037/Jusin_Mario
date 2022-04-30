@@ -3,13 +3,12 @@
 
 
 CMonster::CMonster()
-	:m_eMonsterType(TYPE_END)
 {
 }
 
 CMonster::CMonster(TYPE _eType)
 {
-	m_eMonsterType = _eType;
+	m_tType = _eType;
 }
 
 
@@ -21,7 +20,7 @@ CMonster::~CMonster()
 void CMonster::Initialize(void)
 {
 	//이동 몬스터
-	if (m_eMonsterType == TYPE_MONSTER_MOVE)
+	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fCX = 35.f;
 		m_tInfo.fCY = 35.f;
@@ -30,7 +29,7 @@ void CMonster::Initialize(void)
 	}
 
 	//총알 발사 몬스터
-	if (m_eMonsterType == TYPE_MONSTER_BULLET)
+	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 70.f;
@@ -50,13 +49,13 @@ int CMonster::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_eMonsterType == TYPE_MONSTER_MOVE)
+	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
 	}
 
 	//총알 발사 몬스터
-	if (m_eMonsterType == TYPE_MONSTER_BULLET)
+	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
 	}
@@ -68,7 +67,7 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-	if (m_eMonsterType == TYPE_MONSTER_MOVE)
+	if (m_tType == TYPE_MONSTER_MOVE)
 	{
 		if (100 >= m_tRect.left || WINCX - 100 <= m_tRect.right)
 		{
@@ -77,7 +76,7 @@ void CMonster::Late_Update(void)
 	}
 
 	//총알 발사 몬스터
-	if (m_eMonsterType == TYPE_MONSTER_BULLET)
+	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 		if (100 >= m_tRect.left || WINCX - 100 <= m_tRect.right)
 		{
@@ -92,7 +91,7 @@ void CMonster::Render(HDC hDC)
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
 
-	switch (m_eMonsterType)
+	switch (m_tType)
 	{
 	case TYPE_MONSTER_MOVE: //이동몬스터
 		brush = CreateSolidBrush(RGB(255, 128, 64));

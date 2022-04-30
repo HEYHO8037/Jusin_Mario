@@ -38,7 +38,7 @@ public:
 
 		pObj->Initialize();
 		pObj->Set_Pos(_fX, _fY);
-		pObj->Set_Angle(_fAngle);
+		//pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
