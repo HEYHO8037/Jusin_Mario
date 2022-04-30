@@ -44,8 +44,8 @@ bool CLineMgr::Collision_Line(float & _fX, float * pY)
 
 	for (auto& iter : m_pLineList)
 	{
-		if (_fX >= iter->Get_LineInfo().LeftPoint.fX &&
-			_fX <= iter->Get_LineInfo().RightPoint.fX)
+		if (_fX >= iter->Get_LineInfo().tLPoint.fX &&
+			_fX <= iter->Get_LineInfo().tRPoint.fX)
 		{
 			pTarget = iter;
 		}
@@ -54,11 +54,11 @@ bool CLineMgr::Collision_Line(float & _fX, float * pY)
 	if (!pTarget)
 		return false;
 
-	float	x1 = pTarget->Get_LineInfo().LeftPoint.fX;
-	float	x2 = pTarget->Get_LineInfo().RightPoint.fX;
+	float	x1 = pTarget->Get_LineInfo().tLPoint.fX;
+	float	x2 = pTarget->Get_LineInfo().tRPoint.fX;
 
-	float	y1 = pTarget->Get_LineInfo().LeftPoint.fY;
-	float	y2 = pTarget->Get_LineInfo().RightPoint.fY;
+	float	y1 = pTarget->Get_LineInfo().tLPoint.fY;
+	float	y2 = pTarget->Get_LineInfo().tRPoint.fY;
 
 	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
 	return true;
@@ -70,7 +70,7 @@ void CLineMgr::Create_Line(const CLine& Line)
 	m_pLineList.push_back(pLine);
 }
 
-void CLineMgr::Create_Line(const DotPoint & tLeft, const DotPoint & tRight)
+void CLineMgr::Create_Line(const LINEPOINT & tLeft, const LINEPOINT & tRight)
 {
 	CLine* pLine = new CLine(tLeft, tRight);
 	m_pLineList.push_back(pLine);

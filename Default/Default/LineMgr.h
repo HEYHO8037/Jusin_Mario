@@ -17,7 +17,7 @@ public:
 	bool		Collision_Line(float& _fX, float* pY); //라인 충돌
 
 	void		Create_Line(const CLine& Line); // 라인 복사 생성
-	void		Create_Line(const DotPoint& tLeft, const DotPoint& tRight); // 점 두개로 라인 생성
+	void		Create_Line(const LINEPOINT& tLeft, const LINEPOINT& tRight); // 점 두개로 라인 생성
 	
 	void		Load_LineData(); // 라인데이터 가져오기
 	void		Save_LineData(); // 라인데이터 저장하기

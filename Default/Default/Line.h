@@ -8,7 +8,7 @@ class CLine
 public:
 	CLine();
 	CLine(const LINE& _tLineInfo); // 라인 복사 생성
-	CLine(const DotPoint& _tLeftPoint, const DotPoint& _tRightPoint); // 점 두개로 라인 생성
+	CLine(const LINEPOINT& _tLeftPoint, const LINEPOINT& _tRightPoint); // 점 두개로 라인 생성
 	~CLine();
 
 public:
