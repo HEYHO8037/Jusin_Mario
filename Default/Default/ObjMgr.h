@@ -1,18 +1,18 @@
 #pragma once
 #include "Obj.h"
 
-/*½Ì±ÛÅæ ÆÐÅÏÀÇ °³³ä
+/*ì‹±ê¸€í†¤ íŒ¨í„´ì˜ ê°œë…
 
-°°Àº ºÎ¸ð¸¦ »ó¼Ó¹Þ´Â Å¬·¡½º°¡ 5°³°¡ ÀÖ´Ù°í °¡Á¤ÇÏ¸é
-°¢°¢ÀÇ Å¬·¡½º¸¦ Á¢±ÙÇÒ ¶§ °´Ã¼¸¦ »ý¼ºÇØ¼­ °´Ã¼°¡ 5°³°¡ µÈ´Ù. << ¸Å¿ì ºñÈ¿À²Àû
-¶§¹®¿¡ °°Àº ºÎ¸ð¸¦ »ó¼Ó¹Þ´Â Å¬·¡½º¸é °ü¸®ÇØÁÖ´Â Å¬·¡½º¸¦ ¸¸µé¾î¼­ ÇÏ³ªÀÇ Å¬·¡½º·Î °ü¸®ÇÏ´Â °³³ä
+ê°™ì€ ë¶€ëª¨ë¥¼ ìƒì†ë°›ëŠ” í´ëž˜ìŠ¤ê°€ 5ê°œê°€ ìžˆë‹¤ê³  ê°€ì •í•˜ë©´
+ê°ê°ì˜ í´ëž˜ìŠ¤ë¥¼ ì ‘ê·¼í•  ë•Œ ê°ì²´ë¥¼ ìƒì„±í•´ì„œ ê°ì²´ê°€ 5ê°œê°€ ëœë‹¤. << ë§¤ìš° ë¹„íš¨ìœ¨ì 
+ë•Œë¬¸ì— ê°™ì€ ë¶€ëª¨ë¥¼ ìƒì†ë°›ëŠ” í´ëž˜ìŠ¤ë©´ ê´€ë¦¬í•´ì£¼ëŠ” í´ëž˜ìŠ¤ë¥¼ ë§Œë“¤ì–´ì„œ í•˜ë‚˜ì˜ í´ëž˜ìŠ¤ë¡œ ê´€ë¦¬í•˜ëŠ” ê°œë…
 
-»ý¼ºÀÚ¸¦ È£ÃâÇßÀ» ¶§ °ü¸®ÀÚ Å¬·¡½º°¡ ³Î°ªÀÌ¶ó¸é ¸Þ¸ð¸®¸¦ ÇÒ´çÇÑ´Ù.
-¶§¹®¿¡ »ý¼ºÀÚ°¡ ¿©·¯ Â÷·Ê È£ÃâµÇ´õ¶óµµ ÃÖÃÊ¿¡ »ý¼ºÇÑ °´Ã¼¸¦ ¹ÝÈ¯ÇÑ´Ù
+ìƒì„±ìžë¥¼ í˜¸ì¶œí–ˆì„ ë•Œ ê´€ë¦¬ìž í´ëž˜ìŠ¤ê°€ ë„ê°’ì´ë¼ë©´ ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹í•œë‹¤.
+ë•Œë¬¸ì— ìƒì„±ìžê°€ ì—¬ëŸ¬ ì°¨ë¡€ í˜¸ì¶œë˜ë”ë¼ë„ ìµœì´ˆì— ìƒì„±í•œ ê°ì²´ë¥¼ ë°˜í™˜í•œë‹¤
 
-»ý¼ºÀÚ¸¦ private·Î ÇÏ´Â ÀÌÀ¯´Â
-¸¸¾à ÀÎ½ºÅÏ½º°¡ ¿©·¯°³¸é µ¿½Ã¿¡ Á¢±ÙÇÒ ¼ö ÀÖ±â¶§¹®¿¡ ½Ì±ÛÅæÆÐÅÏÀÇ °³³ä¿¡ ¹®Á¦°¡ »ý±ä´Ù.
-¶§¹®¿¡ Get_Instance() ÇÔ¼ö¸¦ ÅëÇØ¼­¸¸ ÀÎ½ºÅÏ½º¸¦ »ý¼º/Á¢±Ù ÇÒ ¼ö ÀÖ´Ù.
+ìƒì„±ìžë¥¼ privateë¡œ í•˜ëŠ” ì´ìœ ëŠ”
+ë§Œì•½ ì¸ìŠ¤í„´ìŠ¤ê°€ ì—¬ëŸ¬ê°œë©´ ë™ì‹œì— ì ‘ê·¼í•  ìˆ˜ ìžˆê¸°ë•Œë¬¸ì— ì‹±ê¸€í†¤íŒ¨í„´ì˜ ê°œë…ì— ë¬¸ì œê°€ ìƒê¸´ë‹¤.
+ë•Œë¬¸ì— Get_Instance() í•¨ìˆ˜ë¥¼ í†µí•´ì„œë§Œ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìƒì„±/ì ‘ê·¼ í•  ìˆ˜ ìžˆë‹¤.
 
 */
 class CObjMgr
@@ -21,22 +21,22 @@ private:
 	CObjMgr();
 	~CObjMgr();
 
-public: // ¸É¹ö ÇÔ¼ö
-	void Add_Object(OBJID eID, CObj* pObj); // ÀÎÀÚ·Î ¹ÞÀº °´Ã¼ÀÇ Å¸ÀÔ¿¡µû¶ó ¸®½ºÆ®¿¡ Ãß°¡ÇØÁÖ´Â ÇÔ¼ö
+public: // ë§´ë²„ í•¨ìˆ˜
+	void Add_Object(OBJID eID, CObj* pObj); // ì¸ìžë¡œ ë°›ì€ ê°ì²´ì˜ íƒ€ìž…ì—ë”°ë¼ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•´ì£¼ëŠ” í•¨ìˆ˜
 	void Release();
 	void Update();
 	void Late_Update();
 	void Render(HDC hDC);
 
-public: // Àü¿ª ÇÔ¼ö
-	static CObjMgr* Get_Instance() // ÀÎ½ºÅÏ½º Á¤º¸¸¦ ¾ò¾î¿Â´Ù.
+public: // ì „ì—­ í•¨ìˆ˜
+	static CObjMgr* Get_Instance() // ì¸ìŠ¤í„´ìŠ¤ ì •ë³´ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 	{
 		if (!m_pInstance)
 		m_pInstance = new CObjMgr;
 		return m_pInstance;
 	}
 
-	static	void	Destroy_Instance(void) // ÀÎ½ºÅÏ½º Á¤º¸¸¦ »èÁ¦ÇÑ´Ù.
+	static	void	Destroy_Instance(void) // ì¸ìŠ¤í„´ìŠ¤ ì •ë³´ë¥¼ ì‚­ì œí•œë‹¤.
 	{
 		if (m_pInstance)
 		{
@@ -45,11 +45,11 @@ public: // Àü¿ª ÇÔ¼ö
 		}
 	}
 
-private: // ¸É¹ö º¯¼ö
-	list<CObj*> m_ObjList[OBJ_END]; //CObj¸¦ »ó¼Ó¹Þ´Â °´Ã¼µéÀ» ÀúÀåÇÏ´Â ¸®½ºÆ®
+private: // ë§´ë²„ ë³€ìˆ˜
+	list<CObj*> m_ObjList[OBJ_END]; //CObjë¥¼ ìƒì†ë°›ëŠ” ê°ì²´ë“¤ì„ ì €ìž¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
 
-private: // Àü¿ª º¯¼ö
-	static CObjMgr* m_pInstance; // CObjMgr ÀÎ½ºÅÏ½º
+private: // ì „ì—­ ë³€ìˆ˜
+	static CObjMgr* m_pInstance; // CObjMgr ì¸ìŠ¤í„´ìŠ¤
 
 };
 
