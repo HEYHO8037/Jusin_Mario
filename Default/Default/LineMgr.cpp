@@ -14,8 +14,14 @@ CLineMgr::~CLineMgr()
 }
 
 void CLineMgr::Initialize(void)
-{
-
+{	
+	//튜토리얼 맵
+	LINEPOINT	tLine[2]
+	{
+		{0.f,600.f},
+		{1280.f,600.f},
+	};
+	m_pLineList.push_back(new CLine(tLine[0], tLine[1]));
 }
 
 void CLineMgr::Render(HDC hDC)
@@ -32,11 +38,6 @@ void CLineMgr::Release(void)
 
 bool CLineMgr::Collision_Line(float & _fX, float * pY)
 {
-	// 직선의 방정식
-
-	// Y - y1 = ((y2 - y1) / (x2 - x1)) * X - x1
-	// Y  = (((y2 - y1) / (x2 - x1)) * (X - x1)) + y1
-
 	if (m_pLineList.empty())
 		return false;
 
@@ -59,9 +60,10 @@ bool CLineMgr::Collision_Line(float & _fX, float * pY)
 
 	float	y1 = pTarget->Get_LineInfo().tLPoint.fY;
 	float	y2 = pTarget->Get_LineInfo().tRPoint.fY;
-
+	
 	*pY = (((y2 - y1) / (x2 - x1)) * (_fX - x1)) + y1;
 	return true;
+	//Y좌표 구해주고 나서 -(m_tInfo*0.5) 연산추가하기
 }
 
 void CLineMgr::Create_Line(const CLine& Line)

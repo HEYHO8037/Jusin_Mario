@@ -7,6 +7,10 @@ typedef	struct tagInfo
 	float	fCX;
 	float	fCY;
 
+	int m_iHp;
+	float m_fSpeed;
+	float m_fAngle;
+
 }INFO;
 
 
