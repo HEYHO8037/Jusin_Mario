@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "ObjMgr.h"
 #include "Obj.h"
+#include "AbstractFactory.h"
+#include "Item.h"
+#include "Monster.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -19,6 +22,18 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 	if (pObj == nullptr) //인자로 들어온 객체가 쓰레기값이라면 함수종료
 		return;
 	m_ObjList[eID].push_back(pObj); // 아니라면 리스트에 추가
+
+	if (eID == OBJ_PLAYER)
+	{
+		//아이템 생성
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
+	
+		//몬스터 생성
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 600.f, TYPE_MONSTER_MOVE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 700.f, TYPE_MONSTER_BULLET, pObj));
+
+	}
 
 }
 

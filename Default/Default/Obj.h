@@ -16,7 +16,8 @@ public:
 	virtual void Late_Update(void) PURE;
 	virtual void Render(HDC hDC) PURE;
 	void Set_Pos(float _fX, float _fY) { m_tInfo.fX = _fX, m_tInfo.fY = _fY; }
-	
+	void Set_Target(CObj* _pObj) { m_tTarget = _pObj; }
+
 	const INFO& Get_Info() { return m_tInfo; }
 	const RECT& Get_Rect() { return m_tRect; }
 	void Set_Dead() { m_bDead = true; }
