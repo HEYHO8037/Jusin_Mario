@@ -46,6 +46,12 @@
     <Filter Include="98. Design\LineMgr\Line">
       <UniqueIdentifier>{eb009377-3d7b-4bc5-8452-b207021c4621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Jeongeun">
+      <UniqueIdentifier>{9949d295-9db7-4542-b82b-8f5dd2860298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jeongeun\Hurdle">
+      <UniqueIdentifier>{e924b9dc-d23e-4696-931d-07e05f7c9323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -105,6 +111,9 @@
     <ClInclude Include="LineMgr.h">
       <Filter>98. Design\LineMgr</Filter>
     </ClInclude>
+    <ClInclude Include="Hurdle.h">
+      <Filter>Jeongeun\Hurdle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="LineMgr.cpp">
       <Filter>98. Design\LineMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Hurdle.cpp">
+      <Filter>Jeongeun\Hurdle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
