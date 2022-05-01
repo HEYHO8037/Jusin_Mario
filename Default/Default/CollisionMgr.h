@@ -43,6 +43,8 @@ public:
 	void Collision_Monster_Bullet();
 	void Collision_Player_Item();
 	void Collision_Player_Huddle();
+	void Collision_Monster_Huddle();
+
 
 private:
 	static CCollisionMgr* m_pInstance;
