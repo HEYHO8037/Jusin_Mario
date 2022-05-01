@@ -89,7 +89,7 @@ void CBossMonster::SetPlayerInfo(const CObj * pPlayer)
 
 void CBossMonster::PatternNormalShot()
 {
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_MONSTER_BULLET));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_MONSTER_TURTLE));
 }
 
 void CBossMonster::PatternWideShot()
@@ -99,7 +99,7 @@ void CBossMonster::PatternWideShot()
 
 	while (degree < 360)
 	{
-		CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_MONSTER_BULLET);
+		CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_MONSTER_TURTLE);
 		dynamic_cast<CBullet*>(pBullet)->Set_Dir(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, pBullet);
 
