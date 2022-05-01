@@ -18,6 +18,7 @@ public:
 
 public:
 	void Set_Angle(float fAngle);
+	void Set_Type(TYPE eType);
 	void Set_Dir(float fX, float fY);
 
 private:

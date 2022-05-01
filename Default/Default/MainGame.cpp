@@ -47,10 +47,44 @@ void CMainGame::Late_Update(void)
 
 void CMainGame::Render(void)
 {
-	Rectangle(m_hDC, 0, 0, WINCX, WINCY);
+	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	CLineMgr::Get_Instance()->Render(m_hDC);
-	CObjMgr::Get_Instance()->Render(m_hDC);
+	HBITMAP backBitmap = NULL;
+	HBITMAP backBitmapStage = NULL;
+	HDC backHDC = CreateCompatibleDC(m_hDC);
+	backBitmap = CreateCompatibleBitmap(m_hDC, WINCX, WINCY );
+	backBitmapStage = (HBITMAP)SelectObject(backHDC, backBitmap);
+
+	HBRUSH	brush;
+	HGDIOBJ h_old_brush;
+
+	brush = CreateSolidBrush(RGB(170, 233, 255));
+	h_old_brush = SelectObject(backHDC, brush);
+	Rectangle(backHDC, 0, 0, WINCX, WINCY);
+	SelectObject(backHDC, h_old_brush);
+	DeleteObject(brush);
+
+	brush = CreateSolidBrush(RGB(113, 206, 77));
+	h_old_brush = SelectObject(backHDC, brush);
+	Rectangle(backHDC, 0, 600, WINCX, WINCY);
+	SelectObject(backHDC, h_old_brush);
+	DeleteObject(brush);
+
+
+	brush = CreateSolidBrush(RGB(28, 19, 19));
+	h_old_brush = SelectObject(backHDC, brush);
+	Rectangle(backHDC, 0, 720, WINCX, 1440);
+	SelectObject(backHDC, h_old_brush);
+	DeleteObject(brush);
+
+	brush = CreateSolidBrush(RGB(72, 89, 138));
+	h_old_brush = SelectObject(backHDC, brush);
+	Rectangle(backHDC, 0, 1320, WINCX, 1440);
+	SelectObject(backHDC, h_old_brush);
+	DeleteObject(brush);
+
+	CLineMgr::Get_Instance()->Render(backHDC);
+	CObjMgr::Get_Instance()->Render(backHDC);
 
 	++m_iFPS;
 
@@ -62,7 +96,9 @@ void CMainGame::Render(void)
 		m_iFPS = 0;
 		m_dwTime = GetTickCount();
 	}
-
+	BitBlt(m_hDC, 0, 0, WINCX, WINCY, backHDC, 0, 0, SRCCOPY);
+	DeleteObject(SelectObject(backHDC, backBitmapStage));
+	DeleteDC(backHDC);
 }
 
 void CMainGame::Release(void)

@@ -48,6 +48,7 @@ public: // 전역 함수
 
 private: // 맴버 변수
 	list<CObj*> m_ObjList[OBJ_END]; //CObj를 상속받는 객체들을 저장하는 리스트
+	DWORD OTime;
 
 private: // 전역 변수
 	static CObjMgr* m_pInstance; // CObjMgr 인스턴스

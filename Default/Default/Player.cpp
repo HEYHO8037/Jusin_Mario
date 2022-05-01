@@ -21,7 +21,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
 	m_tInfo.fX = 100.f;
-	m_tInfo.fY = float(WINCY) - m_tInfo.fCY*0.5;
+	m_tInfo.fY = float(600) - m_tInfo.fCY*0.5;
 	
 
 	m_tInfo.m_iHp = 1;
@@ -32,8 +32,10 @@ void CPlayer::Initialize(void)
 	m_bDead = false;
 	m_bJump = false;
 	m_fTime = 0.f;
+	m_mTime = 0.f;
 	m_fPower = 5.f;
 	int Level = 1;
+	PTime = GetTickCount();
 
 }
 
@@ -48,6 +50,7 @@ int CPlayer::Update(void)
 	OffSet();
 	Key_Update();
 	Jumping();
+	MJump();
 	Update_Rect();
 
 	return OBJ_NOEVENT;
@@ -95,7 +98,11 @@ void CPlayer::Key_Update(void)
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing('X'))
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX,m_tInfo.fY,TYPE_PBULLET));
+		if (PTime + 200 < GetTickCount())
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_PBULLET));
+			PTime = GetTickCount();
+		}
 	}
 	
 }
@@ -107,11 +114,29 @@ void CPlayer::Jumping(void)
 		m_tInfo.fY -= m_fPower * m_fTime - 2.f * m_fTime * m_fTime * 0.5f;
 		m_fTime += 0.2f;
 
-		if (m_tInfo.fY > float(WINCY)-m_tInfo.fCY*0.5)
+		if (m_tInfo.fY > float(600)-m_tInfo.fCY*0.5)
 		{
 			m_bJump = false;
 			m_fTime = 0.f;
-			m_tInfo.fY = WINCY - m_tInfo.fCY*0.5;
+			m_tInfo.fY = 600 - m_tInfo.fCY*0.5;
+		}
+	}
+}
+
+void CPlayer::MJump(void)
+{
+	
+	if (m_mJump)
+	{
+		m_tInfo.fY -= m_fPower * m_mTime - 2.f * m_mTime * m_mTime * 0.5f;
+		m_mTime += 0.2f;
+
+		if (m_tInfo.fY > float(600) - m_tInfo.fCY*0.5)
+		{
+			m_mJump = false;
+			m_mTime = 0.f;
+			m_bJump = true;
+			
 		}
 	}
 	else

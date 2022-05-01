@@ -22,14 +22,24 @@ void CBullet::Initialize(void)
 	m_tInfo.fCY = 30.f;
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_iHp = 1;
+	m_tInfo.m_fAngle = -1;
+
 	m_bDead = false;
 }
 
 int CBullet::Update(void)
 {
-	if (m_tInfo.m_fAngle == -1)
+	if (m_bDead)
+		return OBJ_DEAD;
+	
+	if (m_tType == TYPE_PBULLET)
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
+	}
+
+	if (m_tType == TYPE_MONSTER_BULLET && !m_tDir.fX)
+	{
+		m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 	else
 	{
@@ -53,7 +63,7 @@ void CBullet::Late_Update(void)
 void CBullet::Render(HDC hDC)
 {
 	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+	Ellipse(hDC, m_tRect.left + ScrollX, m_tRect.top, m_tRect.right + ScrollX, m_tRect.bottom);
 }
 
 void CBullet::Release(void)
@@ -64,6 +74,11 @@ void CBullet::Release(void)
 void CBullet::Set_Angle(float fAngle)
 {
 	m_tInfo.m_fAngle = fAngle;
+}
+
+void CBullet::Set_Type(TYPE eType)
+{
+	m_tType = eType;
 }
 
 void CBullet::Set_Dir(float fX, float fY)
