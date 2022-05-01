@@ -62,6 +62,7 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // objÆ
 			{
 				if (Sour->Get_Type() == TYPE_PBULLET)
 				{
+					Sour->Set_HpMinus();
 
 				}
 
