@@ -33,7 +33,7 @@ void CMonster::Initialize(void)
 		m_fTemp = m_tInfo.fX;
 		m_tInfo.fCX = 40.f;
 		m_tInfo.fCY = 70.f;
-		m_tInfo.m_fSpeed = 2.f;
+		m_tInfo.m_fSpeed = 3.f;
 		m_tInfo.m_iHp = 3;
 		m_bDead = false;
 	}
@@ -73,9 +73,10 @@ int CMonster::Update(void)
 		float fRadian = acosf(fWidth / fDiagonal); 
 		
 		//���� �ٽ� �������ֱ�
-		if ( 400.f > fDiagonal )
+		if ( 400.f > fDiagonal && m_tInfo.m_iHp >= 2)
 		{
 			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
+	
 		}
 
 	}
@@ -86,7 +87,12 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-	if (m_tType == TYPE_MONSTER_TURTLE)
+	if (m_tType == TYPE_MONSTER_MOVE)
+	{
+		if (0 >= m_tInfo.m_iHp)
+			Set_Dead();
+	}
+	else if (m_tType == TYPE_MONSTER_TURTLE)
 	{
 
 		if (2 == m_tInfo.m_iHp) // ��� ���� �ӵ� 0���� �־��ֱ�
@@ -95,14 +101,13 @@ void CMonster::Late_Update(void)
 		}
 		else if (1 == m_tInfo.m_iHp)
 		{
-			m_tInfo.m_fSpeed = 8.f;
+			m_tInfo.m_fSpeed = 3.f;
 
-			if (m_tTarget->Get_Info().fX > m_tInfo.fX)
+			if (m_tTarget->Get_Rect().left > m_tRect.right)
 			{
 				m_tInfo.fX += m_tInfo.m_fSpeed;
 			}
-
-			if (m_tTarget->Get_Info().fX < m_tInfo.fX)
+			else if (m_tTarget->Get_Rect().right < m_tRect.left)
 			{
 				m_tInfo.fX -= m_tInfo.m_fSpeed;
 			}
@@ -113,7 +118,9 @@ void CMonster::Late_Update(void)
 			Set_Dead();
 		}
 	}
-	
+
+	Update_Rect();
+
 }
 
 void CMonster::Render(HDC hDC)
@@ -148,7 +155,7 @@ void CMonster::Render(HDC hDC)
 		{
 			brush = CreateSolidBrush(RGB(58, 118, 106));
 			h_old_brush = SelectObject(hDC, brush);
-			Rectangle(hDC, m_tRect.left, m_tRect.top+25, m_tRect.right, m_tRect.bottom -15);
+			Rectangle(hDC, m_tRect.left, m_tRect.top+40, m_tRect.right, m_tRect.bottom);
 			SelectObject(hDC, h_old_brush);
 			DeleteObject(brush);
 			break;
