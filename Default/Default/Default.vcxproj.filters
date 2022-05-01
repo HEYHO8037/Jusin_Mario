@@ -46,6 +46,9 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="BossMonster.cpp">
+      <Filter>01.Obj\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineMgr.h">
@@ -116,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="Default.h">
       <Filter>헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMonster.h">
+      <Filter>01.Obj\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
