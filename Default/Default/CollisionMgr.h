@@ -39,7 +39,7 @@ public:
 	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipse�� �������?��ü �浹�� �����ϴ� �Լ�
 	
 public:
-	void Collision_Player_Monster();
+	void Collision_Player_BossMonster();
 	void Collision_Player_Bullet();
 	void Collision_Monster_Bullet();
 	void Collision_Player_Item();

@@ -142,17 +142,46 @@ void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
 	}
 }
 
-void CCollisionMgr::Collision_Player_Monster()
+void CCollisionMgr::Collision_Player_BossMonster()
 {
-	float fX, fY;
-
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_MONSTER]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_MONSTER]->end();
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_MONSTER)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_MONSTER)->end();
+	
 	for (iter; iter != iterEnd; ++iter)
 	{
+		float fX, fY;
+
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-
+			if ((*iter)->Get_Type() == TYPE_BOSS)
+			{
+				if (fX > fY) //»óÇÏ Ãæµ¹
+				{
+					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY) // ÇÃ·¹ÀÌ¾î°¡ ´õ À§ÀÎ °æ¿ì
+					{
+						(*iter)->Set_HpMinus(); // º¸½º Ã¼·Â °¨¼Ò
+						
+						static_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Jump();
+					}
+					else
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_HpMinus(); //±× ¿Ü Ãæµ¹ ÇÃ·¹ÀÌ¾î Ã¼·Â °¨¼Ò
+					}
+				}
+				else
+				{
+					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX) 
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
+						return;
+					}
+					else
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(fX);
+						return;
+					}
+				}
+			}
 		}
 	}
 }
@@ -226,28 +255,25 @@ void CCollisionMgr::Collision_Player_Huddle()//?•ì?ì¶”ê?
 			switch (eType)
 			{
 			case TYPE_HUR_FIXED:
-
-				if (fX > fY) //?í•˜ì¶©ëŒ 
+				if (fX > fY)  
 				{	
-					//??ì¶©ëŒ
 					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); //ì¶©ëŒ?œê¸¸?´ë§Œ???¬ë¼ê°€??ëª»ê??”ê²ƒì²˜ëŸ¼ë³´ì´ê²?
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); 
 					}
-					//??ì¶©ëŒ
 					else					
 					{
-						//Sour->Set_PosY(fY); // ì¶©ëŒ??ê¸¸ì´ë§Œí¼ ë°‘ìœ¼ë¡??´ë ¤ê°€ê²?fYê°’ì„ ?£ëŠ”??
+						//Sour->Set_PosY(fY); 
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
 					}
 				}
-				/*else // ì¢Œìš° sì¶©ëŒ fX < fY
+				/*else 
 				{
-					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // ì¢Œì¶©??ê³ ì •?œë¬¼ì²´ê? ?€ì§ì´??ë¬¼ì²´??ì¤‘ì ë³´ë‹¤ ?¤ë¥¸ìª½ì— ?ˆìœ¼ë¯€ë¡?
+					if (Dest->Get_Info().fX > Sour->Get_Info().fX) 
 					{
 						//Sour->Set_PostX(-fX);
 					}
-					else // ??ì¶©ëŒ
+					else 
 					{
 						//Sour->Set_PostX(fX);
 					}

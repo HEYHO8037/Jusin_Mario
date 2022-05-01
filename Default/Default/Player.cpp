@@ -24,7 +24,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fY = float(600) - m_tInfo.fCY*0.5;
 	
 
-	m_tInfo.m_iHp = 1;
+	m_tInfo.m_iHp = 10;
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
 
@@ -62,11 +62,11 @@ void CPlayer::Late_Update(void)
 	{
 		Set_Dead();
 	}
+
 }
 
 void CPlayer::Render(HDC hDC)
 {
-	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 	Rectangle(hDC, m_tRect.left, m_tRect.top - (m_tInfo.m_iHp-1)*15, m_tRect.right, m_tRect.bottom);
 
 	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
@@ -151,14 +151,15 @@ void CPlayer::OffSet(void)
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 	
 
-	if (iOffSet > m_tInfo.fX + iScrollX)
+	if (iOffSet - 100 > m_tInfo.fX + iScrollX)
 	{
 		CScrollMgr::Get_Instance()->Set_ScrollX(m_tInfo.m_fSpeed);
 	}
-	if (iOffSet < m_tInfo.fX + iScrollX)
+	else if (iOffSet + 100 < m_tInfo.fX + iScrollX)
 	{
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_tInfo.m_fSpeed);
 	}
+
 
 
 }
