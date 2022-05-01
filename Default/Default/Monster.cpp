@@ -112,7 +112,7 @@ void CMonster::Render(HDC hDC)
 		{
 			brush = CreateSolidBrush(RGB(64, 128, 128));
 			h_old_brush = SelectObject(hDC, brush);
-			Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
+			Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 			SelectObject(hDC, h_old_brush);
 			DeleteObject(brush);
 		break;

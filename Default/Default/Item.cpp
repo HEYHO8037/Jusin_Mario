@@ -66,7 +66,7 @@ void CItem::Render(HDC hDC)
 	case TYPE_ITEM_GROW : //성장 아이템
 		brush = CreateSolidBrush(RGB(255, 47, 47));
 		h_old_brush = SelectObject(hDC, brush);
-		Ellipse(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
 		break;
@@ -74,7 +74,7 @@ void CItem::Render(HDC hDC)
 	case TYPE_ITEM_BULLET: // 총알 아이템
 		brush = CreateSolidBrush(RGB(0, 210, 0));
 		h_old_brush = SelectObject(hDC, brush);
-		Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
 		break;
