@@ -15,7 +15,5 @@ public:
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
 
-private :	
-	float m_fTemp;
 };
 

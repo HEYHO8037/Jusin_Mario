@@ -21,18 +21,15 @@ void CMonster::Initialize(void)
 {
 	if (m_tType == TYPE_MONSTER_MOVE)
 	{
-		m_tInfo.fCX = 35.f;
-		m_tInfo.fCY = 35.f;
+		m_tInfo.fCX = 50.f;
+		m_tInfo.fCY = 50.f;
 		m_tInfo.m_fSpeed = 5.f;
-		m_fTemp = m_tInfo.fX;
-
 	}
 
 	if (m_tType == TYPE_MONSTER_BULLET)
 	{
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 70.f;
-		m_fTemp = m_tInfo.fX;
 		m_tInfo.m_fSpeed = 3.f;
 
 	}
