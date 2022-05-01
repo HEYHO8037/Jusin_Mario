@@ -29,16 +29,7 @@ void CMainGame::Initialize(void)
 	m_hDC = GetDC(g_hWnd);
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-
-//	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 	
-	//������ ����
-	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(250.f, 200.f, TYPE_ITEM_BULLET));
-	//���� ����
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(400.f, 600.f, TYPE_MONSTER_MOVE));
-	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(450.f, 600.f, TYPE_MONSTER_BULLET));
-
 	CLineMgr::Get_Instance()->Initialize();
 }
 
