@@ -77,8 +77,8 @@ void CHurdle::Render(HDC hDC)
 		DeleteObject(brush);
 		break;
 
-	case TYPE_HUR_FLOAT://움직임-검은색
-		brush = CreateSolidBrush(RGB(0, 0, 0));
+	case TYPE_HUR_FLOAT://움직임-밝은갈색
+		brush = CreateSolidBrush(RGB(193, 113, 17));
 		h_old_brush = SelectObject(hDC, brush);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);

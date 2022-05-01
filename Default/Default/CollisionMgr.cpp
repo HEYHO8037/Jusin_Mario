@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Player.h"
+
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 DWORD CCollisionMgr::CTime = 0;
 CCollisionMgr::CCollisionMgr()
@@ -12,25 +13,25 @@ CCollisionMgr::~CCollisionMgr()
 {
 }
 
-void CCollisionMgr::SetObjList(const list<CObj*>(*pObjList)[OBJ_END])
+void CCollisionMgr::SetObjList(const list<CObj*> (*pObjList)[OBJ_END])
 {
 	m_ObjList = pObjList;
 }
 
-bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * pY) //px¿Í pYÀÇ ÁÖ¼Ò°ªÀ» ³Ñ°ÜÁÖ¾î¾ß ÇÔ¼ö°¡ ³¡³­ÈÄ¿¡µµ º¯¼ö¿¡ ´ëÀÔÇÑ °ªÀ» °è¼Ó ¾µ¼öÀÖ´Ù
+bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * pY) //pxì™€ pYì˜ ì£¼ì†Œê°’ì„ ë„˜ê²¨ì£¼ì–´ì•¼ í•¨ìˆ˜ê°€ ëë‚œí›„ì—ë„ ë³€ìˆ˜ì— ëŒ€ì…í•œ ê°’ì„ ê³„ì† ì“¸ìˆ˜ìˆë‹¤
 {
-	float fWidth = abs(pDest->Get_Info().fX - pSour->Get_Info().fX); // µÎ ÁßÁ¡°£ xÀÇ ±æÀÌ, ¹Øº¯
-	float fHeight = abs(pDest->Get_Info().fY - pSour->Get_Info().fY); // µÎ ÁßÁ¡°£ yÀÇ ±æÀÌ, ³ôÀÌ
+	float fWidth = abs(pDest->Get_Info().fX - pSour->Get_Info().fX); // ë‘ ì¤‘ì ê°„ xì˜ ê¸¸ì´, ë°‘ë³€
+	float fHeight = abs(pDest->Get_Info().fY - pSour->Get_Info().fY); // ë‘ ì¤‘ì ê°„ yì˜ ê¸¸ì´, ë†’ì´
 
-	float fCX = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // °¢°¢ÀÇ ¹İÁö¸¦À» ±¸ÇÑµÚ ´õÇÑ °ª(x) 
-	float fCY = (pDest->Get_Info().fCY + pSour->Get_Info().fCY) * 0.5f; // °¢°¢ÀÇ ¹İÁö¸¦À» ±¸ÇÑµÚ ´õÇÑ °ª(y)
+	float fCX = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // ê°ê°ì˜ ë°˜ì§€ë¥¼ì„ êµ¬í•œë’¤ ë”í•œ ê°’(x) 
+	float fCY = (pDest->Get_Info().fCY + pSour->Get_Info().fCY) * 0.5f; // ê°ê°ì˜ ë°˜ì§€ë¥¼ì„ êµ¬í•œë’¤ ë”í•œ ê°’(y)
 
-	if ((fCX > fWidth) && (fCY > fHeight)) // µÎÁ¡ »çÀÌÀÇ °Å¸®°¡ µÎ°´Ã¼ÀÇ ¹İÁö¸§À» ´õÇÑ°ªº¸´Ù ÀÛ¾ÆÁö¸é Ãæµ¹
+	if ((fCX > fWidth) && (fCY > fHeight)) // ë‘ì  ì‚¬ì´ì˜ ê±°ë¦¬ê°€ ë‘ê°ì²´ì˜ ë°˜ì§€ë¦„ì„ ë”í•œê°’ë³´ë‹¤ ì‘ì•„ì§€ë©´ ì¶©ëŒ
 	{
 		*pX = fCX - fWidth;
-		*pY = fCY - fHeight; // µÎ°´Ã¼ÀÇ ¹İÁö¸§À» ´õÇÑ°ª¿¡¼­ µÎÁ¡»çÀÌÀÇ °Å¸®¸¦ »©ÁÖ¸é Ãæµ¹ÇÑ °Å¸®, ±æÀÌ°¡ ³ª¿Â´Ù
+		*pY = fCY - fHeight; // ë‘ê°ì²´ì˜ ë°˜ì§€ë¦„ì„ ë”í•œê°’ì—ì„œ ë‘ì ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ë¹¼ì£¼ë©´ ì¶©ëŒí•œ ê±°ë¦¬, ê¸¸ì´ê°€ ë‚˜ì˜¨ë‹¤
 
-		return true; // Ãæµ¹ÇßÀ»°æ¿ì true ¹İÈ¯
+		return true; // ì¶©ëŒí–ˆì„ê²½ìš° true ë°˜í™˜
 	}
 
 	return false;
@@ -38,21 +39,21 @@ bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * p
 
 bool CCollisionMgr::Check_Sphere(CObj * pDest, CObj * pSour)
 {
-	// abs Àı´ë°ª±¸ÇÏ´Â ÇÔ¼ö f- floatÀÌ¹Ç·Î ºÙ¿©ÁÜ
-	float fWidth = fabs(pDest->Get_Info().fX - pSour->Get_Info().fX); //¹Øº¯
-	float fHeight = fabs(pDest->Get_Info().fY - pSour->Get_Info().fY); //³ôÀÌ
+	// abs ì ˆëŒ€ê°’êµ¬í•˜ëŠ” í•¨ìˆ˜ f- floatì´ë¯€ë¡œ ë¶™ì—¬ì¤Œ
+	float fWidth = fabs(pDest->Get_Info().fX - pSour->Get_Info().fX); //ë°‘ë³€
+	float fHeight = fabs(pDest->Get_Info().fY - pSour->Get_Info().fY); //ë†’ì´
 
-																	   //sqrt : ·çÆ®¸¦ ¾º¿öÁÖ´Â ÇÔ¼ö
-	float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); //ºøº¯
+																	   //sqrt : ë£¨íŠ¸ë¥¼ ì”Œì›Œì£¼ëŠ” í•¨ìˆ˜
+	float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); //ë¹—ë³€
 
-	float	fRadius = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // µÎ ¿øÀÇ ¹İÁö¸§ ´õÇÑ°ª
+	float	fRadius = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // ë‘ ì›ì˜ ë°˜ì§€ë¦„ ë”í•œê°’
 
-	return fRadius > fDiagonal; // µÎ ¿øÀÇ ¹İÁö¸§À» ´õÇÑ°ªÀÌ µÎ °´Ã¼»çÀÌÀÇ ±æÀÌº¸´Ù Å©´Ù = Ãæµ¹
+	return fRadius > fDiagonal; // ë‘ ì›ì˜ ë°˜ì§€ë¦„ì„ ë”í•œê°’ì´ ë‘ ê°ì²´ì‚¬ì´ì˜ ê¸¸ì´ë³´ë‹¤ í¬ë‹¤ = ì¶©ëŒ
 }
 
-void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // objÆ÷ÀÎÅÍ Å¸ÀÔ ¸®½ºÆ®¾È¿¡ ÀÖ´Â µÎ °´Ã¼°¡ Ãæµ¹ÇßÀ»½Ã Ã³¸®ÇÏ´Â ÇÔ¼ö
+void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // objí¬ì¸í„° íƒ€ì… ë¦¬ìŠ¤íŠ¸ì•ˆì— ìˆëŠ” ë‘ ê°ì²´ê°€ ì¶©ëŒí–ˆì„ì‹œ ì²˜ë¦¬í•˜ëŠ” í•¨ìˆ˜
 {
-	RECT rc{}; // Ãæµ¹ÇÑ ¹üÀ§¸¦ ´ã´Â º¯¼ö 
+	RECT rc{}; // ì¶©ëŒí•œ ë²”ìœ„ë¥¼ ë‹´ëŠ” ë³€ìˆ˜ 
 
 	for (auto& Dest : _Dest)
 	{
@@ -67,8 +68,8 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // objÆ
 				}
 
 
-				//µÎ °´Ã¼°¡ Ãæµ¹µÇ¾úÀ»¶§ true¸¦ ¹İÈ¯ÇÑ´Ù
-				//trueÀÎ »óÅÂ = µÎ °´Ã¼°¡ Ãæµ¹µÇ¾ú´Ù´Â °ÍÀ» ÀÇ¹ÌÇÏ¹Ç·Î ÀÌ¶§ ¿øÇÏ´Â Çàµ¿À» ÇÏ´Â ÇÔ¼ö¸¦ ³Ö¾îÁÖ¸éµÈ´Ù
+				//ë‘ ê°ì²´ê°€ ì¶©ëŒë˜ì—ˆì„ë•Œ trueë¥¼ ë°˜í™˜í•œë‹¤
+				//trueì¸ ìƒíƒœ = ë‘ ê°ì²´ê°€ ì¶©ëŒë˜ì—ˆë‹¤ëŠ” ê²ƒì„ ì˜ë¯¸í•˜ë¯€ë¡œ ì´ë•Œ ì›í•˜ëŠ” í–‰ë™ì„ í•˜ëŠ” í•¨ìˆ˜ë¥¼ ë„£ì–´ì£¼ë©´ëœë‹¤
 				//ex) Set_Dead
 			
 			}
@@ -76,21 +77,21 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // objÆ
 	}
 
 }
-//°íÁ¤µÇ¾îÀÖ´Â ¹°Ã¼		//¿òÁ÷ÀÌ´Â ¹°Ã¼
+//ê³ ì •ë˜ì–´ìˆëŠ” ë¬¼ì²´		//ì›€ì§ì´ëŠ” ë¬¼ì²´
 void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	for (auto& Dest : _Dest)
 	{
 		for (auto & Sour : _Sour)
 		{
-			float fX = 0.f, fY = 0.f; // Ãæµ¹ÇÑ ±æÀÌ·Î »ç¿ëÇÒ º¯¼ö
-			//Dest ÇÃ·¹ÀÌ¾î Sour ¸ó½ºÅÍ
+			float fX = 0.f, fY = 0.f; // ì¶©ëŒí•œ ê¸¸ì´ë¡œ ì‚¬ìš©í•  ë³€ìˆ˜
+			//Dest í”Œë ˆì´ì–´ Sour ëª¬ìŠ¤í„°
 			if (Check_Rect(Dest, Sour, &fX, &fY))
 			{
-				//»óÇÏÃæµ¹
-				if (fX > fY) // Ãæµ¹ÇßÀ»¶§ ³ª¿Â XÀÇ ±æÀÌ°¡ YÀÇ ±æÀÌº¸´Ù ±æ´Ù¸é »óÇÏÃæµ¹ 
+				//ìƒí•˜ì¶©ëŒ
+				if (fX > fY) // ì¶©ëŒí–ˆì„ë•Œ ë‚˜ì˜¨ Xì˜ ê¸¸ì´ê°€ Yì˜ ê¸¸ì´ë³´ë‹¤ ê¸¸ë‹¤ë©´ ìƒí•˜ì¶©ëŒ 
 				{
-					if (Sour->Get_Rect().top < Dest->Get_Rect().bottom) // °íÁ¤µÇ¾îÀÖ´Â¹°Ã¼ÀÇ yÀÇ °ªÀÌ ¿òÁ÷ÀÌ´Â ¹°Ã¼ÀÇ yÀÇ °ªº¸´Ù Å« °æ¿ì, »ó Ãæµ¹
+					if (Sour->Get_Rect().top < Dest->Get_Rect().bottom) // ê³ ì •ë˜ì–´ìˆëŠ”ë¬¼ì²´ì˜ yì˜ ê°’ì´ ì›€ì§ì´ëŠ” ë¬¼ì²´ì˜ yì˜ ê°’ë³´ë‹¤ í° ê²½ìš°, ìƒ ì¶©ëŒ
 					{
 						//Dest->Set_PostY(fY);
 						if (CTime + 300 < GetTickCount())
@@ -99,22 +100,22 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 							static_cast<CPlayer*>(Dest)->Set_Jump();
 							CTime = GetTickCount();
 						}
-						//Sour->Set_PosY(-fY); // Ãæµ¹µÈ ±æÀÌ¸¸Å­ À§·Î ¿Ã¶ó°¡°Ô -fY°ªÀ» ³Ö´Â´Ù
+						//Sour->Set_PosY(-fY); // ì¶©ëŒëœ ê¸¸ì´ë§Œí¼ ìœ„ë¡œ ì˜¬ë¼ê°€ê²Œ -fYê°’ì„ ë„£ëŠ”ë‹¤
 					}
-					else //ÇÏ Ãæµ¹
+					else //í•˜ ì¶©ëŒ
 					{
 						//Sour->Set_HpMinus();
-						//Sour->Set_PosY(fY); // Ãæµ¹µÈ ±æÀÌ¸¸Å­ ¹ØÀ¸·Î ³»·Á°¡°Ô fY°ªÀ» ³Ö´Â´Ù
+						//Sour->Set_PosY(fY); // ì¶©ëŒëœ ê¸¸ì´ë§Œí¼ ë°‘ìœ¼ë¡œ ë‚´ë ¤ê°€ê²Œ fYê°’ì„ ë„£ëŠ”ë‹¤
 					}
 				}
-				else // ÁÂ¿ì sÃæµ¹ fX < fY
+				else // ì¢Œìš° sì¶©ëŒ fX < fY
 				{
-					if (Sour->Get_Info().fX > Dest->Get_Info().fX) // ÁÂÃæµ¹(°íÁ¤µÈ¹°Ã¼°¡ ¿òÁ÷ÀÌ´Â ¹°Ã¼ÀÇ ÁßÁ¡º¸´Ù ¿À¸¥ÂÊ¿¡ ÀÖÀ¸¹Ç·Î)
+					if (Sour->Get_Info().fX > Dest->Get_Info().fX) // ì¢Œì¶©ëŒ(ê³ ì •ëœë¬¼ì²´ê°€ ì›€ì§ì´ëŠ” ë¬¼ì²´ì˜ ì¤‘ì ë³´ë‹¤ ì˜¤ë¥¸ìª½ì— ìˆìœ¼ë¯€ë¡œ)
 					{	
 						//Dest->Set_PostX(-fX);
 						//return;
 					}
-					else // ¿ì Ãæµ¹
+					else // ìš° ì¶©ëŒ
 					{
 						//Dest->Set_PostX(fX);
 						//return;
@@ -166,7 +167,7 @@ void CCollisionMgr::Collision_Player_Bullet()
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-			//Ãæµ¹Ã³¸®
+			//ì¶©ëŒì²˜ë¦¬
 		}
 	}
 }
@@ -187,7 +188,7 @@ void CCollisionMgr::Collision_Monster_Bullet()
 		{
 			if (Check_Rect((*iter), (*Biter),&fX, &fY))
 			{
-				//Ãæµ¹Ã³¸®
+				//ì¶©ëŒì²˜ë¦¬
 			}
 		}
 	}
@@ -204,24 +205,60 @@ void CCollisionMgr::Collision_Player_Item()
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-			//Ãæµ¹Ã³¸®
+			//ì¶©ëŒì²˜ë¦¬
 		}
 	}
 }
 
-void CCollisionMgr::Collision_Player_Huddle()
+void CCollisionMgr::Collision_Player_Huddle()//ì •ì€ì¶”ê°€
 {
 	float fX, fY;
+	TYPE	eType;
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_HURDLE]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_HURDLE]->end();
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_HURDLE)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_HURDLE)->end();
 	
 	for (iter; iter != iterEnd; ++iter)
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-			//Ãæµ¹Ã³¸®
+			eType = (*iter)->Get_Type();
+			switch (eType)
+			{
+			case TYPE_HUR_FIXED:
+
+				if (fX > fY) //ìƒí•˜ì¶©ëŒ 
+				{	
+					//ìƒ ì¶©ëŒ
+					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); //ì¶©ëŒëœê¸¸ì´ë§Œí¼ ì˜¬ë¼ê°€ì„œ ëª»ê°€ëŠ”ê²ƒì²˜ëŸ¼ë³´ì´ê²Œ
+					}
+					//í•˜ ì¶©ëŒ
+					else					
+					{
+						//Sour->Set_PosY(fY); // ì¶©ëŒëœ ê¸¸ì´ë§Œí¼ ë°‘ìœ¼ë¡œ ë‚´ë ¤ê°€ê²Œ fYê°’ì„ ë„£ëŠ”ë‹¤
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
+					}
+				}
+				/*else // ì¢Œìš° sì¶©ëŒ fX < fY
+				{
+					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // ì¢Œì¶©ëŒ(ê³ ì •ëœë¬¼ì²´ê°€ ì›€ì§ì´ëŠ” ë¬¼ì²´ì˜ ì¤‘ì ë³´ë‹¤ ì˜¤ë¥¸ìª½ì— ìˆìœ¼ë¯€ë¡œ)
+					{
+						//Sour->Set_PostX(-fX);
+					}
+					else // ìš° ì¶©ëŒ
+					{
+						//Sour->Set_PostX(fX);
+					}
+				}*/
+				
+				
+
+				break;
+			}
 		}
+
 	}
 }
 
@@ -241,7 +278,7 @@ void CCollisionMgr::Collision_Monster_Huddle()
 		{
 			if (Check_Rect((*iter), (*Biter), &fX, &fY))
 			{
-				//Ãæµ¹Ã³¸®
+				//ì¶©ëŒì²˜ë¦¬
 			}
 		}
 	}

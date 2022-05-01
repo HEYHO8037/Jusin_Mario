@@ -27,6 +27,9 @@ public:
 		}
 	}
 
+
+public:
+	void Set_Power(float fPower) { m_fPower = fPower; }
 	void MJump();
 	void Set_Jump() { m_mJump = true;
 	m_bJump = false;

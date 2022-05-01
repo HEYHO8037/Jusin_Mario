@@ -6,13 +6,16 @@
 #include "Item.h"
 #include "Monster.h"
 #include "CollisionMgr.h"
+#include "Player.h"
 #include "BossMonster.h"
+
 
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
 CObjMgr::CObjMgr()
 {
+	CCollisionMgr::Get_Instance()->SetObjList(&m_ObjList);
 }
 
 
@@ -39,21 +42,23 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
     
 	    //HURDLE CREATE
-    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 575.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(250.f, 575.f, TYPE_HUR_FLOAT, pObj));
+    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 375.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(50.f, 575.f, TYPE_HUR_FIXED, pObj));
+
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(100.f, 575.f, TYPE_HUR_FLOAT, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(400.f, 375.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(600.f, 575.f, TYPE_HUR_STACK, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK, pObj));
 
 		//Boss Create(임시)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
-
 		}
 
 }
 
 void CObjMgr::Release()
 {
-	for (int i = 0; i < OBJ_END; ++i) // 占쏙옙占쏙옙트 占썼열占쏙옙 크占썩보占쏙옙 占쌜다몌옙 占쌥븝옙
+	for (int i = 0; i < OBJ_END; ++i) 
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
@@ -95,14 +100,15 @@ void CObjMgr::Late_Update()
 			++iter;
 		}
 	}
+  
+	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+	CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
 	if (OTime + 30 < GetTickCount())
 	{
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 		CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 		OTime = GetTickCount();
 	}
-	
-	
 	
 }
 

@@ -139,6 +139,10 @@ void CPlayer::MJump(void)
 			
 		}
 	}
+	else
+	{
+		m_fPower = 5.f;
+	}
 }
 
 void CPlayer::OffSet(void)
