@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Monster.h"
 #include "CollisionMgr.h"
+#include "BossMonster.h"
 
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
@@ -42,6 +43,10 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(250.f, 575.f, TYPE_HUR_FLOAT, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(400.f, 375.f, TYPE_HUR_ITEM, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK, pObj));
+
+		//Boss Create(임시)
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
+
 		}
 
 }
