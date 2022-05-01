@@ -19,20 +19,20 @@ void CCollisionMgr::SetObjList(const list<CObj*> (*pObjList)[OBJ_END])
 	m_ObjList = pObjList;
 }
 
-bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * pY) //px?�?pY??주소값을 ?�겨주어???�수가 ?�난?�에??변?�에 ?�?�한 값을 계속 ?�수?�다
+bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * pY) //px?ï¿?pY??ì£¼ì†Œê°’ì„ ?ï¿½ê²¨ì£¼ì–´???ï¿½ìˆ˜ê°€ ?ï¿½ë‚œ?ï¿½ì—??ë³€?ï¿½ì— ?ï¿?ï¿½í•œ ê°’ì„ ê³„ì† ?ï¿½ìˆ˜?ï¿½ë‹¤
 {
-	float fWidth = abs(pDest->Get_Info().fX - pSour->Get_Info().fX); // ??중점�?x??길이, 밑�?
-	float fHeight = abs(pDest->Get_Info().fY - pSour->Get_Info().fY); // ??중점�?y??길이, ?�이
+	float fWidth = abs(pDest->Get_Info().fX - pSour->Get_Info().fX); // ??ì¤‘ì ï¿?x??ê¸¸ì´, ë°‘ï¿½?
+	float fHeight = abs(pDest->Get_Info().fY - pSour->Get_Info().fY); // ??ì¤‘ì ï¿?y??ê¸¸ì´, ?ï¿½ì´
 
-	float fCX = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // 각각??반�?를을 구한???�한 �?x) 
-	float fCY = (pDest->Get_Info().fCY + pSour->Get_Info().fCY) * 0.5f; // 각각??반�?를을 구한???�한 �?y)
+	float fCX = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // ê°ê°??ë°˜ï¿½?ë¥¼ì„ êµ¬í•œ???ï¿½í•œ ï¿?x) 
+	float fCY = (pDest->Get_Info().fCY + pSour->Get_Info().fCY) * 0.5f; // ê°ê°??ë°˜ï¿½?ë¥¼ì„ êµ¬í•œ???ï¿½í•œ ï¿?y)
 
-	if ((fCX > fWidth) && (fCY > fHeight)) // ?�점 ?�이??거리가 ?�객체의 반�?름을 ?�한값보???�아지�?충돌
+	if ((fCX > fWidth) && (fCY > fHeight)) // ?ï¿½ì  ?ï¿½ì´??ê±°ë¦¬ê°€ ?ï¿½ê°ì²´ì˜ ë°˜ï¿½?ë¦„ì„ ?ï¿½í•œê°’ë³´???ï¿½ì•„ì§€ï¿?ì¶©ëŒ
 	{
 		*pX = fCX - fWidth;
-		*pY = fCY - fHeight; // ?�객체의 반�?름을 ?�한값에???�점?�이??거리�?빼주�?충돌??거리, 길이가 ?�온??
+		*pY = fCY - fHeight; // ?ï¿½ê°ì²´ì˜ ë°˜ï¿½?ë¦„ì„ ?ï¿½í•œê°’ì—???ï¿½ì ?ï¿½ì´??ê±°ë¦¬ï¿?ë¹¼ì£¼ï¿?ì¶©ëŒ??ê±°ë¦¬, ê¸¸ì´ê°€ ?ï¿½ì˜¨??
 
-		return true; // 충돌?�을경우 true 반환
+		return true; // ì¶©ëŒ?ï¿½ì„ê²½ìš° true ë°˜í™˜
 	}
 
 	return false;
@@ -40,21 +40,21 @@ bool CCollisionMgr::Check_Rect(CObj * pDest, CObj * pSour, float * pX, float * p
 
 bool CCollisionMgr::Check_Sphere(CObj * pDest, CObj * pSour)
 {
-	// abs ?��?값구?�는 ?�수 f- float?��?�?붙여�?
-	float fWidth = fabs(pDest->Get_Info().fX - pSour->Get_Info().fX); //밑�?
-	float fHeight = fabs(pDest->Get_Info().fY - pSour->Get_Info().fY); //?�이
+	// abs ?ï¿½ï¿½?ê°’êµ¬?ï¿½ëŠ” ?ï¿½ìˆ˜ f- float?ï¿½ï¿½?ï¿?ë¶™ì—¬ï¿?
+	float fWidth = fabs(pDest->Get_Info().fX - pSour->Get_Info().fX); //ë°‘ï¿½?
+	float fHeight = fabs(pDest->Get_Info().fY - pSour->Get_Info().fY); //?ï¿½ì´
 
-																	   //sqrt : 루트�??�워주는 ?�수
-	float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); //빗�?
+																	   //sqrt : ë£¨íŠ¸ï¿??ï¿½ì›Œì£¼ëŠ” ?ï¿½ìˆ˜
+	float fDiagonal = sqrtf(fWidth*fWidth + fHeight*fHeight); //ë¹—ï¿½?
 
-	float	fRadius = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // ???�의 반�?�??�한�?
+	float	fRadius = (pDest->Get_Info().fCX + pSour->Get_Info().fCX) * 0.5f; // ???ï¿½ì˜ ë°˜ï¿½?ï¿??ï¿½í•œï¿?
 
-	return fRadius > fDiagonal; // ???�의 반�?름을 ?�한값이 ??객체?�이??길이보다 ?�다 = 충돌
+	return fRadius > fDiagonal; // ???ï¿½ì˜ ë°˜ï¿½?ë¦„ì„ ?ï¿½í•œê°’ì´ ??ê°ì²´?ï¿½ì´??ê¸¸ì´ë³´ë‹¤ ?ï¿½ë‹¤ = ì¶©ëŒ
 }
 
-void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj?�인???�??리스?�안???�는 ??객체가 충돌?�을??처리?�는 ?�수
+void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj?ï¿½ì¸???ï¿??ë¦¬ìŠ¤?ï¿½ì•ˆ???ï¿½ëŠ” ??ê°ì²´ê°€ ì¶©ëŒ?ï¿½ì„??ì²˜ë¦¬?ï¿½ëŠ” ?ï¿½ìˆ˜
 {
-	RECT rc{}; // 충돌??범위�??�는 변??
+	RECT rc{}; // ì¶©ëŒ??ë²”ìœ„ï¿??ï¿½ëŠ” ë³€??
 
 	for (auto& Dest : _Dest)
 	{
@@ -69,8 +69,8 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj?
 				}
 
 
-				//??객체가 충돌?�었?�때 true�?반환?�다
-				//true???�태 = ??객체가 충돌?�었?�는 것을 ?��??��?�??�때 ?�하???�동???�는 ?�수�??�어주면?�다
+				//??ê°ì²´ê°€ ì¶©ëŒ?ï¿½ì—ˆ?ï¿½ë•Œ trueï¿?ë°˜í™˜?ï¿½ë‹¤
+				//true???ï¿½íƒœ = ??ê°ì²´ê°€ ì¶©ëŒ?ï¿½ì—ˆ?ï¿½ëŠ” ê²ƒì„ ?ï¿½ï¿½??ï¿½ï¿½?ï¿??ï¿½ë•Œ ?ï¿½í•˜???ï¿½ë™???ï¿½ëŠ” ?ï¿½ìˆ˜ï¿??ï¿½ì–´ì£¼ë©´?ï¿½ë‹¤
 				//ex) Set_Dead
 			
 			}
@@ -78,21 +78,21 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj?
 	}
 
 }
-//고정?�어?�는 물체		//?�직???물체
+//ê³ ì •?ï¿½ì–´?ï¿½ëŠ” ë¬¼ì²´		//?ï¿½ì§???ë¬¼ì²´
 void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	for (auto& Dest : _Dest)
 	{
 		for (auto & Sour : _Sour)
 		{
-			float fX = 0.f, fY = 0.f; // 충돌??길이�??�용??변??
-			//Dest ?�레?�어 Sour 몬스??
+			float fX = 0.f, fY = 0.f; // ì¶©ëŒ??ê¸¸ì´ï¿??ï¿½ìš©??ë³€??
+			//Dest ?ï¿½ë ˆ?ï¿½ì–´ Sour ëª¬ìŠ¤??
 			if (Check_Rect(Dest, Sour, &fX, &fY))
 			{
-				//?�하충돌
-				if (fX > fY) // 충돌?�을???�온 X??길이가 Y??길이보다 길다�??�하충돌 
+				//?ï¿½í•˜ì¶©ëŒ
+				if (fX > fY) // ì¶©ëŒ?ï¿½ì„???ï¿½ì˜¨ X??ê¸¸ì´ê°€ Y??ê¸¸ì´ë³´ë‹¤ ê¸¸ë‹¤ï¿??ï¿½í•˜ì¶©ëŒ 
 				{
-					if (Sour->Get_Rect().top <= Dest->Get_Rect().bottom) // 고정?�어?�는물체??y??값이 ?�직???물체??y??값보????경우, ??충돌
+					if (Sour->Get_Rect().top <= Dest->Get_Rect().bottom) // ê³ ì •?ï¿½ì–´?ï¿½ëŠ”ë¬¼ì²´??y??ê°’ì´ ?ï¿½ì§???ë¬¼ì²´??y??ê°’ë³´????ê²½ìš°, ??ì¶©ëŒ
 					{
 						//Dest->Set_PostY(fY);
 						if (CTime + 300 < GetTickCount())
@@ -101,22 +101,22 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 							static_cast<CPlayer*>(Dest)->Set_Jump();
 							CTime = GetTickCount();
 						}
-						//Sour->Set_PosY(-fY); // 충돌??길이만큼 ?�로 ?�라가�?-fY값을 ?�는??
+						//Sour->Set_PosY(-fY); // ì¶©ëŒ??ê¸¸ì´ë§Œí¼ ?ï¿½ë¡œ ?ï¿½ë¼ê°€ï¿?-fYê°’ì„ ?ï¿½ëŠ”??
 					}
-					else //??충돌
+					else //??ì¶©ëŒ
 					{
 						//Sour->Set_HpMinus();
-						//Sour->Set_PosY(fY); // 충돌??길이만큼 밑으�??�려가�?fY값을 ?�는??
+						//Sour->Set_PosY(fY); // ì¶©ëŒ??ê¸¸ì´ë§Œí¼ ë°‘ìœ¼ï¿??ï¿½ë ¤ê°€ï¿?fYê°’ì„ ?ï¿½ëŠ”??
 					}
 				}
-				else // 좌우 s충돌 fX < fY
+				else // ì¢Œìš° sì¶©ëŒ fX < fY
 				{
-					if (Sour->Get_Info().fX > Dest->Get_Info().fX) // 좌충??고정?�물체�? ?�직???물체??중점보다 ?�른쪽에 ?�으므�?
+					if (Sour->Get_Info().fX > Dest->Get_Info().fX) // ì¢Œì¶©??ê³ ì •?ï¿½ë¬¼ì²´ï¿½? ?ï¿½ì§???ë¬¼ì²´??ì¤‘ì ë³´ë‹¤ ?ï¿½ë¥¸ìª½ì— ?ï¿½ìœ¼ë¯€ï¿?
 					{	
 						//Dest->Set_PostX(-fX);
 						//return;
 					}
-					else // ??충돌
+					else // ??ì¶©ëŒ
 					{
 						//Dest->Set_PostX(fX);
 						//return;
@@ -156,17 +156,17 @@ void CCollisionMgr::Collision_Player_BossMonster()
 		{
 			if ((*iter)->Get_Type() == TYPE_BOSS)
 			{
-				if (fX > fY) //���� �浹
+				if (fX > fY) //ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹
 				{
-					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY) // �÷��̾ �� ���� ���?
+					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY) // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿?
 					{
-						(*iter)->Set_HpMinus(); // ���� ü�� ����
+						(*iter)->Set_HpMinus(); // ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 						
 						static_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Jump();
 					}
 					else
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_HpMinus(); //�� �� �浹 �÷��̾� ü�� ����
+						m_ObjList[OBJ_PLAYER]->front()->Set_HpMinus(); //ï¿½ï¿½ ï¿½ï¿½ ï¿½æµ¹ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 				}
 				else
@@ -256,30 +256,39 @@ void CCollisionMgr::Collision_Player_Huddle()
 			case TYPE_HUR_FIXED:
 				if (fX > fY)  
 				{	
+					//»óÃæµ¹
 					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); 
+						if((*iter)->Get_Rect().left<=m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX&&
+							(*iter)->Get_Rect().right>= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+						{
+							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Rect().top);
+						}
 					}
+					//ÇÏÃæµ¹
 					else					
 					{
-						//Sour->Set_PosY(fY); 
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
 					}
 				}
-				/*else 
+				else 
 				{
-					if (Dest->Get_Info().fX > Sour->Get_Info().fX) 
+					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
 					{
-						//Sour->Set_PostX(-fX);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
 					}
 					else 
 					{
-						//Sour->Set_PostX(fX);
+						//(*iter)->Set_PostX(fX);
 					}
-				}*/
-				
-				
-
+				}
+				break;
+			case TYPE_HUR_FLOAT:
+				Collision_RectEx_Push(*m_ObjList[OBJ_PLAYER], *m_ObjList[OBJ_HURDLE]);
+				break;
+			case TYPE_HUR_ITEM:
+				break;
+			case TYPE_HUR_STACK:
 				break;
 			}
 		}
@@ -303,13 +312,13 @@ void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sou
 					continue;
 				}
 
-				if (fX < fY) //�¿��浹�� �ʿ�
+				if (fX < fY) //ï¿½Â¿ï¿½ï¿½æµ¹ï¿½ï¿½ ï¿½Ê¿ï¿½
 				{
 					//sour- monster, dest- hurdle
 				
 					eType = Sour->Get_Type();
 
-					dynamic_cast<CMonster*>(Sour)->Set_Reverse(); // �浹������ ������ ���� �ٲ��ֱ�
+					dynamic_cast<CMonster*>(Sour)->Set_Reverse(); // ï¿½æµ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½
 					
 					if(eType == TYPE_MONSTER_TURTLE && 1 >= Sour->Get_Info().m_iHp)
 					{
@@ -320,3 +329,31 @@ void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sou
 		}
 	}
 }
+
+void CCollisionMgr::Collision_RectEx_Push(list<CObj*> _Dest, list<CObj*> _Sour)
+{
+	for (auto& Dest : _Dest)
+	{
+		for (auto& Sour : _Sour)
+		{
+			float	fX = 0.f, fY = 0.f;
+
+			if (Check_Rect(Dest, Sour, &fX, &fY))
+			{
+				
+				if (fY > fX)
+				{
+					// ÁÂ Ãæµ¹
+					if (Dest->Get_Info().fX > Sour->Get_Info().fX)
+						Sour->Set_PosX(-fX);
+
+					// ¿ì Ãæµ¹
+					else
+						Sour->Set_PosX(fX);
+				}
+
+			}
+		}
+	}
+}
+

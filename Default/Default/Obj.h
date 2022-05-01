@@ -27,7 +27,8 @@ public:
 	
 	void Set_PostX(float _fX) { m_tInfo.fX += _fX; }
 	void Set_PostY(float _fY) { m_tInfo.fY += _fY; }
-
+	void Set_PosX(float _fX) { m_tInfo.fX = _fX; }
+	void Set_PosY(float _fY) { m_tInfo.fY = _fY; }
 	const TYPE Get_Type() { return m_tType; }
 
 protected:

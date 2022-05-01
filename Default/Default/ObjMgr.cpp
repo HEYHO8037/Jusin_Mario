@@ -70,8 +70,9 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 475.f, TYPE_HUR_FIXED, pObj));
 
 		//Boss Create(임시)
+
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
-		
+
 	}
 
 }
@@ -133,6 +134,7 @@ void CObjMgr::Late_Update()
 
 		OTime = GetTickCount();
 	}
+	
 	
 }
 

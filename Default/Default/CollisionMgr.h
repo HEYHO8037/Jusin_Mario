@@ -32,11 +32,12 @@ public:
 		}
 	}
 
-	static bool Check_Rect(CObj* pDest, CObj* pSour, float *pX, float *pY); // ��ü �ΰ� �浹 Ȯ�ο� �Լ�
-	static bool Check_Sphere(CObj* pDest, CObj* pSour); // ellipse �浹 Ȯ�ο� �Լ�
-	static void Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour); // ��ü �浹�� �����ϴ� �Լ�
-	static void Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour); // ��ü �浹�� �����ϴ� �Լ�
-	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipse�� �������?��ü �浹�� �����ϴ� �Լ�
+	static bool Check_Rect(CObj* pDest, CObj* pSour, float *pX, float *pY); // ï¿½ï¿½Ã¼ ï¿½Î°ï¿½ ï¿½æµ¹ È®ï¿½Î¿ï¿½ ï¿½Ô¼ï¿½
+	static bool Check_Sphere(CObj* pDest, CObj* pSour); // ellipse ï¿½æµ¹ È®ï¿½Î¿ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour); // ï¿½ï¿½Ã¼ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour); // ï¿½ï¿½Ã¼ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?ï¿½ï¿½Ã¼ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_RectEx_Push(list<CObj*> _Dest, list<CObj*> _Sour);
 	static void Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sour);
 	
 public:
