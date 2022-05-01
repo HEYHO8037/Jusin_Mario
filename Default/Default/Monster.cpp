@@ -24,6 +24,8 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
 		m_tInfo.m_fSpeed = 5.f;
+		m_tInfo.m_iHp = 2;
+		m_bDead = false;
 	}
 
 	if (m_tType == TYPE_MONSTER_TURTLE)
@@ -33,6 +35,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCY = 80.f;
 		m_tInfo.m_fSpeed = 3.f;
 		m_tInfo.m_iHp = 2;
+		m_bDead = false;
 	}
 
 }
@@ -84,8 +87,10 @@ int CMonster::Update(void)
 void CMonster::Late_Update(void)
 {
 
-
-	//몬스터의 hp가 1일될때 속도증가 계속 왼쪽으로 나가게
+	if (m_tInfo.m_iHp <= 0)
+	{
+		Set_Dead();
+	}
 	
 }
 

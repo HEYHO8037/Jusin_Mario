@@ -34,6 +34,7 @@ void CPlayer::Initialize(void)
 	m_fTime = 0.f;
 	m_fPower = 5.f;
 	int Level = 1;
+	PTime = GetTickCount();
 
 }
 
@@ -95,7 +96,11 @@ void CPlayer::Key_Update(void)
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing('X'))
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX,m_tInfo.fY,TYPE_PBULLET));
+		if (PTime + 200 < GetTickCount())
+		{
+			CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_PBULLET));
+			PTime = GetTickCount();
+		}
 	}
 	
 }
@@ -108,6 +113,23 @@ void CPlayer::Jumping(void)
 		m_fTime += 0.2f;
 
 		if (m_tInfo.fY > float(WINCY)-m_tInfo.fCY*0.5)
+		{
+			m_bJump = false;
+			m_fTime = 0.f;
+			m_tInfo.fY = WINCY - m_tInfo.fCY*0.5;
+		}
+	}
+}
+
+void CPlayer::MJump(void)
+{
+	m_fTime = 0.f;
+	if (!m_bJump)
+	{
+		m_tInfo.fY -= m_fPower * m_fTime - 2.f * m_fTime * m_fTime * 0.5f;
+		m_fTime += 0.2f;
+
+		if (m_tInfo.fY > float(WINCY) - m_tInfo.fCY*0.5)
 		{
 			m_bJump = false;
 			m_fTime = 0.f;
