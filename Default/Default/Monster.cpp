@@ -30,7 +30,6 @@ void CMonster::Initialize(void)
 
 	if (m_tType == TYPE_MONSTER_TURTLE)
 	{
-		m_fTemp = m_tInfo.fX;
 		m_tInfo.fCX = 40.f;
 		m_tInfo.fCY = 70.f;
 		m_tInfo.m_fSpeed = 3.f;
@@ -50,20 +49,25 @@ int CMonster::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_tType == TYPE_MONSTER_MOVE) // ̵      
+	if (m_tType == TYPE_MONSTER_MOVE)   
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
-
-		if (200 > m_tInfo.fX || 600 < m_tInfo.fX)
-		{
-			m_tInfo.m_fSpeed *= -1.f;
-
-		}
-
 	}
 
-	else if (m_tType == TYPE_MONSTER_TURTLE) //  Ѿ      
+	else if (m_tType == TYPE_MONSTER_TURTLE)  
 	{
+
+		if (1 >= m_tInfo.m_iHp)
+		{
+			if (m_tInfo.fX > m_tTarget->Get_Info().fX)
+			{
+				m_tInfo.fX += m_tInfo.m_fSpeed;
+			}
+			else if (m_tInfo.fX < m_tTarget->Get_Info().fX)
+			{
+				m_tInfo.fX -= m_tInfo.m_fSpeed;
+			}
+		}
 
 		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX;
 		float fHeight = m_tTarget->Get_Info().fY - m_tInfo.fY;
@@ -72,12 +76,12 @@ int CMonster::Update(void)
 
 		float fRadian = acosf(fWidth / fDiagonal);
 
-		//      ٽ         ֱ 
-		if (400.f > fDiagonal && m_tInfo.m_iHp >= 2)
+		if (450.f > fDiagonal && m_tInfo.m_iHp >=2)
 		{
 			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
 
 		}
+		
 
 	}
 
@@ -95,22 +99,13 @@ void CMonster::Late_Update(void)
 	else if (m_tType == TYPE_MONSTER_TURTLE)
 	{
 
-		if (2 == m_tInfo.m_iHp) //           ӵ  0      ־  ֱ 
+		if (2 == m_tInfo.m_iHp) 
 		{
 			m_tInfo.m_fSpeed = 0.f;
 		}
 		else if (1 == m_tInfo.m_iHp)
 		{
-			m_tInfo.m_fSpeed = 3.f;
-
-			if (m_tTarget->Get_Rect().left > m_tRect.right)
-			{
-				m_tInfo.fX += m_tInfo.m_fSpeed;
-			}
-			else if (m_tTarget->Get_Rect().right < m_tRect.left)
-			{
-				m_tInfo.fX -= m_tInfo.m_fSpeed;
-			}
+			m_tInfo.m_fSpeed = 8.f;
 
 		}
 		else if (0 >= m_tInfo.m_iHp)
