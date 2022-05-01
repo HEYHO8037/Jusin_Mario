@@ -19,7 +19,11 @@ public:
 	void Set_Target(CObj* _pObj) { m_tTarget = _pObj; }
 	const INFO& Get_Info() { return m_tInfo; }
 	const RECT& Get_Rect() { return m_tRect; }
+	
 	void Set_Dead() { m_bDead = true; }
+
+	void Set_HpPlus() { m_tInfo.m_iHp += 1; }
+	void Set_HpMinus() { m_tInfo.m_iHp -= 1; }
 	
 	const TYPE Get_Type() { return m_tType; }
 

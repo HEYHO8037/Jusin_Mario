@@ -24,7 +24,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.fY = float(WINCY) - m_tInfo.fCY*0.5;
 	
 
-	m_tInfo.m_iHp = 3;
+	m_tInfo.m_iHp = 1;
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
 
@@ -33,6 +33,7 @@ void CPlayer::Initialize(void)
 	m_bJump = false;
 	m_fTime = 0.f;
 	m_fPower = 5.f;
+	int Level = 1;
 
 }
 
@@ -63,9 +64,9 @@ void CPlayer::Late_Update(void)
 void CPlayer::Render(HDC hDC)
 {
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	Rectangle(hDC, m_tRect.left+iScrollX, m_tRect.top, m_tRect.right+iScrollX, m_tRect.bottom);
+	Rectangle(hDC, m_tRect.left, m_tRect.top - (m_tInfo.m_iHp-1)*15, m_tRect.right, m_tRect.bottom);
 
-	Rectangle(hDC, 600+iScrollX, 200, 800+iScrollX, 300);
+	//Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 }
 
 void CPlayer::Key_Update(void)
@@ -132,4 +133,6 @@ void CPlayer::OffSet(void)
 
 
 }
+
+
 

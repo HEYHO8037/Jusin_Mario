@@ -28,6 +28,7 @@ public:
 	}
 
 	
+	
 private:
 	void OffSet();
 	void Key_Update(void);
@@ -37,5 +38,6 @@ private:
 	float m_fTime;
 	float m_fPower;
 	bool m_bWeapon;
+
 };
 
