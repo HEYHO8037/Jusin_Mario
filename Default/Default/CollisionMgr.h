@@ -17,6 +17,7 @@ public:
 		if (!m_pInstance)
 		{
 			m_pInstance = new CCollisionMgr;
+			
 		}
 
 		return m_pInstance;
@@ -43,10 +44,10 @@ public:
 	void Collision_Monster_Bullet();
 	void Collision_Player_Item();
 	void Collision_Player_Huddle();
-
+	
 private:
 	static CCollisionMgr* m_pInstance;
-
+	static DWORD CTime;
 	const list<CObj*> (*m_ObjList)[OBJ_END];
 };
 

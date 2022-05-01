@@ -28,15 +28,18 @@ public:
 	}
 
 	void MJump();
-	void Set_Jump() { m_bJump = false; }
+	void Set_Jump() { m_mJump = true;
+	m_bJump = false;
+	}
 	
 private:
 	void OffSet();
 	void Key_Update(void);
 	void Jumping(void);
 	bool m_bJump;
-	bool m_bDoubleJump;
+	bool m_mJump;
 	float m_fTime;
+	float m_mTime;
 	float m_fPower;
 	bool m_bWeapon;
 	DWORD PTime;

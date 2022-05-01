@@ -34,8 +34,8 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
 	
 		//MONSTER CREATE
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 700.f, TYPE_MONSTER_MOVE, pObj));
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 700.f, TYPE_MONSTER_TURTLE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 580.f, TYPE_MONSTER_MOVE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 580.f, TYPE_MONSTER_TURTLE, pObj));
     
 	    //HURDLE CREATE
     	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 575.f, TYPE_HUR_FIXED, pObj));
@@ -90,7 +90,7 @@ void CObjMgr::Late_Update()
 			++iter;
 		}
 	}
-	if (OTime + 20 < GetTickCount())
+	if (OTime + 30 < GetTickCount())
 	{
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 		CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);

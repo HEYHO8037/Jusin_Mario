@@ -23,8 +23,8 @@ void CMonster::Initialize(void)
 	{
 		m_tInfo.fCX = 50.f;
 		m_tInfo.fCY = 50.f;
-		m_tInfo.m_fSpeed = 5.f;
-		m_tInfo.m_iHp = 2;
+		m_tInfo.m_fSpeed = 3.f;
+		m_tInfo.m_iHp = 1;
 		m_bDead = false;
 	}
 
@@ -33,7 +33,7 @@ void CMonster::Initialize(void)
 		m_fTemp = m_tInfo.fX;
 		m_tInfo.fCX = 40.f;
 		m_tInfo.fCY = 80.f;
-		m_tInfo.m_fSpeed = 3.f;
+		m_tInfo.m_fSpeed = 2.f;
 		m_tInfo.m_iHp = 2;
 		m_bDead = false;
 	}
