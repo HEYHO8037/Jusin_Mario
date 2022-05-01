@@ -36,7 +36,7 @@ public:
 	static bool Check_Sphere(CObj* pDest, CObj* pSour); // ellipse �浹 Ȯ�ο� �Լ�
 	static void Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour); // ��ü �浹�� �����ϴ� �Լ�
 	static void Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour); // ��ü �浹�� �����ϴ� �Լ�
-	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipse�� ������� ��ü �浹�� �����ϴ� �Լ�
+	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipse�� �������?��ü �浹�� �����ϴ� �Լ�
 	
 public:
 	void Collision_Player_Monster();

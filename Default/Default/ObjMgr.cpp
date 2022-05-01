@@ -42,11 +42,11 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
     
 	    //HURDLE CREATE
-    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 375.f, TYPE_HUR_FIXED, pObj));
+    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 425.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(50.f, 575.f, TYPE_HUR_FIXED, pObj));
 
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(100.f, 575.f, TYPE_HUR_FLOAT, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(400.f, 375.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(400.f, 425.f, TYPE_HUR_ITEM, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(600.f, 575.f, TYPE_HUR_STACK, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK, pObj));
 
