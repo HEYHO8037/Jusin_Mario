@@ -28,6 +28,7 @@ private:
 	LARGE_INTEGER end;
 
 	const CObj* m_pPlayer;
+	int iStatus;
 
 
 };

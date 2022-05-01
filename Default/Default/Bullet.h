@@ -16,7 +16,11 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
-private:
+public:
+	void Set_Angle(float fAngle);
+	void Set_Dir(float fX, float fY);
 
+private:
+	INFO m_tDir;
 	
 };

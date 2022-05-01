@@ -25,8 +25,15 @@ void CBullet::Initialize(void)
 
 int CBullet::Update(void)
 {
-	
-	m_tInfo.fX += m_tInfo.m_fSpeed;
+	if (m_tInfo.m_fAngle == -1)
+	{
+		m_tInfo.fX += m_tInfo.m_fSpeed;
+	}
+	else
+	{
+		m_tInfo.fX += m_tDir.fX * m_tInfo.m_fSpeed;
+		m_tInfo.fY += m_tDir.fY * m_tInfo.m_fSpeed;
+	}
 
 	Update_Rect();
 
@@ -49,4 +56,15 @@ void CBullet::Render(HDC hDC)
 void CBullet::Release(void)
 {
 	m_tInfo.m_fSpeed = 0.f;
+}
+
+void CBullet::Set_Angle(float fAngle)
+{
+	m_tInfo.m_fAngle = fAngle;
+}
+
+void CBullet::Set_Dir(float fX, float fY)
+{
+	m_tDir.fX = fX;
+	m_tDir.fY = fY;
 }
