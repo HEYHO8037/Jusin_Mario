@@ -18,6 +18,5 @@ public:
 public:
 	void Set_Minus_Hp(void) { m_tInfo.m_iHp -= 1; }
 	void Set_Reverse(void) { m_tInfo.m_fSpeed *= -1.f; }
-
 };
 

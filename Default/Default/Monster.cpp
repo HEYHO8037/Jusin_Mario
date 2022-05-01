@@ -129,9 +129,14 @@ void CMonster::Render(HDC hDC)
 	switch (m_tType)
 	{
 	case TYPE_MONSTER_MOVE:
-		brush = CreateSolidBrush(RGB(255, 128, 64));
+		brush = CreateSolidBrush(RGB(240, 219, 202));
 		h_old_brush = SelectObject(hDC, brush);
-		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		Ellipse(hDC, m_tRect.left +10, m_tRect.top+30, m_tRect.right-10, m_tRect.bottom);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+		brush = CreateSolidBrush(RGB(255, 74, 6));
+		h_old_brush = SelectObject(hDC, brush);
+		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom -10);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
 		break;
@@ -139,20 +144,55 @@ void CMonster::Render(HDC hDC)
 	case TYPE_MONSTER_TURTLE:
 		if (3 == m_tInfo.m_iHp)
 		{
-			brush = CreateSolidBrush(RGB(73, 146, 146));
-			h_old_brush = SelectObject(hDC, brush);
-			Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-			SelectObject(hDC, h_old_brush);
-			DeleteObject(brush);
+		
+			if (m_tTarget->Get_Rect().right < m_tRect.left)
+    			{
+				brush = CreateSolidBrush(RGB(63, 107, 69));
+				h_old_brush = SelectObject(hDC, brush);
+				Ellipse(hDC, m_tRect.left, m_tRect.top + 20, m_tRect.right, m_tRect.bottom - 10);
+				SelectObject(hDC, h_old_brush);
+				DeleteObject(brush);
+				brush = CreateSolidBrush(RGB(251, 230, 204));
+				h_old_brush = SelectObject(hDC, brush);
+				Ellipse(hDC, m_tRect.left + 8, m_tRect.top + 55, m_tRect.right - 22, m_tRect.bottom);
+				Ellipse(hDC, m_tRect.left + 16, m_tRect.top + 55, m_tRect.right - 15, m_tRect.bottom);
+				Ellipse(hDC, m_tRect.left, m_tRect.top +20, m_tRect.right-12, m_tRect.bottom-10);
+				Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right - 15, m_tRect.bottom - 45);
+				SelectObject(hDC, h_old_brush);
+				DeleteObject(brush);
+			}
+			else
+			{
+		  		brush = CreateSolidBrush(RGB(63, 107, 69));
+				h_old_brush = SelectObject(hDC, brush);
+				Ellipse(hDC, m_tRect.left, m_tRect.top + 20, m_tRect.right, m_tRect.bottom - 10);
+				SelectObject(hDC, h_old_brush);
+				DeleteObject(brush);
+				brush = CreateSolidBrush(RGB(251, 230, 204));
+				h_old_brush = SelectObject(hDC, brush);
+				Ellipse(hDC, m_tRect.left + 20, m_tRect.  top + 55, m_tRect.right - 7, m_tRect.bottom);
+				Ellipse(hDC, m_tRect.left + 30, m_tRect.top + 55, m_tRect.right - 2, m_tRect.bottom);
+				Ellipse(hDC, m_tRect.left+15, m_tRect.top + 20, m_tRect.right, m_tRect.bottom - 10);
+				Ellipse(hDC, m_tRect.left+15, m_tRect.top, m_tRect.right, m_tRect.bottom - 45);
+				SelectObject(hDC, h_old_brush);
+				DeleteObject(brush);
+			}
 			break;
 		}
 		else if (3 > m_tInfo.m_iHp)
 		{
-			brush = CreateSolidBrush(RGB(58, 118, 106));
+			brush = CreateSolidBrush(RGB(251, 230, 204));
 			h_old_brush = SelectObject(hDC, brush);
-			Rectangle(hDC, m_tRect.left, m_tRect.top + 40, m_tRect.right, m_tRect.bottom);
+			Ellipse(hDC, m_tRect.left, m_tRect.top + 40, m_tRect.right, m_tRect.bottom);
 			SelectObject(hDC, h_old_brush);
 			DeleteObject(brush);
+
+			brush = CreateSolidBrush(RGB(63, 107, 69));
+			h_old_brush = SelectObject(hDC, brush);
+			Ellipse(hDC, m_tRect.left, m_tRect.top + 40, m_tRect.right, m_tRect.bottom -5);
+			SelectObject(hDC, h_old_brush);
+			DeleteObject(brush);
+			
 			break;
 		}
 		break;
