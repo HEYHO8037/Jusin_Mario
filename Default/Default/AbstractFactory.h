@@ -38,16 +38,25 @@ public:
 
 		pObj->Initialize();
 		pObj->Set_Pos(_fX, _fY);
-		pObj->Set_Angle(_fAngle);
+		//pObj->Set_Angle(_fAngle);
 
 		return pObj;
 	}
 
-	static CObj*	Create(float _fX, float _fY, TYPE _eType)
+	/*static CObj*	Create(float _fX, float _fY, TYPE _eType)
 	{
 		CObj*	pObj = new T(_eType);
 		pObj->Initialize();
 		pObj->Set_Pos(_fX, _fY);
+		return pObj;
+	}*/
+
+	static CObj*	Create(float _fX, float _fY, TYPE _eType, CObj* _pObj)
+	{
+		CObj*	pObj = new T(_eType);
+		pObj->Initialize();
+		pObj->Set_Pos(_fX, _fY);
+		pObj->Set_Target(_pObj);
 		return pObj;
 	}
 

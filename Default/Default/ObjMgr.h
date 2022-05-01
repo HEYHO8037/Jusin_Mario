@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Obj.h"
 
 /*싱글톤 패턴의 개념

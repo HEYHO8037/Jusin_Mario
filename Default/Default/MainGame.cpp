@@ -30,7 +30,8 @@ void CMainGame::Initialize(void)
 	m_hDC = GetDC(g_hWnd);
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-;	CLineMgr::Get_Instance()->Initialize();
+
+	CLineMgr::Get_Instance()->Initialize();
 }
 
 void CMainGame::Update(void)

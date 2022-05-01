@@ -2,8 +2,10 @@
 #include "ObjMgr.h"
 #include "Obj.h"
 #include"Hurdle.h"
-#include"AbstractFactory.h"
-
+#include "AbstractFactory.h"
+#include "Item.h"
+#include "Monster.h"
+#include "CollisionMgr.h"
 
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
@@ -19,26 +21,35 @@ CObjMgr::~CObjMgr()
 }
 
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
-{	
-	if (pObj == nullptr) //ÀÎÀÚ·Î µé¾î¿Â °´Ã¼°¡ ¾²·¹±â°ªÀÌ¶ó¸é ÇÔ¼öÁ¾·á
+
+{
+	if (pObj == nullptr) 
 		return;
-	m_ObjList[eID].push_back(pObj); // ¾Æ´Ï¶ó¸é ¸®½ºÆ®¿¡ Ãß°¡
+	m_ObjList[eID].push_back(pObj);
+
 	if (eID == OBJ_PLAYER)
 	{
-		
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 575.f, TYPE_HUR_FIXED));
-		//¹Ø¿¡ÇÊ¿äÇØ¿ä
+		//å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
+	
+		//å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 600.f, TYPE_MONSTER_MOVE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 700.f, TYPE_MONSTER_TURTLE, pObj));
+    
+    //HURDLE CREATE
+    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 575.f, TYPE_HUR_FIXED));
+		//ë°‘ì—í•„ìš”í•´ìš”
 		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(250.f, 575.f, TYPE_HUR_FLOAT));
 		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(400.f, 375.f, TYPE_HUR_ITEM));
 		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK));
-
 	}
 
 }
 
 void CObjMgr::Release()
 {
-	for (int i = 0; i < OBJ_END; ++i) // ¸®½ºÆ® ¹è¿­ÀÇ Å©±âº¸´Ù ÀÛ´Ù¸é ¹İº¹
+	for (int i = 0; i < OBJ_END; ++i) // å ì™ì˜™å ì™ì˜™íŠ¸ å ì¼ì—´å ì™ì˜™ í¬å ì©ë³´å ì™ì˜™ å ìŒœë‹¤ëªŒì˜™ å ìŒ¥ë¸ì˜™
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
@@ -52,20 +63,6 @@ void CObjMgr::Release()
 
 void CObjMgr::Update()
 {
-
-	/*
-	¹üÀ§±â¹İfor¹®
-	for(int i = 0; i < OBJ_END; ++i)
-	{
-	for(auto& iter : m_ObjList[i])
-	{
-	~~ ¹üÀ§±â¹İ Æ÷¹®À» ¾È¾´ ÀÌÀ¯ :
-	c++11¿¡ ³ª¿Â ¹®¹ıÀ¸·Î for-each¹®°ú ¸Å¿ì Èí»çÇÏ¸ç ¹İº¹µµÁß Áß°£¿¡ ¸ø¸ØÃá´Ù
-	±×¸®°í ¹üÀ§±â¹İ Æ÷¹®ÀÇ º¯¼ö´Â ¿ø¼Ò ±×ÀÚÃ¼ÀÌ±â ¶§¹®¿¡ ÁÖ¼Ò°ªÁ¢±ÙÀÌ ºÒ°¡´ÉÇÏ´Ù.
-	}
-	}
-	*/
-
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
@@ -84,28 +81,32 @@ void CObjMgr::Update()
 	
 }
 
-	void CObjMgr::Late_Update()
-	{
+void CObjMgr::Late_Update()
+{
 	for (int i = 0; i < OBJ_END; ++i)
-		{
+	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-			{
-				(*iter)->Late_Update();
-				++iter;
-			}
+		{
+			(*iter)->Late_Update();
+			++iter;
 		}
 	}
 
-	void CObjMgr::Render(HDC hDC)
+	CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
+	
+	
+}
+
+void CObjMgr::Render(HDC hDC)
+{
+	for (int i = 0; i < OBJ_END; ++i)
 	{
-		for (int i = 0; i < OBJ_END; ++i)
+		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
-			for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
-			{
-				(*iter)->Render(hDC);
-				++iter;
-			}
+			(*iter)->Render(hDC);
+			++iter;
 		}
 	}
+}
 
 

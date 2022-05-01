@@ -1,11 +1,12 @@
 #pragma once
-\
+
 #include "Obj.h"
 
 class CBullet : public CObj
 {
 public:
 	CBullet();
+	CBullet(TYPE eType);
 	virtual ~CBullet();
 
 public:
@@ -15,6 +16,7 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release(void) override;
 
+private:
 
 	
 };

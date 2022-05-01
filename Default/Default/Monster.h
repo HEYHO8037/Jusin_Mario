@@ -16,9 +16,8 @@ public:
 	virtual void Render(HDC hDC) override;
 
 public:
-	TYPE Get_type(void) { return m_eMonsterType; }
+	void Set_Minus_Hp(void) { m_tInfo.m_iHp -= 1; }
+	float m_fTemp;
 
-private :
-	TYPE m_eMonsterType;
 };
 
