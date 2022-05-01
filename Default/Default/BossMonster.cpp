@@ -21,11 +21,11 @@ CBossMonster::~CBossMonster()
 
 void CBossMonster::Initialize(void)
 {
-	m_tInfo.fCX = 200.f;
-	m_tInfo.fCY = 200.f;
+	m_tInfo.fCX = 150.f;
+	m_tInfo.fCY = 150.f;
 
 	m_tInfo.m_fSpeed = 10.f;
-	m_tInfo.m_iHp = 1000;
+	m_tInfo.m_iHp = 10;
 	currentState = None;
 	behaviorState = Exit;
 
@@ -65,7 +65,7 @@ void CBossMonster::Render(HDC hDC)
 
 	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	Rectangle(hDC, m_tRect.left + ScrollX, m_tRect.top, m_tRect.right + ScrollX, m_tRect.bottom);
+	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	
 	SelectObject(hDC, h_old_brush);
 	DeleteObject(brush);

@@ -42,17 +42,37 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(1000.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
     
 	    //HURDLE CREATE
-    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 425.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(50.f, 575.f, TYPE_HUR_FIXED, pObj));
+		//움직이는 허들
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1480.f, 575.f, TYPE_HUR_FLOAT, pObj));
 
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(100.f, 575.f, TYPE_HUR_FLOAT, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(400.f, 425.f, TYPE_HUR_ITEM, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(600.f, 575.f, TYPE_HUR_STACK, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK, pObj));
+		//움직이는 허들을 통해 점프하기
+    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 525.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 575.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 475.f, TYPE_HUR_FIXED, pObj));
+
+
+		//아이템 허들과 안움직이는 허들 ( 아이템 먹기 )
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1980.f, 425.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2030.f, 425.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2080.f, 425.f, TYPE_HUR_FIXED, pObj));
+
+		//안움직이는 허들
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2480.f, 525.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2480.f, 575.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2480.f, 475.f, TYPE_HUR_FIXED, pObj));
+
+		//거북이(허들 사이에 움직임)
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(2605.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
+
+		//안움직이는 허들
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 525.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 575.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 475.f, TYPE_HUR_FIXED, pObj));
 
 		//Boss Create(임시)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
-		}
+		
+	}
 
 }
 
@@ -102,12 +122,14 @@ void CObjMgr::Late_Update()
 	}
   
 	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
-	CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
+	
 	if (OTime + 30 < GetTickCount())
 	{
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 		CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Collision_Monster_Huddle(m_ObjList[OBJ_HURDLE], m_ObjList[OBJ_MONSTER]);
+		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
+		CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
 
 		OTime = GetTickCount();
 	}
