@@ -32,7 +32,7 @@ void CMonster::Initialize(void)
 	{
 		m_fTemp = m_tInfo.fX;
 		m_tInfo.fCX = 40.f;
-		m_tInfo.fCY = 80.f;
+		m_tInfo.fCY = 70.f;
 		m_tInfo.m_fSpeed = 2.f;
 		m_tInfo.m_iHp = 3;
 		m_bDead = false;
@@ -73,7 +73,7 @@ int CMonster::Update(void)
 		float fRadian = acosf(fWidth / fDiagonal); 
 		
 		//���� �ٽ� �������ֱ�
-		if ( 300.f > fDiagonal )
+		if ( 400.f > fDiagonal )
 		{
 			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
 		}
@@ -144,11 +144,11 @@ void CMonster::Render(HDC hDC)
 			DeleteObject(brush);
 		break;
 		}
-		else if (2 == m_tInfo.m_iHp)
+		else if (3 > m_tInfo.m_iHp)
 		{
 			brush = CreateSolidBrush(RGB(58, 118, 106));
 			h_old_brush = SelectObject(hDC, brush);
-			Rectangle(hDC, m_tRect.left, m_tRect.top+20, m_tRect.right, m_tRect.bottom -20);
+			Rectangle(hDC, m_tRect.left, m_tRect.top+25, m_tRect.right, m_tRect.bottom -15);
 			SelectObject(hDC, h_old_brush);
 			DeleteObject(brush);
 			break;
