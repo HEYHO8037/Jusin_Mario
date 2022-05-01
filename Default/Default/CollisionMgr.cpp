@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Player.h"
+#include "Monster.h"
 
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 DWORD CCollisionMgr::CTime = 0;
@@ -91,7 +92,7 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 				//?�하충돌
 				if (fX > fY) // 충돌?�을???�온 X??길이가 Y??길이보다 길다�??�하충돌 
 				{
-					if (Sour->Get_Rect().top < Dest->Get_Rect().bottom) // 고정?�어?�는물체??y??값이 ?�직이??물체??y??값보????경우, ??충돌
+					if (Sour->Get_Rect().top <= Dest->Get_Rect().bottom) // 고정?�어?�는물체??y??값이 ?�직이??물체??y??값보????경우, ??충돌
 					{
 						//Dest->Set_PostY(fY);
 						if (CTime + 300 < GetTickCount())
@@ -167,7 +168,6 @@ void CCollisionMgr::Collision_Player_Bullet()
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-			//충돌처리
 		}
 	}
 }
@@ -188,7 +188,7 @@ void CCollisionMgr::Collision_Monster_Bullet()
 		{
 			if (Check_Rect((*iter), (*Biter),&fX, &fY))
 			{
-				//충돌처리
+	
 			}
 		}
 	}
@@ -205,12 +205,11 @@ void CCollisionMgr::Collision_Player_Item()
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-			//충돌처리
 		}
 	}
 }
 
-void CCollisionMgr::Collision_Player_Huddle()//?��?추�?
+void CCollisionMgr::Collision_Player_Huddle()
 {
 	float fX, fY;
 	TYPE	eType;
@@ -227,23 +226,21 @@ void CCollisionMgr::Collision_Player_Huddle()//?��?추�?
 			{
 			case TYPE_HUR_FIXED:
 
-				if (fX > fY) //?�하충돌 
+				if (fX > fY)
 				{	
-					//??충돌
 					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); //충돌?�길?�만???�라가??못�??�것처럼보이�?
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY);
 					}
-					//??충돌
 					else					
 					{
-						//Sour->Set_PosY(fY); // 충돌??길이만큼 밑으�??�려가�?fY값을 ?�는??
+						//Sour->Set_PosY(fY); 
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
 					}
 				}
 				/*else // 좌우 s충돌 fX < fY
 				{
-					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // 좌충??고정?�물체�? ?�직이??물체??중점보다 ?�른쪽에 ?�으므�?
+					if (Dest->Get_Info().fX > Sour->Get_Info().fX)
 					{
 						//Sour->Set_PostX(-fX);
 					}
@@ -262,23 +259,35 @@ void CCollisionMgr::Collision_Player_Huddle()//?��?추�?
 	}
 }
 
-void CCollisionMgr::Collision_Monster_Huddle()
+void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sour)
 {
-	float fX, fY;
+	TYPE eType;
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_MONSTER]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_MONSTER]->end();
-
-	for (iter; iter != iterEnd; ++iter)
+	for (auto& Dest : _Dest)
 	{
-		list<CObj*>::const_iterator Biter = m_ObjList[OBJ_HURDLE]->begin();
-		list<CObj*>::const_iterator BiterEnd = m_ObjList[OBJ_HURDLE]->end();
-
-		for (Biter; Biter != BiterEnd; ++Biter)
+		for (auto & Sour : _Sour)
 		{
-			if (Check_Rect((*iter), (*Biter), &fX, &fY))
+			float fX = 0.f, fY = 0.f; 
+			if (Check_Rect(Dest, Sour, &fX, &fY))
 			{
-				//충돌처리
+				if (Sour->Get_Type() == TYPE_BOSS)
+				{
+					continue;
+				}
+
+				if (fX < fY) //�¿��浹�� �ʿ�
+				{
+					//sour- monster, dest- hurdle
+				
+					eType = Sour->Get_Type();
+
+					dynamic_cast<CMonster*>(Sour)->Set_Reverse(); // �浹������ ������ ���� �ٲ��ֱ�
+					
+					if(eType == TYPE_MONSTER_TURTLE && 1 >= Sour->Get_Info().m_iHp)
+					{
+						Sour->Set_HpMinus();
+					}
+				}
 			}
 		}
 	}
