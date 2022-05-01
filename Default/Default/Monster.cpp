@@ -26,8 +26,9 @@ void CMonster::Initialize(void)
 		m_tInfo.m_fSpeed = 5.f;
 	}
 
-	if (m_tType == TYPE_MONSTER_BULLET)
+	if (m_tType == TYPE_MONSTER_TURTLE)
 	{
+		m_fTemp = m_tInfo.fX;
 		m_tInfo.fCX = 40.f;
 		m_tInfo.fCY = 80.f;
 		m_tInfo.m_fSpeed = 3.f;
@@ -69,7 +70,7 @@ int CMonster::Update(void)
 		float fRadian = acosf(fWidth / fDiagonal); 
 		
 		//범위 다시 지정해주기
-		if ( 200.f <= fDiagonal && 600.f > fDiagonal )
+		if ( 300.f > fDiagonal )
 		{
 			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
 		}
@@ -82,13 +83,7 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-	//if (m_ttype == type_monster_move)
-	{
-		if ( 200 >= m_tRect.left || 400 <= m_tRect.right)
-		{
-			m_tInfo.m_fSpeed *= -1.f;
-		}
-	}
+
 
 	//몬스터의 hp가 1일될때 속도증가 계속 왼쪽으로 나가게
 	
