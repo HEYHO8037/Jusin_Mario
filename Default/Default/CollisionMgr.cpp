@@ -227,34 +227,41 @@ void CCollisionMgr::Collision_Player_Huddle()//?•ì?ì¶”ê?
 			{
 			case TYPE_HUR_FIXED:
 
-				if (fX > fY) //?í•˜ì¶©ëŒ 
+				if (fX > fY)  
 				{	
-					//??ì¶©ëŒ
+					//»óÃæµ¹
 					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); //ì¶©ëŒ?œê¸¸?´ë§Œ???¬ë¼ê°€??ëª»ê??”ê²ƒì²˜ëŸ¼ë³´ì´ê²?
+						if((*iter)->Get_Rect().left<=m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX&&
+							(*iter)->Get_Rect().right>= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+						{
+							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Rect().top);
+						}
 					}
-					//??ì¶©ëŒ
+					//ÇÏÃæµ¹
 					else					
 					{
-						//Sour->Set_PosY(fY); // ì¶©ëŒ??ê¸¸ì´ë§Œí¼ ë°‘ìœ¼ë¡??´ë ¤ê°€ê²?fYê°’ì„ ?£ëŠ”??
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
 					}
 				}
-				/*else // ì¢Œìš° sì¶©ëŒ fX < fY
+				else 
 				{
-					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // ì¢Œì¶©??ê³ ì •?œë¬¼ì²´ê? ?€ì§ì´??ë¬¼ì²´??ì¤‘ì ë³´ë‹¤ ?¤ë¥¸ìª½ì— ?ˆìœ¼ë¯€ë¡?
+					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
 					{
-						//Sour->Set_PostX(-fX);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
 					}
-					else // ??ì¶©ëŒ
+					else 
 					{
-						//Sour->Set_PostX(fX);
+						//(*iter)->Set_PostX(fX);
 					}
-				}*/
-				
-				
-
+				}
+				break;
+			case TYPE_HUR_FLOAT:
+				Collision_RectEx_Push(*m_ObjList[OBJ_PLAYER], *m_ObjList[OBJ_HURDLE]);
+				break;
+			case TYPE_HUR_ITEM:
+				break;
+			case TYPE_HUR_STACK:
 				break;
 			}
 		}
@@ -283,3 +290,31 @@ void CCollisionMgr::Collision_Monster_Huddle()
 		}
 	}
 }
+
+void CCollisionMgr::Collision_RectEx_Push(list<CObj*> _Dest, list<CObj*> _Sour)
+{
+	for (auto& Dest : _Dest)
+	{
+		for (auto& Sour : _Sour)
+		{
+			float	fX = 0.f, fY = 0.f;
+
+			if (Check_Rect(Dest, Sour, &fX, &fY))
+			{
+				
+				if (fY > fX)
+				{
+					// ÁÂ Ãæµ¹
+					if (Dest->Get_Info().fX > Sour->Get_Info().fX)
+						Sour->Set_PosX(-fX);
+
+					// ¿ì Ãæµ¹
+					else
+						Sour->Set_PosX(fX);
+				}
+
+			}
+		}
+	}
+}
+
