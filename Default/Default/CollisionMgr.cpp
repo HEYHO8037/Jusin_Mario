@@ -93,7 +93,7 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 					if (Sour->Get_Rect().top < Dest->Get_Rect().bottom) // 고정되어있는물체의 y의 값이 움직이는 물체의 y의 값보다 큰 경우, 상 충돌
 					{
 						//Dest->Set_PostY(fY);
-						if (CTime + 100 < GetTickCount())
+						if (CTime + 300 < GetTickCount())
 						{
 							Sour->Set_HpMinus();
 							static_cast<CPlayer*>(Dest)->Set_Jump();
