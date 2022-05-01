@@ -15,5 +15,9 @@ public:
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
 
+public:
+	void Set_Minus_Hp(void) { m_tInfo.m_iHp -= 1; }
+
+
 };
 

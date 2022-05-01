@@ -28,10 +28,10 @@ void CMonster::Initialize(void)
 
 	if (m_tType == TYPE_MONSTER_BULLET)
 	{
-		m_tInfo.fCX = 50.f;
-		m_tInfo.fCY = 70.f;
+		m_tInfo.fCX = 40.f;
+		m_tInfo.fCY = 80.f;
 		m_tInfo.m_fSpeed = 3.f;
-
+		m_tInfo.m_iHp = 2;
 	}
 
 }
@@ -58,7 +58,7 @@ int CMonster::Update(void)
 	
 	}
 
-	else if (m_tType == TYPE_MONSTER_BULLET) // 총알 몬스터
+	else if (m_tType == TYPE_MONSTER_TURTLE) // 총알 몬스터
 	{
 
 		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX; 
@@ -69,19 +69,10 @@ int CMonster::Update(void)
 		float fRadian = acosf(fWidth / fDiagonal); 
 		
 		//범위 다시 지정해주기
-		if ( 200.f <= fDiagonal && 600.f > fDiagonal)
+		if ( 200.f <= fDiagonal && 600.f > fDiagonal )
 		{
-			m_tInfo.fX -= m_tInfo.m_fSpeed;
-
-			if (500 >= m_tInfo.fX || 700 < m_tInfo.fX)
-			{
-				m_tInfo.m_fSpeed *= -1.f;
-
-			}
-		}
-		
-		else if( 200.f > fDiagonal)
 			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
+		}
 
 	}
 
@@ -91,14 +82,15 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-	//if (m_tType == TYPE_MONSTER_MOVE)
-	//{
-	//	if ( 200 >= m_tRect.left || 400 <= m_tRect.right)
-	//	{
-	//		m_tInfo.m_fSpeed *= -1.f;
-	//	}
-	//}
+	//if (m_ttype == type_monster_move)
+	{
+		if ( 200 >= m_tRect.left || 400 <= m_tRect.right)
+		{
+			m_tInfo.m_fSpeed *= -1.f;
+		}
+	}
 
+	//몬스터의 hp가 1일될때 속도증가 계속 왼쪽으로 나가게
 	
 }
 
@@ -120,14 +112,26 @@ void CMonster::Render(HDC hDC)
 		DeleteObject(brush);
 		break;
 
-	case TYPE_MONSTER_BULLET:
-		brush = CreateSolidBrush(RGB(64, 128, 128));
-		h_old_brush = SelectObject(hDC, brush);
-		Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	case TYPE_MONSTER_TURTLE:
+		if (2 == m_tInfo.m_iHp)
+		{
+			brush = CreateSolidBrush(RGB(64, 128, 128));
+			h_old_brush = SelectObject(hDC, brush);
+			Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom);
+			SelectObject(hDC, h_old_brush);
+			DeleteObject(brush);
 		break;
-
+		}
+		else if (1 == m_tInfo.m_iHp)
+		{
+			brush = CreateSolidBrush(RGB(64, 128, 128));
+			h_old_brush = SelectObject(hDC, brush);
+			Rectangle(hDC, m_tRect.left + iScrollX, m_tRect.top, m_tRect.right + iScrollX, m_tRect.bottom -40);
+			SelectObject(hDC, h_old_brush);
+			DeleteObject(brush);
+			break;
+		}
+		break;
 	default:
 		break;
 	}
