@@ -32,11 +32,11 @@ public:
 		}
 	}
 
-	static bool Check_Rect(CObj* pDest, CObj* pSour, float *pX, float *pY); // °´Ã¼ µÎ°³ Ãæµ¹ È®ÀÎ¿ë ÇÔ¼ö
-	static bool Check_Sphere(CObj* pDest, CObj* pSour); // ellipse Ãæµ¹ È®ÀÎ¿ë ÇÔ¼ö
-	static void Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour); // °´Ã¼ Ãæµ¹½Ã ½ÇÇàÇÏ´Â ÇÔ¼ö
-	static void Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour); // °´Ã¼ Ãæµ¹½Ã ½ÇÇàÇÏ´Â ÇÔ¼ö
-	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipse·Î ¸¸µé¾îÁø °´Ã¼ Ãæµ¹½Ã »èÁ¦ÇÏ´Â ÇÔ¼ö
+	static bool Check_Rect(CObj* pDest, CObj* pSour, float *pX, float *pY); // ï¿½ï¿½Ã¼ ï¿½Î°ï¿½ ï¿½æµ¹ È®ï¿½Î¿ï¿½ ï¿½Ô¼ï¿½
+	static bool Check_Sphere(CObj* pDest, CObj* pSour); // ellipse ï¿½æµ¹ È®ï¿½Î¿ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour); // ï¿½ï¿½Ã¼ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour); // ï¿½ï¿½Ã¼ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
+	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 	
 public:
 	void Collision_Player_Monster();
@@ -44,7 +44,9 @@ public:
 	void Collision_Monster_Bullet();
 	void Collision_Player_Item();
 	void Collision_Player_Huddle();
-	
+	void Collision_Monster_Huddle();
+
+
 private:
 	static CCollisionMgr* m_pInstance;
 	static DWORD CTime;

@@ -34,7 +34,7 @@ void CMonster::Initialize(void)
 		m_tInfo.fCX = 40.f;
 		m_tInfo.fCY = 80.f;
 		m_tInfo.m_fSpeed = 2.f;
-		m_tInfo.m_iHp = 2;
+		m_tInfo.m_iHp = 3;
 		m_bDead = false;
 	}
 
@@ -50,7 +50,7 @@ int CMonster::Update(void)
 	if (m_bDead)
 		return OBJ_DEAD;
 
-	if (m_tType == TYPE_MONSTER_MOVE) //ÀÌµ¿ ¸ó½ºÅÍ
+	if (m_tType == TYPE_MONSTER_MOVE) //ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
 		
@@ -62,7 +62,7 @@ int CMonster::Update(void)
 	
 	}
 
-	else if (m_tType == TYPE_MONSTER_TURTLE) // ÃÑ¾Ë ¸ó½ºÅÍ
+	else if (m_tType == TYPE_MONSTER_TURTLE) // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½
 	{
 
 		float fWidth = m_tTarget->Get_Info().fX - m_tInfo.fX; 
@@ -72,7 +72,7 @@ int CMonster::Update(void)
 
 		float fRadian = acosf(fWidth / fDiagonal); 
 		
-		//¹üÀ§ ´Ù½Ã ÁöÁ¤ÇØÁÖ±â
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½
 		if ( 300.f > fDiagonal )
 		{
 			m_tInfo.fX += m_tInfo.m_fSpeed * cosf(fRadian);
@@ -86,10 +86,32 @@ int CMonster::Update(void)
 
 void CMonster::Late_Update(void)
 {
-
-	if (m_tInfo.m_iHp <= 0)
+	if (m_tType == TYPE_MONSTER_TURTLE)
 	{
-		Set_Dead();
+
+		if (2 == m_tInfo.m_iHp) // ï¿½î²®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö±ï¿½
+		{
+			m_tInfo.m_fSpeed = 0.f;
+		}
+		else if (1 == m_tInfo.m_iHp)
+		{
+			m_tInfo.m_fSpeed = 8.f;
+
+			if (m_tTarget->Get_Info().fX > m_tInfo.fX)
+			{
+				m_tInfo.fX += m_tInfo.m_fSpeed;
+			}
+
+			if (m_tTarget->Get_Info().fX < m_tInfo.fX)
+			{
+				m_tInfo.fX -= m_tInfo.m_fSpeed;
+			}
+
+		}
+		else if (0 >= m_tInfo.m_iHp)
+		{
+			Set_Dead();
+		}
 	}
 	
 }
@@ -113,20 +135,20 @@ void CMonster::Render(HDC hDC)
 		break;
 
 	case TYPE_MONSTER_TURTLE:
-		if (2 == m_tInfo.m_iHp)
+		if (3 == m_tInfo.m_iHp)
 		{
-			brush = CreateSolidBrush(RGB(64, 128, 128));
+			brush = CreateSolidBrush(RGB(73, 146, 146));
 			h_old_brush = SelectObject(hDC, brush);
 			Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 			SelectObject(hDC, h_old_brush);
 			DeleteObject(brush);
 		break;
 		}
-		else if (1 == m_tInfo.m_iHp)
+		else if (2 == m_tInfo.m_iHp)
 		{
-			brush = CreateSolidBrush(RGB(64, 128, 128));
+			brush = CreateSolidBrush(RGB(58, 118, 106));
 			h_old_brush = SelectObject(hDC, brush);
-			Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom -40);
+			Rectangle(hDC, m_tRect.left, m_tRect.top+20, m_tRect.right, m_tRect.bottom -20);
 			SelectObject(hDC, h_old_brush);
 			DeleteObject(brush);
 			break;

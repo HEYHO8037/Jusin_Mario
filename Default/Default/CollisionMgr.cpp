@@ -224,3 +224,25 @@ void CCollisionMgr::Collision_Player_Huddle()
 		}
 	}
 }
+
+void CCollisionMgr::Collision_Monster_Huddle()
+{
+	float fX, fY;
+
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_MONSTER]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_MONSTER]->end();
+
+	for (iter; iter != iterEnd; ++iter)
+	{
+		list<CObj*>::const_iterator Biter = m_ObjList[OBJ_HURDLE]->begin();
+		list<CObj*>::const_iterator BiterEnd = m_ObjList[OBJ_HURDLE]->end();
+
+		for (Biter; Biter != BiterEnd; ++Biter)
+		{
+			if (Check_Rect((*iter), (*Biter), &fX, &fY))
+			{
+				//충돌처리
+			}
+		}
+	}
+}
