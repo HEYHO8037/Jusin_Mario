@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
+#include "Player.h"
 
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 
@@ -12,7 +13,7 @@ CCollisionMgr::~CCollisionMgr()
 {
 }
 
-void CCollisionMgr::SetObjList(const list<CObj*>(*pObjList)[OBJ_END])
+void CCollisionMgr::SetObjList(const list<CObj*> (*pObjList)[OBJ_END])
 {
 	m_ObjList = pObjList;
 }
@@ -199,18 +200,54 @@ void CCollisionMgr::Collision_Player_Item()
 	}
 }
 
-void CCollisionMgr::Collision_Player_Huddle()
+void CCollisionMgr::Collision_Player_Huddle()//정은추가
 {
 	float fX, fY;
+	TYPE	eType;
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_HURDLE]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_HURDLE]->end();
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_HURDLE)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_HURDLE)->end();
 	
 	for (iter; iter != iterEnd; ++iter)
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
-			//충돌처리
+			eType = (*iter)->Get_Type();
+			switch (eType)
+			{
+			case TYPE_HUR_FIXED:
+
+				if (fX > fY) //상하충돌 
+				{	
+					//상 충돌
+					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostY(-fY); //충돌된길이만큼 올라가서 못가는것처럼보이게
+					}
+					//하 충돌
+					else					
+					{
+						//Sour->Set_PosY(fY); // 충돌된 길이만큼 밑으로 내려가게 fY값을 넣는다
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
+					}
+				}
+				/*else // 좌우 s충돌 fX < fY
+				{
+					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // 좌충돌(고정된물체가 움직이는 물체의 중점보다 오른쪽에 있으므로)
+					{
+						//Sour->Set_PostX(-fX);
+					}
+					else // 우 충돌
+					{
+						//Sour->Set_PostX(fX);
+					}
+				}*/
+				
+				
+
+				break;
+			}
 		}
+
 	}
 }

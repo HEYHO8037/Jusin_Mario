@@ -114,6 +114,10 @@ void CPlayer::Jumping(void)
 			m_tInfo.fY = WINCY - m_tInfo.fCY*0.5;
 		}
 	}
+	else
+	{
+		m_fPower = 5.f;
+	}
 }
 
 void CPlayer::OffSet(void)

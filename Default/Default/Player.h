@@ -27,7 +27,9 @@ public:
 		}
 	}
 
-	
+	//충돌관련 정은추가
+public:
+	void Set_Power(float fPower) { m_fPower = fPower; }
 	
 private:
 	void OffSet();

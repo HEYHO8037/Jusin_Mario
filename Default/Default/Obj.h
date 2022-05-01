@@ -25,6 +25,9 @@ public:
 	void Set_HpPlus() { m_tInfo.m_iHp += 1; }
 	void Set_HpMinus() { m_tInfo.m_iHp -= 1; }
 	
+	void Set_PostX(float _fX) { m_tInfo.fX += _fX; }
+	void Set_PostY(float _fY) { m_tInfo.fY += _fY; }
+
 	const TYPE Get_Type() { return m_tType; }
 
 protected:
