@@ -10,6 +10,7 @@
 #include "Monster.h"
 #include "Player.h"
 #include "Hurdle.h"
+#include "BossMonster.h"
 
 
 CMainGame::CMainGame()

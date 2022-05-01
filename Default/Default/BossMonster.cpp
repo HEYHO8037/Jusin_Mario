@@ -1,5 +1,9 @@
 #include "stdafx.h"
 #include "BossMonster.h"
+#include "AbstractFactory.h"
+#include "Bullet.h"
+#include "ObjMgr.h"
+#include "ScrollMgr.h"
 
 
 CBossMonster::CBossMonster()
@@ -15,6 +19,7 @@ void CBossMonster::Initialize(void)
 {
 	m_tInfo.fCX = 200.f;
 	m_tInfo.fCY = 200.f;
+	m_tInfo.m_fAngle = -1;
 
 	m_tInfo.m_fSpeed = 10.f;
 	m_tInfo.m_iHp = 1000;
@@ -29,6 +34,24 @@ int CBossMonster::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
+
+	srand(time(NULL));
+
+	int i = rand() % 4;
+	switch (i)
+	{
+	case 0:
+		PatternNormalShot();
+		break;
+	case 1:
+		PatternWideShot();
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+
+	}
 
 
 
@@ -48,9 +71,12 @@ void CBossMonster::Render(HDC hDC)
 	HBRUSH	brush;
 	HGDIOBJ h_old_brush;
 
-	brush = CreateSolidBrush(RGB(255, 128, 64));
+	brush = CreateSolidBrush(RGB(100, 100, 100));
 	h_old_brush = SelectObject(hDC, brush);
-	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+
+	Rectangle(hDC, m_tRect.left + ScrollX, m_tRect.top, m_tRect.right + ScrollX, m_tRect.bottom);
 	
 	SelectObject(hDC, h_old_brush);
 	DeleteObject(brush);
@@ -63,35 +89,21 @@ void CBossMonster::SetPlayerInfo(const CObj * pPlayer)
 
 void CBossMonster::PatternNormalShot()
 {
-	float fDeltaTime = 0.f;
-
-	while (true)
-	{
-		QueryPerformanceCounter(&start);
-
-
-
-		QueryPerformanceCounter(&end);
-
-		fDeltaTime = (end.QuadPart - start.QuadPart) / (float)timer.QuadPart;
-
-	}
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_MONSTER_BULLET));
 }
 
 void CBossMonster::PatternWideShot()
 {
 	float fDeltaTime = 0.f;
+	int degree = 0;
 
-	while (true)
+	while (degree < 360)
 	{
-		QueryPerformanceCounter(&start);
+		CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_MONSTER_BULLET);
+		dynamic_cast<CBullet*>(pBullet)->Set_Dir(cosf(degree * PI / 180.f), sinf(degree * PI / 180.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, pBullet);
 
-
-
-		QueryPerformanceCounter(&end);
-
-		fDeltaTime = (end.QuadPart - start.QuadPart) / (float)timer.QuadPart;
-
+		degree += 10;
 	}
 
 }
