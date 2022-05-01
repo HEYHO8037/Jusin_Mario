@@ -27,6 +27,14 @@ void CBullet::Initialize(void)
 
 int CBullet::Update(void)
 {
+	if (m_bDead)
+		return OBJ_DEAD;
+	
+	if (m_tType == TYPE_PBULLET)
+	{
+		m_tInfo.fX += m_tInfo.m_fSpeed;
+	}
+
 	if (m_tInfo.m_fAngle == -1)
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;

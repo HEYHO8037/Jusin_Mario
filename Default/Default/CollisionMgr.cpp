@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
-
+#include "Player.h"
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 
 CCollisionMgr::CCollisionMgr()
@@ -62,8 +62,8 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj�
 			{
 				if (Sour->Get_Type() == TYPE_PBULLET)
 				{
+					Dest->Set_HpMinus();
 					Sour->Set_HpMinus();
-
 				}
 
 
@@ -84,30 +84,35 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 		for (auto & Sour : _Sour)
 		{
 			float fX = 0.f, fY = 0.f; // 충돌한 길이로 사용할 변수
-
+			//Dest 플레이어 Sour 몬스터
 			if (Check_Rect(Dest, Sour, &fX, &fY))
 			{
 				//상하충돌
 				if (fX > fY) // 충돌했을때 나온 X의 길이가 Y의 길이보다 길다면 상하충돌 
 				{
-					if (Dest->Get_Info().fY > Sour->Get_Info().fY) // 고정되어있는물체의 y의 값이 움직이는 물체의 y의 값보다 큰 경우, 상 충돌
+					if ((Sour->Get_Info().fY - (Sour->Get_Info().fCY*0.5f)) < (Dest->Get_Info().fY + (Dest->Get_Info().fCY*0.5))) // 고정되어있는물체의 y의 값이 움직이는 물체의 y의 값보다 큰 경우, 상 충돌
 					{
+						Sour->Set_HpMinus();
+						static_cast<CPlayer*>(Dest)->Set_Jump();
+						static_cast<CPlayer*>(Dest)->MJump();
+
 						//Sour->Set_PosY(-fY); // 충돌된 길이만큼 위로 올라가게 -fY값을 넣는다
 					}
 					else //하 충돌
 					{
+						//Sour->Set_HpMinus();
 						//Sour->Set_PosY(fY); // 충돌된 길이만큼 밑으로 내려가게 fY값을 넣는다
 					}
 				}
 				else // 좌우 s충돌 fX < fY
 				{
-					if (Dest->Get_Info().fX > Sour->Get_Info().fX) // 좌충돌(고정된물체가 움직이는 물체의 중점보다 오른쪽에 있으므로)
+					if (Sour->Get_Info().fX > Dest->Get_Info().fX) // 좌충돌(고정된물체가 움직이는 물체의 중점보다 오른쪽에 있으므로)
 					{
-						//Sour->Set_PostX(-fX);
+						Dest->Set_PostX(-fX);
 					}
 					else // 우 충돌
 					{
-						//Sour->Set_PostX(fX);
+						Dest->Set_PostX(fX);
 					}
 				}
 			}

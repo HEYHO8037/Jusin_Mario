@@ -27,7 +27,8 @@ public:
 		}
 	}
 
-	
+	void MJump();
+	void Set_Jump() { m_bJump = false; }
 	
 private:
 	void OffSet();
@@ -38,6 +39,6 @@ private:
 	float m_fTime;
 	float m_fPower;
 	bool m_bWeapon;
-
+	DWORD PTime;
 };
 
