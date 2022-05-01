@@ -39,7 +39,7 @@ void CMainGame::Initialize(void)
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(400.f, 600.f, TYPE_MONSTER_MOVE));
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, CAbstractFactory<CMonster>::Create(450.f, 600.f, TYPE_MONSTER_BULLET));
 
-;	CLineMgr::Get_Instance()->Initialize();
+	CLineMgr::Get_Instance()->Initialize();
 }
 
 void CMainGame::Update(void)

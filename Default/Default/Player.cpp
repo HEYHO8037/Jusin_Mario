@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "KeyMgr.h"
 #include "ScrollMgr.h"
+#include "ObjMgr.h"
+#include "AbstractFactory.h"
+#include "Bullet.h"
 
 
 CPlayer::CPlayer()
@@ -25,6 +28,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
 
+	m_bWeapon = false;
 	m_bDead = false;
 	m_bJump = false;
 	m_fTime = 0.f;
@@ -83,9 +87,14 @@ void CPlayer::Key_Update(void)
 		return;
 	}
 	m_tInfo.m_fSpeed = 5.f;
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_SHIFT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('Z'))
 	{
 		m_tInfo.m_fSpeed = 10.f;	
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Pressing('X'))
+	{
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX,m_tInfo.fY,TYPE_PBULLET));
 	}
 	
 }

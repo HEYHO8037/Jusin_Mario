@@ -15,10 +15,9 @@ public:
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
 
-public:
-	TYPE Get_type(void) { return m_eMonsterType; }
 
-private :
-	TYPE m_eMonsterType;
+
+private :	
+	float m_fTemp;
 };
 
