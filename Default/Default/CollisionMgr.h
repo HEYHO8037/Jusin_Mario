@@ -37,6 +37,7 @@ public:
 	static void Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour); // ��ü �浹�� �����ϴ� �Լ�
 	static void Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour); // ��ü �浹�� �����ϴ� �Լ�
 	static void Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour); // ellipse�� �������?��ü �浹�� �����ϴ� �Լ�
+	static void Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sour);
 	
 public:
 	void Collision_Player_Monster();
@@ -44,7 +45,6 @@ public:
 	void Collision_Monster_Bullet();
 	void Collision_Player_Item();
 	void Collision_Player_Huddle();
-	void Collision_Monster_Huddle();
 
 
 private:
