@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "ObjMgr.h"
 #include "Obj.h"
+#include"Hurdle.h"
 #include "AbstractFactory.h"
 #include "Item.h"
 #include "Monster.h"
 #include "CollisionMgr.h"
+
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -19,28 +21,35 @@ CObjMgr::~CObjMgr()
 }
 
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
+
 {
-	if (pObj == nullptr) //���ڷ� ���� ��ü�� �����Ⱚ�̶��?�Լ�����
+	if (pObj == nullptr) 
 		return;
-	m_ObjList[eID].push_back(pObj); // �ƴ϶��?����Ʈ�� �߰�
+	m_ObjList[eID].push_back(pObj);
 
 	if (eID == OBJ_PLAYER)
 	{
-		//������ ����
+		//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
 		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
 		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
 	
-		//���� ����
+		//占쏙옙占쏙옙 占쏙옙占쏙옙
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 600.f, TYPE_MONSTER_MOVE, pObj));
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(600.f, 700.f, TYPE_MONSTER_TURTLE, pObj));
-
+    
+    //HURDLE CREATE
+    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 575.f, TYPE_HUR_FIXED));
+		//밑에필요해요
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(250.f, 575.f, TYPE_HUR_FLOAT));
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(400.f, 375.f, TYPE_HUR_ITEM));
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK));
 	}
 
 }
 
 void CObjMgr::Release()
 {
-	for (int i = 0; i < OBJ_END; ++i) // ����Ʈ �迭�� ũ�⺸�� �۴ٸ� �ݺ�
+	for (int i = 0; i < OBJ_END; ++i) // 占쏙옙占쏙옙트 占썼열占쏙옙 크占썩보占쏙옙 占쌜다몌옙 占쌥븝옙
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
 		{
@@ -54,20 +63,6 @@ void CObjMgr::Release()
 
 void CObjMgr::Update()
 {
-
-	/*
-	�������for��
-	for(int i = 0; i < OBJ_END; ++i)
-	{
-	for(auto& iter : m_ObjList[i])
-	{
-	~~ �������?������ �Ⱦ� ���� :
-	c++11�� ���� �������� for-each���� �ſ� �����ϸ� �ݺ����� �߰��� �������?
-	�׸��� �������?������ ������ ���� ����ü�̱� ������ �ּҰ������� �Ұ����ϴ�.
-	}
-	}
-	*/
-
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)

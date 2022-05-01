@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "Monster.h"
 #include "Player.h"
+#include "Hurdle.h"
 
 
 CMainGame::CMainGame()
@@ -29,7 +30,7 @@ void CMainGame::Initialize(void)
 	m_hDC = GetDC(g_hWnd);
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-	
+
 	CLineMgr::Get_Instance()->Initialize();
 }
 

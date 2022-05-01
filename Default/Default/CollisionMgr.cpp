@@ -197,8 +197,8 @@ void CCollisionMgr::Collision_Player_Huddle()
 {
 	float fX, fY;
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_HUDDLE]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_HUDDLE]->end();
+	list<CObj*>::const_iterator iter = m_ObjList[OBJ_HURDLE]->begin();
+	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_HURDLE]->end();
 	
 	for (iter; iter != iterEnd; ++iter)
 	{

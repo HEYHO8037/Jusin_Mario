@@ -15,13 +15,18 @@ CLineMgr::~CLineMgr()
 
 void CLineMgr::Initialize(void)
 {	
-	//Æ©Åä¸®¾ó ¸Ê
-	LINEPOINT	tLine[2]
+	LINEPOINT	tLine[4]
 	{
+		//Tutorial>Stagemap
 		{0.f,600.f},
 		{1280.f,600.f},
+		//Bossmap
+		{ 5120.f,1320.f },
+		{ 6400.f,1320.f },
 	};
+	
 	m_pLineList.push_back(new CLine(tLine[0], tLine[1]));
+	m_pLineList.push_back(new CLine(tLine[2], tLine[3]));
 }
 
 void CLineMgr::Render(HDC hDC)

@@ -1,12 +1,11 @@
 #pragma once
 #include "Obj.h"
-class CHurdle
+class CUI
 	:public CObj
 {
 public:
-	CHurdle();
-	CHurdle(TYPE e_Type);
-	~CHurdle();
+	CUI();
+	~CUI();
 
 public:
 	virtual void Initialize(void) override;
@@ -14,12 +13,6 @@ public:
 	virtual int Update(void) override;
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
-
-public:
-	TYPE Get_type(void) { return m_eHurdleType; }
-
-private:
-	TYPE m_eHurdleType;
 
 
 
