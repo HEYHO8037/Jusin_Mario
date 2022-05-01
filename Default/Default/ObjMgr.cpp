@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "ObjMgr.h"
 #include "Obj.h"
+#include"Hurdle.h"
+#include"AbstractFactory.h"
+
+
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -15,10 +19,20 @@ CObjMgr::~CObjMgr()
 }
 
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
-{
+{	
 	if (pObj == nullptr) //인자로 들어온 객체가 쓰레기값이라면 함수종료
 		return;
 	m_ObjList[eID].push_back(pObj); // 아니라면 리스트에 추가
+	if (eID == OBJ_PLAYER)
+	{
+		
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(200.f, 575.f, TYPE_HUR_FIXED));
+		//밑에필요해요
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(250.f, 575.f, TYPE_HUR_FLOAT));
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(400.f, 375.f, TYPE_HUR_ITEM));
+		//CObjMgr::Get_Instance()->Add_Object(OBJ_HURDLE, CAbstractFactory<CHurdle>::Create(450.f, 575.f, TYPE_HUR_STACK));
+
+	}
 
 }
 

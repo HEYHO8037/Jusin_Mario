@@ -28,7 +28,7 @@ private:
 	~CScrollMgr();
 
 public:
-	float Get_ScrollX(void) { return m_fScrollX; }
+	float Get_ScrollX(void) { return m_fScrollX; }	
 	void Set_ScrollX(float _fX) { m_fScrollX += _fX; }
 	
 	float Get_ScrollY(void) { return m_fScrollY; }

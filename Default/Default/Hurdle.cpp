@@ -3,11 +3,12 @@
 
 
 CHurdle::CHurdle()
+	:m_eHurdleType(TYPE_END)
 {
 }
 CHurdle::CHurdle(TYPE e_Type) 
 {
-	m_eType = e_Type;
+	m_eHurdleType = e_Type;
 
 }
 CHurdle::~CHurdle()
@@ -43,6 +44,8 @@ int CHurdle::Update(void)
 		break;
 	*/
 
+	Update_Rect();
+
 	return OBJ_NOEVENT;
 }
 
@@ -64,7 +67,7 @@ void CHurdle::Render(HDC hDC)
 	HBRUSH   brush;
 	HGDIOBJ h_old_brush;
 
-	switch (m_eType)
+	switch (m_eHurdleType)
 	{
 	case TYPE_HUR_FIXED://고정-갈색
 		brush = CreateSolidBrush(RGB(128, 64, 0));	//배경색
@@ -72,7 +75,7 @@ void CHurdle::Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);//도형
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
-	break;
+		break;
 
 	case TYPE_HUR_FLOAT://움직임-검은색
 		brush = CreateSolidBrush(RGB(0, 0, 0));
@@ -80,7 +83,7 @@ void CHurdle::Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
-	break;
+		break;
 	
 	case TYPE_HUR_ITEM://아이템-노란색
 		brush = CreateSolidBrush(RGB(255, 255, 0));
@@ -88,9 +91,17 @@ void CHurdle::Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
-	break;
+		break;
+
+	case TYPE_HUR_STACK://굴뚝-초록색
+		brush = CreateSolidBrush(RGB(0, 128, 0));
+		h_old_brush = SelectObject(hDC, brush);
+		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+		SelectObject(hDC, h_old_brush);
+		DeleteObject(brush);
+		break;
+		
 	}
-	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 }
 void CHurdle::Release(void)
 {

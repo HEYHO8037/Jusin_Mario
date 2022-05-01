@@ -23,7 +23,7 @@
       <Filter>01.Obj\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Hurdle.cpp">
-      <Filter>01.Obj\Hurdle</Filter>
+      <Filter>JeongEun\Hurdle</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>01.Obj\Item</Filter>
@@ -40,10 +40,13 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>00.MainGame</Filter>
     </ClCompile>
-    <ClCompile Include="Default.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="UI.cpp">
+      <Filter>JeongEun\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Default.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -70,7 +73,7 @@
       <Filter>01.Obj\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Hurdle.h">
-      <Filter>01.Obj\Hurdle</Filter>
+      <Filter>JeongEun\Hurdle</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>01.Obj\Item</Filter>
@@ -117,6 +120,9 @@
     <ClInclude Include="Default.h">
       <Filter>헤더</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>JeongEun\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Default.ico">
@@ -154,9 +160,6 @@
     <Filter Include="01.Obj\Item">
       <UniqueIdentifier>{2aac0db3-5200-42a3-b3ef-fd43358c67fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Obj\Hurdle">
-      <UniqueIdentifier>{d69a0272-bdcc-4e5f-98f8-1b19d0362321}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Obj\Bullet">
       <UniqueIdentifier>{3fdf4819-80a5-49ff-b409-51323b4f6e01}</UniqueIdentifier>
     </Filter>
@@ -183,6 +186,15 @@
     </Filter>
     <Filter Include="98.Design\KeyMgr">
       <UniqueIdentifier>{eef6cc0b-9723-44d9-9006-36b111cca086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JeongEun">
+      <UniqueIdentifier>{42ac0274-2033-42bd-860a-a5a8b0edaf9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JeongEun\UI">
+      <UniqueIdentifier>{046c859c-6941-4ba8-8397-4d2be4856831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JeongEun\Hurdle">
+      <UniqueIdentifier>{d69a0272-bdcc-4e5f-98f8-1b19d0362321}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
