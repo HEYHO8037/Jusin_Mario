@@ -14,10 +14,6 @@ public:
 	virtual int Update(void) override;
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
-public :
-	TYPE Get_Itme_Type() const { return m_ItemType; }
-
-private :
-	TYPE m_ItemType; // 아이템 타입 구분 변수
+ // 아이템 타입 구분 변수
 };
 

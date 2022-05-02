@@ -3,13 +3,12 @@
 #include "ScrollMgr.h"
 
 CItem::CItem()
-	:m_ItemType(TYPE_END)
 {
 }
 
 CItem::CItem(TYPE _eType)
 {
-	m_ItemType = _eType;
+	m_tType = _eType;
 }
 
 CItem::~CItem()
@@ -20,7 +19,7 @@ CItem::~CItem()
 void CItem::Initialize(void)
 {
 	//성장 아이템
-	if (m_ItemType == TYPE_ITEM_GROW)
+	if (m_tType == TYPE_ITEM_GROW)
 	{
 		m_tInfo.fCX = 30.f;
 		m_tInfo.fCY = 30.f;
@@ -29,7 +28,7 @@ void CItem::Initialize(void)
 	}
 
 	//총알 생성 아이템
-	if (m_ItemType == TYPE_ITEM_BULLET)
+	if (m_tType == TYPE_ITEM_BULLET)
 	{
 		m_tInfo.fCX = 30.f;
 		m_tInfo.fCY = 50.f;
@@ -48,13 +47,13 @@ int CItem::Update(void)
 
 
 	//성장 아이템
-	if (m_ItemType == TYPE_ITEM_GROW)
+	if (m_tType == TYPE_ITEM_GROW)
 	{
 		m_tInfo.m_fSpeed = 4.f; //성장아이템만 속도추가, 움직이게 만듦
 		m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 
-	if (m_ItemType == TYPE_ITEM_BULLET) // 총알 아이템
+	if (m_tType == TYPE_ITEM_BULLET) // 총알 아이템
 	{
 
 	}
@@ -74,7 +73,7 @@ void CItem::Render(HDC hDC)
 	HGDIOBJ h_old_brush;
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	switch (m_ItemType)
+	switch (m_tType)
 	{
 	case TYPE_ITEM_GROW : //성장 아이템
 		brush = CreateSolidBrush(RGB(255, 47, 47));
