@@ -3,6 +3,7 @@
 #include "ScrollMgr.h"
 
 CItem::CItem()
+	
 {
 }
 
@@ -18,16 +19,16 @@ CItem::~CItem()
 
 void CItem::Initialize(void)
 {
-	//¼ºÀå ¾ÆÀÌÅÛ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (m_tType == TYPE_ITEM_GROW)
 	{
 		m_tInfo.fCX = 30.f;
 		m_tInfo.fCY = 30.f;
 
-		m_tInfo.m_fSpeed = 4.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡
+		m_tInfo.m_fSpeed = 4.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½Óµï¿½ï¿½ß°ï¿½
 	}
 
-	//ÃÑ¾Ë »ý¼º ¾ÆÀÌÅÛ
+	//ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (m_tType == TYPE_ITEM_BULLET)
 	{
 		m_tInfo.fCX = 30.f;
@@ -46,14 +47,14 @@ int CItem::Update(void)
 		return OBJ_DEAD;
 
 
-	//¼ºÀå ¾ÆÀÌÅÛ
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (m_tType == TYPE_ITEM_GROW)
 	{
-		m_tInfo.m_fSpeed = 4.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡, ¿òÁ÷ÀÌ°Ô ¸¸µê
+		m_tInfo.m_fSpeed = 4.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½Óµï¿½ï¿½ß°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½
 		m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 
-	if (m_tType == TYPE_ITEM_BULLET) // ÃÑ¾Ë ¾ÆÀÌÅÛ
+	if (m_tType == TYPE_ITEM_BULLET) // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 
 	}
@@ -75,7 +76,7 @@ void CItem::Render(HDC hDC)
 
 	switch (m_tType)
 	{
-	case TYPE_ITEM_GROW : //¼ºÀå ¾ÆÀÌÅÛ
+	case TYPE_ITEM_GROW : //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		brush = CreateSolidBrush(RGB(255, 47, 47));
 		h_old_brush = SelectObject(hDC, brush);
 		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
@@ -83,7 +84,7 @@ void CItem::Render(HDC hDC)
 		DeleteObject(brush);
 		break;
 
-	case TYPE_ITEM_BULLET: // ÃÑ¾Ë ¾ÆÀÌÅÛ
+	case TYPE_ITEM_BULLET: // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		brush = CreateSolidBrush(RGB(0, 210, 0));
 		h_old_brush = SelectObject(hDC, brush);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);

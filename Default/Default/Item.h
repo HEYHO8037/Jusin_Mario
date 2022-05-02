@@ -14,6 +14,6 @@ public:
 	virtual int Update(void) override;
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
- // 아이템 타입 구분 변수
+	
 };
 

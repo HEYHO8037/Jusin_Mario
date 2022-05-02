@@ -22,6 +22,7 @@ public:
 	
 	void Set_Dead() { m_bDead = true; }
 
+	const int& Get_Hp() { return m_tInfo.m_iHp; }
 	void Set_HpPlus() { m_tInfo.m_iHp += 1; }
 	void Set_HpMinus() { m_tInfo.m_iHp -= 1; }
 	
