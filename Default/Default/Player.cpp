@@ -27,6 +27,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.m_iHp = 1;
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
+	m_tInfo.m_ItemCheck = 0;
 
 	m_tWeapon = TYPE_NO_WEAPON;
 	m_bDead = false;
@@ -35,8 +36,7 @@ void CPlayer::Initialize(void)
 	m_mTime = 0.f;
 	m_fPower = 5.f;
 	int Level = 1;
-	PTime = GetTickCount();
-
+	PTime = GetTickCount();	
 }
 
 void CPlayer::Release(void)

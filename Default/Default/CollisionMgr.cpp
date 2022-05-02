@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Hurdle.h"
 #include "Monster.h"
+#include "AbstractFactory.h"
+#include "Item.h"
 
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 DWORD CCollisionMgr::CTime = 0;
@@ -310,6 +312,26 @@ void CCollisionMgr::Collision_Player_Huddle()
 				break;
 			}
 			case TYPE_HUR_ITEM:
+				if (fX > fY)// 상하충돌만
+				{
+					if ((*iter)->Get_Info().fY >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)//허들이 밑에있음
+					{
+						
+					}
+					else //허들이 위에있음
+					{
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
+						//아이템 생성 함수
+						if (0 == m_ObjList[OBJ_PLAYER]->front()->Get_Info().m_ItemCheck)
+						{
+
+							
+						
+
+						}
+
+					}
+				}
 				break;
 			case TYPE_HUR_STACK:
 				break;
