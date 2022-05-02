@@ -17,8 +17,8 @@ CHurdle::~CHurdle()
 
 void CHurdle::Initialize(void)
 {
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 50.f;
+	m_tInfo.fCX = 100.f;
+	m_tInfo.fCY = 100.f;
 
 	switch (m_tType)
 	{
