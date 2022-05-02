@@ -258,8 +258,6 @@ void CCollisionMgr::Collision_Player_Item()
 	}
 }
 
-
-
 void CCollisionMgr::Collision_Bullet_Huddle()
 {
 

@@ -8,7 +8,7 @@
 #include "CollisionMgr.h"
 #include "Player.h"
 #include "BossMonster.h"
-
+#include "Cloud.h"
 
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
@@ -72,6 +72,10 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		//보스(임시)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
 
+		for (int i = 0; i < 8; ++i)
+		{
+			m_ObjList[OBJ_CLOUD].push_back(CAbstractFactory<CCloud>::Create(float((rand() % 600 + 1300.f)) + float((rand() % 400 + 100.f)) + 500.f, float((rand() % 60 + 300)), 0));
+		}
 	}
 
 }
@@ -129,7 +133,7 @@ void CObjMgr::Late_Update()
 		CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Collision_Monster_Huddle(m_ObjList[OBJ_HURDLE], m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
-		CCollisionMgr::Get_Instance()->Collision_Player_FixedHuddle();
+		//CCollisionMgr::Get_Instance()->Collision_Player_FixedHuddle();
 		CCollisionMgr::Get_Instance()->Collision_Player_FloatHuddle();
 		CCollisionMgr::Get_Instance()->Collision_Player_Item();
 		CCollisionMgr::Get_Instance()->Collision_Bullet_Huddle();

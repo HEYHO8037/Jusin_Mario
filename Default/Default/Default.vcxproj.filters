@@ -58,6 +58,9 @@
     <ClCompile Include="MyBmp.cpp">
       <Filter>BmpMgr\MyBmp</Filter>
     </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>01.Obj\Cloud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineMgr.h">
@@ -141,6 +144,9 @@
     <ClInclude Include="MyBmp.h">
       <Filter>BmpMgr\MyBmp</Filter>
     </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>01.Obj\Cloud</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Default.ico">
@@ -219,6 +225,9 @@
     </Filter>
     <Filter Include="BmpMgr\MyBmp">
       <UniqueIdentifier>{27a4e5f1-68f2-43cc-ae30-038918c764f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Obj\Cloud">
+      <UniqueIdentifier>{7300485a-61ba-4cf3-8aa2-b9cb0aebceb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
