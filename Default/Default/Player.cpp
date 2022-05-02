@@ -213,6 +213,7 @@ void CPlayer::Falling()
 {
 	if (m_bIsFalling)
 	{
+		m_bJump = false;
 		m_tInfo.fY += m_fPower * m_fTime * 0.5f;
 		m_fTime += 0.2f;
 

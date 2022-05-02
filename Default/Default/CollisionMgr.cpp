@@ -348,7 +348,7 @@ void CCollisionMgr::Collision_Player_FixedHuddle()
 			{
 				if (fX >= fY)
 				{
-					if (m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY <= (*iter)->Get_Info().fY)
+					if (m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY < (*iter)->Get_Info().fY)
 					{
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_GroundPoint((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
@@ -357,7 +357,8 @@ void CCollisionMgr::Collision_Player_FixedHuddle()
 
 					else
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PosY((*iter)->Get_Info().fY + fY);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PosY((*iter)->Get_Info().fY + (*iter)->Get_Info().fCY);
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Falling(true);
 					}
 				}
 				else
@@ -429,7 +430,7 @@ void CCollisionMgr::Collision_Player_FloatHuddle()
 					}
 					else
 					{
-						if (Dest->Get_Info().fY <= (*iter)->Get_Info().fY)
+						if (Dest->Get_Info().fY < (*iter)->Get_Info().fY)
 						{
 							dynamic_cast<CPlayer*>(Dest)->Set_PosY((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
 							dynamic_cast<CPlayer*>(Dest)->Set_GroundPoint((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
@@ -438,7 +439,8 @@ void CCollisionMgr::Collision_Player_FloatHuddle()
 
 						else
 						{
-							Dest->Set_PosY((*iter)->Get_Info().fY + fY);
+							m_ObjList[OBJ_PLAYER]->front()->Set_PosY((*iter)->Get_Info().fY + (*iter)->Get_Info().fCY);
+							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Falling(true);
 						}
 					}
 

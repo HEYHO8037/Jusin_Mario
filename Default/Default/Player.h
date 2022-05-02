@@ -32,7 +32,7 @@ public:
 	void Set_Jump() { m_mJump = true;
 	m_bJump = false;
 	}
-	void Draw_Character(HDC hDC);
+
 	float Get_Power() { return m_fPower; }
 	float Get_GroundPoint() { return m_fGroundPoint;  }
 	void Set_GroundPoint(float fPoint) { m_fGroundPoint = fPoint; }

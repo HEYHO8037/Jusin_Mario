@@ -43,29 +43,29 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
     
 	    //HURDLE CREATE
 		//움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1480.f, 550.f, TYPE_HUR_FLOAT, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1480.f, 555.f, TYPE_HUR_FLOAT, pObj));
 
 		//움직이는 허들을 통해 점프하기
-    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 550.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 450.f, TYPE_HUR_FIXED, pObj));
+    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 555.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 465.f, TYPE_HUR_FIXED, pObj));
 		
 		//아이템 허들과 안움직이는 허들 ( 아이템 먹기 )
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1980.f, 325.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2080.f, 325.f, TYPE_HUR_ITEM, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2180.f, 325.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1980.f, 425.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2070.f, 425.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2160.f, 425.f, TYPE_HUR_FIXED, pObj));
 
 		//안움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2580.f, 550.f, TYPE_HUR_FLOAT, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2780.f, 550.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2780.f, 450.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2480.f, 555.f, TYPE_HUR_FLOAT, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2670.f, 555.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2670.f, 465.f, TYPE_HUR_FIXED, pObj));
 
 		//거북이(허들 사이에 움직임)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(3005.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
 
 		//안움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3330.f, 550.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3430.f, 550.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3430.f, 450.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3330.f, 555.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3420.f, 555.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3420.f, 465.f, TYPE_HUR_FIXED, pObj));
 		
 		//굴뚝(임시)
 		//m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2030.f, 575.f, TYPE_HUR_STACK, pObj));
