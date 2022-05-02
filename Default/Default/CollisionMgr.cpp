@@ -227,17 +227,37 @@ void CCollisionMgr::Collision_Monster_Bullet()
 void CCollisionMgr::Collision_Player_Item()
 {
 	float fX, fY;
+	TYPE eType;
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_ITEM)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_ITEM)->end();
+	RECT rc{};
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_ITEM]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_ITEM]->end();
-	
 	for (iter; iter != iterEnd; ++iter)
 	{
-		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		if (IntersectRect(&rc, &((*iter)->Get_Rect()), &(m_ObjList[OBJ_PLAYER]->front()->Get_Rect())))
 		{
+			eType = (*iter)->Get_Type(); // 아이템 타입 얻어오기
+			if (eType == TYPE_ITEM_GROW) //플레이어 성장 함수
+			{				
+				if (m_ObjList[OBJ_PLAYER]->front()->Get_Hp() <= 2)
+				{
+					m_ObjList[OBJ_PLAYER]->front()->Set_HpPlus();
+					(*iter)->Set_Dead();
+				}
+
+			}
+			else if (eType == TYPE_ITEM_BULLET)//총알쏘는 함수				
+			{
+				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Equip_Weapon();
+				(*iter)->Set_Dead();
+			}
+
 		}
+
 	}
 }
+
+
 
 void CCollisionMgr::Collision_Player_Huddle()
 {
@@ -297,6 +317,29 @@ void CCollisionMgr::Collision_Player_Huddle()
 		}
 
 	}
+}
+
+void CCollisionMgr::Collision_Bullet_Huddle()
+{
+
+	float fX, fY;
+	
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_BULLET)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_BULLET)->end();
+	RECT rc{};
+
+	for (iter; iter != iterEnd; ++iter)
+	{
+		list<CObj*>::const_iterator Biter = (*m_ObjList + OBJ_HURDLE)->begin();
+		list<CObj*>::const_iterator BiterEnd = (*m_ObjList + OBJ_HURDLE)->end();
+
+		for (Biter; Biter != BiterEnd; ++Biter)
+		{
+			if (IntersectRect(&rc, &((*iter)->Get_Rect()), &((*Biter)->Get_Rect())))
+				(*iter)->Set_Dead();
+		}
+	}
+
 }
 
 void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sour)

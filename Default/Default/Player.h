@@ -15,16 +15,14 @@ public:
 	virtual void Render(HDC hDC);
 
 public:
-	void Set_Weapon(TYPE _Weapon) 
+	void Equip_Weapon() 
 	{ 
-		if (_Weapon == TYPE_NO_WEAPON)
-		{ 
-			m_bWeapon = false; 
-		}
-		else if (_Weapon == TYPE_GUN_WEAPON)
-		{
-			m_bWeapon = true;
-		}
+		m_tWeapon = TYPE_GUN_WEAPON;
+	}
+
+	void UnEquip_Weapon()
+	{
+		m_tWeapon = TYPE_NO_WEAPON;
 	}
 
 
@@ -35,8 +33,8 @@ public:
 	m_bJump = false;
 	}
 	bool Get_Jump() { return m_bJump;  }
-
 	void Draw_Character(HDC hDC);
+
 private:
 	void OffSet();
 	void Key_Update(void);
@@ -46,7 +44,7 @@ private:
 	float m_fTime;
 	float m_mTime;
 	float m_fPower;
-	bool m_bWeapon;
+	TYPE m_tWeapon;
 	DWORD PTime;
 };
 

@@ -3,13 +3,13 @@
 #include "ScrollMgr.h"
 
 CItem::CItem()
-	:m_ItemType(TYPE_END)
+	
 {
 }
 
 CItem::CItem(TYPE _eType)
 {
-	m_ItemType = _eType;
+	m_tType = _eType;
 }
 
 CItem::~CItem()
@@ -19,17 +19,17 @@ CItem::~CItem()
 
 void CItem::Initialize(void)
 {
-	//¼ºÀå ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_GROW)
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_ITEM_GROW)
 	{
 		m_tInfo.fCX = 30.f;
 		m_tInfo.fCY = 30.f;
 
-		m_tInfo.m_fSpeed = 4.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡
+		m_tInfo.m_fSpeed = 4.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿?ï¿½Óµï¿½ï¿½ß°ï¿½
 	}
 
-	//ÃÑ¾Ë »ý¼º ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_BULLET)
+	//ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_ITEM_BULLET)
 	{
 		m_tInfo.fCX = 30.f;
 		m_tInfo.fCY = 50.f;
@@ -47,18 +47,16 @@ int CItem::Update(void)
 		return OBJ_DEAD;
 
 
-	//¼ºÀå ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_GROW)
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_ITEM_GROW)
 	{
-		//¼ºÀå¾ÆÀÌÅÛ¸¸ ¹æÇâÀÌµ¿
-		m_tInfo.m_fSpeed = 4.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡
+		m_tInfo.m_fSpeed = 4.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿?ï¿½Óµï¿½ï¿½ß°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½
+		m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 
-	//ÃÑ¾Ë »ý¼º ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_BULLET)
+	if (m_tType == TYPE_ITEM_BULLET) // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
-		m_tInfo.fCX = 30.f;
-		m_tInfo.fCY = 50.f;
+
 	}
 
 	Update_Rect();
@@ -76,9 +74,9 @@ void CItem::Render(HDC hDC)
 	HGDIOBJ h_old_brush;
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
-	switch (m_ItemType)
+	switch (m_tType)
 	{
-	case TYPE_ITEM_GROW : //¼ºÀå ¾ÆÀÌÅÛ
+	case TYPE_ITEM_GROW : //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		brush = CreateSolidBrush(RGB(255, 47, 47));
 		h_old_brush = SelectObject(hDC, brush);
 		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
@@ -86,7 +84,7 @@ void CItem::Render(HDC hDC)
 		DeleteObject(brush);
 		break;
 
-	case TYPE_ITEM_BULLET: // ÃÑ¾Ë ¾ÆÀÌÅÛ
+	case TYPE_ITEM_BULLET: // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		brush = CreateSolidBrush(RGB(0, 210, 0));
 		h_old_brush = SelectObject(hDC, brush);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
