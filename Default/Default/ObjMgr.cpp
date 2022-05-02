@@ -34,8 +34,8 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 	if (eID == OBJ_PLAYER)
 	{
 		//ITEM CREATE
-		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
-		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 580.f, TYPE_ITEM_GROW, pObj));
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(350.f, 580.f, TYPE_ITEM_BULLET, pObj));
 	
 		//MONSTER CREATE
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 575.f, TYPE_MONSTER_MOVE, pObj));
@@ -48,9 +48,7 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		//움직이는 허들을 통해 점프하기
     	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 525.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 575.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 475.f, TYPE_HUR_FIXED, pObj));
-
-
+		
 		//아이템 허들과 안움직이는 허들 ( 아이템 먹기 )
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1980.f, 425.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2030.f, 425.f, TYPE_HUR_ITEM, pObj));
@@ -68,9 +66,10 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 525.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 575.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 475.f, TYPE_HUR_FIXED, pObj));
-
-		//Boss Create(임시)
-
+		
+		//굴뚝(임시)
+		//m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2030.f, 575.f, TYPE_HUR_STACK, pObj));
+		//보스(임시)
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
 
 	}
@@ -132,8 +131,10 @@ void CObjMgr::Late_Update()
 		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
 		CCollisionMgr::Get_Instance()->Collision_Player_FixedHuddle();
 		CCollisionMgr::Get_Instance()->Collision_Player_FloatHuddle();
+		CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
+		CCollisionMgr::Get_Instance()->Collision_Player_Item();
+		CCollisionMgr::Get_Instance()->Collision_Bullet_Huddle();
 		CCollisionMgr::Get_Instance()->Collision_Huddle_Huddle();
-
 		OTime = GetTickCount();
 	}
 	

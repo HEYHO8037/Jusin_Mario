@@ -1,15 +1,16 @@
 #include "stdafx.h"
 #include "Item.h"
 #include "ScrollMgr.h"
+#include "BmpMgr.h"
 
 CItem::CItem()
-	:m_ItemType(TYPE_END)
+	
 {
 }
 
 CItem::CItem(TYPE _eType)
 {
-	m_ItemType = _eType;
+	m_tType = _eType;
 }
 
 CItem::~CItem()
@@ -19,21 +20,26 @@ CItem::~CItem()
 
 void CItem::Initialize(void)
 {
-	//¼ºÀå ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_GROW)
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_ITEM_GROW)
 	{
-		m_tInfo.fCX = 30.f;
-		m_tInfo.fCY = 30.f;
+		m_tInfo.fCX = 49.f;
+		m_tInfo.fCY = 47.f;	
+		m_tInfo.m_fSpeed = 4.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿?ï¿½Óµï¿½ï¿½ß°ï¿½
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/GrowItem.bmp", L"GrowItem");
 
-		m_tInfo.m_fSpeed = 4.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡
+
 	}
 
-	//ÃÑ¾Ë »ı¼º ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_BULLET)
+	//ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_ITEM_BULLET)
 	{
-		m_tInfo.fCX = 30.f;
-		m_tInfo.fCY = 50.f;
+		m_tInfo.fCX = 48.f;
+		m_tInfo.fCY = 53.f;
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BulletItem.bmp", L"BulletItem");
 	}
+
+	
 
 }
 
@@ -47,18 +53,16 @@ int CItem::Update(void)
 		return OBJ_DEAD;
 
 
-	//¼ºÀå ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_GROW)
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	if (m_tType == TYPE_ITEM_GROW)
 	{
-		//¼ºÀå¾ÆÀÌÅÛ¸¸ ¹æÇâÀÌµ¿
-		m_tInfo.m_fSpeed = 4.f; //¼ºÀå¾ÆÀÌÅÛ¸¸ ¼ÓµµÃß°¡
+		m_tInfo.m_fSpeed = 4.f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿?ï¿½Óµï¿½ï¿½ß°ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½
+		//m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 
-	//ÃÑ¾Ë »ı¼º ¾ÆÀÌÅÛ
-	if (m_ItemType == TYPE_ITEM_BULLET)
+	if (m_tType == TYPE_ITEM_BULLET) // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
-		m_tInfo.fCX = 30.f;
-		m_tInfo.fCY = 50.f;
+
 	}
 
 	Update_Rect();
@@ -72,26 +76,46 @@ void CItem::Late_Update(void)
 
 void CItem::Render(HDC hDC)
 {
-	HBRUSH	brush;
-	HGDIOBJ h_old_brush;
+	
+	
 	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-
-	switch (m_ItemType)
+	
+	switch (m_tType)
 	{
-	case TYPE_ITEM_GROW : //¼ºÀå ¾ÆÀÌÅÛ
-		brush = CreateSolidBrush(RGB(255, 47, 47));
-		h_old_brush = SelectObject(hDC, brush);
-		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	case TYPE_ITEM_GROW : //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"GrowItem");
+
+		GdiTransparentBlt(hDC, 					// º¹»ç ¹ŞÀ», ÃÖÁ¾ÀûÀ¸·Î ±×¸²À» ±×¸± DC
+			int(m_tRect.left),	// 2,3 ÀÎÀÚ :  º¹»ç¹ŞÀ» À§Ä¡ X, Y
+			int(m_tRect.top),
+			int(m_tInfo.fCX),				// 4,5 ÀÎÀÚ : º¹»ç¹ŞÀ» °¡·Î, ¼¼·Î ±æÀÌ
+			int(m_tInfo.fCY),
+			hMemDC,							// ºñÆ®¸ÊÀ» °¡Áö°í ÀÖ´Â DC
+			0,								// ºñÆ®¸Ê Ãâ·Â ½ÃÀÛ ÁÂÇ¥, X,Y
+			0,
+			(int)m_tInfo.fCX,				// º¹»çÇÒ ºñÆ®¸ÊÀÇ °¡·Î, ¼¼·Î ±æÀÌ
+			(int)m_tInfo.fCY,
+			RGB(0, 0, 255));			// Á¦°ÅÇÏ°íÀÚ ÇÏ´Â »ö»ó
+	}
 		break;
 
-	case TYPE_ITEM_BULLET: // ÃÑ¾Ë ¾ÆÀÌÅÛ
-		brush = CreateSolidBrush(RGB(0, 210, 0));
-		h_old_brush = SelectObject(hDC, brush);
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	case TYPE_ITEM_BULLET: // ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"BulletItem");
+
+		GdiTransparentBlt(hDC, 					// º¹»ç ¹ŞÀ», ÃÖÁ¾ÀûÀ¸·Î ±×¸²À» ±×¸± DC
+			int(m_tRect.left),	// 2,3 ÀÎÀÚ :  º¹»ç¹ŞÀ» À§Ä¡ X, Y
+			int(m_tRect.top),
+			int(m_tInfo.fCX),				// 4,5 ÀÎÀÚ : º¹»ç¹ŞÀ» °¡·Î, ¼¼·Î ±æÀÌ
+			int(m_tInfo.fCY),
+			hMemDC,							// ºñÆ®¸ÊÀ» °¡Áö°í ÀÖ´Â DC
+			0,								// ºñÆ®¸Ê Ãâ·Â ½ÃÀÛ ÁÂÇ¥, X,Y
+			0,
+			(int)m_tInfo.fCX,				// º¹»çÇÒ ºñÆ®¸ÊÀÇ °¡·Î, ¼¼·Î ±æÀÌ
+			(int)m_tInfo.fCY,
+			RGB(0, 0, 255));			// Á¦°ÅÇÏ°íÀÚ ÇÏ´Â »ö»ó
+	}
 		break;
 
 	default:

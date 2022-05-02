@@ -91,11 +91,20 @@ void CHurdle::Render(HDC hDC)
 		break;
 	
 	case TYPE_HUR_ITEM://아이템-노란색
+		
 		brush = CreateSolidBrush(RGB(255, 255, 0));
 		h_old_brush = SelectObject(hDC, brush);
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
+		MoveToEx(hDC, m_tRect.left + 15, m_tRect.top + 10,nullptr);
+		LineTo(hDC, m_tRect.right - 15, m_tRect.top + 10);
+		LineTo(hDC, m_tRect.right - 15, m_tRect.top + 23);
+		LineTo(hDC, m_tRect.right - 25, m_tRect.top + 23);
+		LineTo(hDC, m_tRect.right - 25, m_tRect.top+35);
+		Rectangle(hDC, m_tRect.left + 23, m_tRect.top + 38, m_tRect.right - 23, m_tRect.bottom -7 );
+
+
 		break;
 
 	case TYPE_HUR_STACK://굴뚝-초록색
