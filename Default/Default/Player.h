@@ -34,7 +34,7 @@ public:
 	void Set_Jump() { m_mJump = true;
 	m_bJump = false;
 	}
-	
+	void Draw_Character(HDC hDC);
 private:
 	void OffSet();
 	void Key_Update(void);
