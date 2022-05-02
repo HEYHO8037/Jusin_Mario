@@ -365,11 +365,11 @@ void CCollisionMgr::Collision_Player_FixedHuddle()
 				{
 					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PosX((*iter)->Get_Info().fX - (*iter)->Get_Info().fCX);
 					}
 					else
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PosX((*iter)->Get_Info().fX + (*iter)->Get_Info().fCX);
 					}
 				}
 			}
@@ -410,7 +410,7 @@ void CCollisionMgr::Collision_Player_FloatHuddle()
 						{
 							if (!dynamic_cast<CHurdle*>(*iter)->GetIsMove())
 							{
-								Dest->Set_PosX(Dest->Get_Info().fX + fX);
+								Dest->Set_PosX((*iter)->Get_Info().fX + (*iter)->Get_Info().fCX);
 								return;
 							}
 
@@ -421,7 +421,7 @@ void CCollisionMgr::Collision_Player_FloatHuddle()
 						{
 							if (!dynamic_cast<CHurdle*>(*iter)->GetIsMove())
 							{
-								Dest->Set_PosX(Dest->Get_Info().fX - fX);
+								Dest->Set_PosX((*iter)->Get_Info().fX - (*iter)->Get_Info().fCX);
 								return;
 							}
 
