@@ -240,10 +240,11 @@ void CCollisionMgr::Collision_Player_Item()
 	{
 		if (IntersectRect(&rc, &((*iter)->Get_Rect()), &(m_ObjList[OBJ_PLAYER]->front()->Get_Rect())))
 		{
-			eType = (*iter)->Get_Type(); // ?�이???�???�어?�기
-			if (eType == TYPE_ITEM_GROW) //?�레?�어 ?�장 ?�수
+			eType = (*iter)->Get_Type(); 
+
+ 			if (eType == TYPE_ITEM_GROW && !(*iter)->Get_Dead()) 
 			{				
-				if (m_ObjList[OBJ_PLAYER]->front()->Get_Hp() <= 2)
+  				if (m_ObjList[OBJ_PLAYER]->front()->Get_Hp() <= 2)
 				{
 					m_ObjList[OBJ_PLAYER]->front()->Set_HpPlus();
 					(*iter)->Set_Dead();
@@ -522,18 +523,31 @@ void CCollisionMgr::Collision_Item_Huddle()
 						if (Dest->Get_Rect().top < (*iter)->Get_Rect().bottom)
 						{
 							Dest->Set_PostY(fY);
-							if (CTime + 300 < GetTickCount())
+							if (CTime + 300 < GetTickCount() && !dynamic_cast<CHurdle*>((*iter))->GetIsItem())
 							{
 								CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(2080.f, 355.f, TYPE_ITEM_GROW));
+								dynamic_cast<CHurdle*>((*iter))->SetIsItem(true);
 								CTime = GetTickCount();
 							}
-							/*m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 580.f, TYPE_ITEM_GROW, pObj));
-							m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(350.f, 580.f, TYPE_ITEM_BULLET, pObj));*/
+						}
 
+						if(Dest->Get_Info().fY <= (*iter)->Get_Info().fY)
+						{
+							dynamic_cast<CPlayer*>(Dest)->Set_PosY((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
+							dynamic_cast<CPlayer*>(Dest)->Set_GroundPoint((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
+							m_pSaveObj = (*iter);
 						}
 
 					}
 
+				}
+				else if (m_pSaveObj &&
+					((Dest->Get_Rect().right < m_pSaveObj->Get_Rect().left)
+						|| (Dest->Get_Rect().left > m_pSaveObj->Get_Rect().right)))
+				{
+					dynamic_cast<CPlayer*>(Dest)->Set_GroundPoint(float(600) - Dest->Get_Info().fCY*0.5);
+					dynamic_cast<CPlayer*>(Dest)->Set_Falling(true);
+					m_pSaveObj = nullptr;
 				}
 			}
 			++iter;
