@@ -40,5 +40,4 @@ protected:
 	CObj* m_tTarget;
 	TYPE m_tType;
 	bool m_bDead;
-
 };

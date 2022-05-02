@@ -30,6 +30,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
 	m_tType = TYPE_PLAYER;
+	m_tInfo.m_ItemCheck = 0;
 
 	m_tWeapon = TYPE_NO_WEAPON;
 	m_bDead = false;
@@ -42,6 +43,7 @@ void CPlayer::Initialize(void)
 	PTime = GetTickCount();
 	m_fGroundPoint = float(600) - m_tInfo.fCY*0.5;
 
+	PTime = GetTickCount();	
 }
 
 void CPlayer::Release(void)

@@ -57,6 +57,8 @@
     </ClCompile>
     <ClCompile Include="MyBmp.cpp">
       <Filter>BmpMgr\MyBmp</Filter>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>01.Obj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +142,8 @@
     </ClInclude>
     <ClInclude Include="MyBmp.h">
       <Filter>BmpMgr\MyBmp</Filter>
+    <ClInclude Include="Cloud.h">
+      <Filter>01.Obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

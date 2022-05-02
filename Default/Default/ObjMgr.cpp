@@ -8,8 +8,7 @@
 #include "CollisionMgr.h"
 #include "Player.h"
 #include "BossMonster.h"
-
-
+#include "Cloud.h"
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
 
@@ -27,12 +26,15 @@ CObjMgr::~CObjMgr()
 void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 
 {
+	srand(unsigned(time(nullptr)));
+
 	if (pObj == nullptr) 
 		return;
 	m_ObjList[eID].push_back(pObj);
 	OTime = GetTickCount();
 	if (eID == OBJ_PLAYER)
 	{
+
 		//ITEM CREATE
 		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 580.f, TYPE_ITEM_GROW, pObj));
 		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(350.f, 580.f, TYPE_ITEM_BULLET, pObj));
@@ -66,12 +68,15 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 525.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 575.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2730.f, 475.f, TYPE_HUR_FIXED, pObj));
-		
-		//굴뚝(임시)
-		//m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2030.f, 575.f, TYPE_HUR_STACK, pObj));
-		//보스(임시)
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
 
+		//Boss Create(임시)
+
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(4500.f, 575.f, TYPE_BOSS, pObj));
+		
+		for (int i = 0; i < 8; ++i)
+		{
+			m_ObjList[OBJ_CLOUD].push_back(CAbstractFactory<CCloud>::Create(float((rand() % 600 + 1300.f)) + float((rand() % 400 + 100.f)) + 500.f, float((rand() % 60 + 300)), 0));
+		}
 	}
 
 }
@@ -143,6 +148,7 @@ void CObjMgr::Late_Update()
 
 void CObjMgr::Render(HDC hDC)
 {
+
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
