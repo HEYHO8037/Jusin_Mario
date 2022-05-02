@@ -20,7 +20,7 @@ void CBullet::Initialize(void)
 {
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
-	m_tInfo.m_fSpeed = 5.f;
+	m_tInfo.m_fSpeed = 8.f;
 	m_tInfo.m_iHp = 1;
 	m_tInfo.m_fAngle = -1;
 
