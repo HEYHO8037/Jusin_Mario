@@ -25,7 +25,9 @@ void CItem::Initialize(void)
 	{
 		m_tInfo.fCX = 49.f;
 		m_tInfo.fCY = 47.f;	
-		m_tInfo.m_fSpeed = 4.f; //��������۸�?�ӵ��߰�
+		
+		m_bDead = false;
+		 //��������۸�?�ӵ��߰�
 		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/GrowItem.bmp", L"GrowItem");
 
 
@@ -36,6 +38,8 @@ void CItem::Initialize(void)
 	{
 		m_tInfo.fCX = 48.f;
 		m_tInfo.fCY = 53.f;
+	
+		m_bDead = false;
 		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BulletItem.bmp", L"BulletItem");
 	}
 
@@ -56,7 +60,7 @@ int CItem::Update(void)
 	//���� ������
 	if (m_tType == TYPE_ITEM_GROW)
 	{
-		m_tInfo.m_fSpeed = 4.f; //��������۸�?�ӵ��߰�, �����̰� ����
+		 //��������۸�?�ӵ��߰�, �����̰� ����
 		//m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 
@@ -67,6 +71,7 @@ int CItem::Update(void)
 
 	Update_Rect();
 	return OBJ_NOEVENT;
+
 }
 
 void CItem::Late_Update(void)
