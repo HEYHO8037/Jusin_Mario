@@ -346,19 +346,18 @@ void CCollisionMgr::Collision_Player_FixedHuddle()
 
 			if (eType == TYPE_HUR_FIXED)
 			{
-				if (fX > fY)
+				if (fX >= fY)
 				{
-					if ((*iter)->Get_Info().fY >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
+					if (m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY <= (*iter)->Get_Info().fY)
 					{
-						if ((*iter)->Get_Rect().left <= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX &&
-							(*iter)->Get_Rect().right >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
-						{
-							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Rect().top);
-						}
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_GroundPoint((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
+						m_pSaveObj = (*iter);
 					}
+
 					else
 					{
-						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PosY((*iter)->Get_Info().fY + fY);
 					}
 				}
 				else
@@ -373,6 +372,14 @@ void CCollisionMgr::Collision_Player_FixedHuddle()
 					}
 				}
 			}
+		}
+		else if (m_pSaveObj &&
+			((m_ObjList[OBJ_PLAYER]->front()->Get_Rect().right < m_pSaveObj->Get_Rect().left)
+				|| (m_ObjList[OBJ_PLAYER]->front()->Get_Rect().left > m_pSaveObj->Get_Rect().right)))
+		{
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_GroundPoint(float(600) - m_ObjList[OBJ_PLAYER]->front()->Get_Info().fCY*0.5);
+			dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Falling(true);
+			m_pSaveObj = nullptr;
 		}
 	}
 
