@@ -124,7 +124,7 @@ void CMonster::Render(HDC hDC)
 	HBRUSH   brush;
 	HGDIOBJ h_old_brush;
 
-	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+//	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	switch (m_tType)
 	{
