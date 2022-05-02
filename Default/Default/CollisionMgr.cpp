@@ -312,6 +312,29 @@ void CCollisionMgr::Collision_Player_Huddle()
 			case TYPE_HUR_ITEM:
 				break;
 			case TYPE_HUR_STACK:
+				if (fX > fY)
+				{	//ÇÃ·¹ ±¼¶ÒÀ§¿¡
+					if ((*iter)->Get_Info().fY >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
+					{
+						if ((*iter)->Get_Rect().left <= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX &&
+							(*iter)->Get_Rect().right >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+						{
+							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Rect().top);
+						}
+					}
+				}
+				else
+				{
+					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
+					}
+					else
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(fX);
+					}
+				}
+				break;
 				break;
 			}
 		}
