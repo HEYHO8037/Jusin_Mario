@@ -19,12 +19,15 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize(void)
 {
-	m_tInfo.fCX = 100.f;
-	m_tInfo.fCY = 100.f;
+	m_tInfo.fCX = 48.f;
+	m_tInfo.fCY = 70.f;
 	m_tInfo.fX = 100.f;
 	m_tInfo.fY = float(600) - m_tInfo.fCY*0.5;
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/PlayerR.bmp", L"PlayerR");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/PlayerL.bmp", L"PlayerL");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/PlayerR2.bmp", L"PlayerR2");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/PlayerL2.bmp", L"PlayerL2");
+
 
 	m_tInfo.m_iHp = 1;
 	m_tInfo.m_fSpeed = 5.f;
@@ -38,6 +41,9 @@ void CPlayer::Initialize(void)
 	m_mTime = 0.f;
 	m_fPower = 5.f;
 	m_bRight = true;
+	m_bBoss = false;
+	m_bBossKill = false;
+	m_bStar = false;
 	int Level = 1;
 	PTime = GetTickCount();
 	m_fGroundPoint = float(600) - m_tInfo.fCY*0.5;
@@ -53,12 +59,15 @@ int CPlayer::Update(void)
 {
 	if (m_bDead)
 		return OBJ_DEAD;
-	OffSet();
+	if (!m_bBoss)
+	{
+		OffSet();
+	}
 	Key_Update();
 	Jumping();
 	Falling();
 	MJump();
-	Update_Rect();
+	Update_PRect();
 
 	return OBJ_NOEVENT;
 }
@@ -67,8 +76,12 @@ void CPlayer::Late_Update(void)
 {
 	if (m_tInfo.m_iHp <= 0)
 	{
-		Set_Dead();
+		Set_Dead();	
 	}
+	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+	if (ScrollX < -5100)
+		m_bBoss = true;
+
 
 }
 
@@ -78,35 +91,72 @@ void CPlayer::Render(HDC hDC)
 	HGDIOBJ h_old_brush;
 	if (m_bRight)
 	{
-		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerR");
-
-		GdiTransparentBlt(hDC, 					// 복사 받을, 최종적으로 그림을 그릴 DC
-			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
-			int(m_tRect.top),
-			int(m_tInfo.fCX),				// 4,5 인자 : 복사받을 가로, 세로 길이
-			int(m_tInfo.fCY),
-			hMemDC,							// 비트맵을 가지고 있는 DC
-			0,								// 비트맵 출력 시작 좌표, X,Y
-			0,
-			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
-			(int)m_tInfo.fCY,
-			RGB(0, 255, 0));			// 제거하고자 하는 색상
+		if (m_tInfo.m_iHp == 1)
+		{
+			HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerR");
+			GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+				int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tRect.top),
+				int(48),				// 4,5 인자 : 복사받을 가로, 세로 길이
+				int(70),
+				hMemDC,							// 비트맵을 가지고 있는 DC
+				0,								// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tInfo.fCY,
+				RGB(0, 255, 0));			// 제거하고자 하는 색상
+		}
+		else if (m_tInfo.m_iHp == 2)
+		{
+			HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerR2");
+			GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+				int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tRect.top),
+				int(52),				// 4,5 인자 : 복사받을 가로, 세로 길이
+				int(70),
+				hMemDC,							// 비트맵을 가지고 있는 DC
+				0,								// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tInfo.fCY,
+				RGB(0, 255, 0));			// 제거하고자 하는 색상
+		}
+		
+	
 	}
 	else
 	{
-		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerL");
-
-		GdiTransparentBlt(hDC, 					// 복사 받을, 최종적으로 그림을 그릴 DC
-			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
-			int(m_tRect.top),
-			int(m_tInfo.fCX),				// 4,5 인자 : 복사받을 가로, 세로 길이
-			int(m_tInfo.fCY),
-			hMemDC,							// 비트맵을 가지고 있는 DC
-			0,								// 비트맵 출력 시작 좌표, X,Y
-			0,
-			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
-			(int)m_tInfo.fCY,
-			RGB(0, 255, 0));			// 제거하고자 하는 색상
+		if (m_tInfo.m_iHp == 1)
+		{
+			HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerL");
+			GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+				int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tRect.top),
+				int(48),				// 4,5 인자 : 복사받을 가로, 세로 길이
+				int(70),
+				hMemDC,							// 비트맵을 가지고 있는 DC
+				0,								// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tInfo.fCY,
+				RGB(0, 255, 0));			// 제거하고자 하는 색상
+		}
+		else if (m_tInfo.m_iHp == 2)
+		{
+			HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerL2");
+			GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+				int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+				int(m_tRect.top),
+				int(52),				// 4,5 인자 : 복사받을 가로, 세로 길이
+				int(70),
+				hMemDC,							// 비트맵을 가지고 있는 DC
+				0,								// 비트맵 출력 시작 좌표, X,Y
+				0,
+				(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+				(int)m_tInfo.fCY,
+				RGB(0, 255, 0));			// 제거하고자 하는 색상
+		}
+	
 	}
 
 	/*if (m_tWeapon == TYPE_NO_WEAPON)
@@ -125,29 +175,49 @@ void CPlayer::Render(HDC hDC)
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
 	}*/
-
+	/*int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+	Rectangle(hDC, m_tInfo.fX - m_tInfo.fCX *0.5 + ScrollX,
+		m_tInfo.fY - m_tInfo.fCY*0.5,
+		m_tInfo.fX + m_tInfo.fCX*0.5 + ScrollX,
+		m_tInfo.fY + m_tInfo.fCY*0.5);*/
 	 //되는지확인해주세여 . .  
-	if (0==m_tInfo.m_iHp )
-	{
-		lstrcpy(m_szFPS, L"GAMEOVER!");
-		TextOut(hDC, WINCX >> 1, WINCY >> 1, m_szFPS, lstrlen(m_szFPS));
-	}
+	
+	
 }
 
-
+void CPlayer::Update_PRect(void)
+{
+	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+	m_tRect.left = LONG(m_tInfo.fX - m_tInfo.fCX * 0.5 + ScrollX);
+	m_tRect.right = LONG(m_tInfo.fX + m_tInfo.fCX * 0.5 + ScrollX);
+	m_tRect.top = LONG(m_tInfo.fY - m_tInfo.fCY * 0.5 );
+	m_tRect.bottom = LONG(m_tInfo.fY + m_tInfo.fCY * 0.5 );
+}
 
 void CPlayer::Key_Update(void)
 {
 	
-	
+	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
-		m_tInfo.fX -= m_tInfo.m_fSpeed;
+		if (m_bBoss == true && m_tInfo.fX <= 5130)
+		{
+			m_tInfo.fX = 5130;
+		}
+		
+		else
+		{
+			m_tInfo.fX -= m_tInfo.m_fSpeed;
+		}
 		m_bRight = false;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
+		if (m_bBoss == true && m_tInfo.fX >= 6360)
+		{
+			m_tInfo.fX = 6360;
+		}
 		m_tInfo.fX += m_tInfo.m_fSpeed;
 		m_bRight = true;
 	}
@@ -160,7 +230,7 @@ void CPlayer::Key_Update(void)
 	m_tInfo.m_fSpeed = 5.f;
 	if (CKeyMgr::Get_Instance()->Key_Pressing('Z'))
 	{
-		m_tInfo.m_fSpeed = 10.f;	
+		m_tInfo.m_fSpeed = 20.f;	
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Pressing('X'))
@@ -169,7 +239,11 @@ void CPlayer::Key_Update(void)
 		{
 			if (PTime + 200 < GetTickCount())
 			{
-				CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_PBULLET));
+				if(m_bRight)
+					CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_PBULLET,true));
+				else
+					CObjMgr::Get_Instance()->Add_Object(OBJ_BULLET, CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY, TYPE_PBULLET, false));
+				
 				PTime = GetTickCount();
 			}
 		}
@@ -181,7 +255,7 @@ void CPlayer::Jumping(void)
 {
 	if (m_bJump)
 	{
-		m_tInfo.fY -= m_fPower * m_fTime - 1.5f * m_fTime * m_fTime * 0.5f;
+		m_tInfo.fY -= m_fPower * m_fTime - 1.7f * m_fTime * m_fTime * 0.5f;
 		m_fTime += 0.2f;
 
 
@@ -237,8 +311,7 @@ void CPlayer::Falling()
 void CPlayer::OffSet(void)
 {
 	int iOffSet = WINCX >> 1;
-	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	
+	int iScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();	
 
 	if (iOffSet - 200 > m_tInfo.fX + iScrollX)
 	{
@@ -249,5 +322,20 @@ void CPlayer::OffSet(void)
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_tInfo.m_fSpeed);
 	}
 
+}
+
+void CPlayer::Set_Size()
+{
+	if (m_tInfo.m_iHp == 1)
+	{
+		m_tInfo.fCX = 48.f;
+		m_tInfo.fCY = 70.f;
+	}
+
+	else if (m_tInfo.m_iHp == 2)
+	{
+		m_tInfo.fCX = 52.f;
+		m_tInfo.fCY = 73.f;
+	}
 }
 

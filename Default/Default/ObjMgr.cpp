@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "BossMonster.h"
 #include "Cloud.h"
+#include "BmpMgr.h"
+#include "ScrollMgr.h"
 
 
 CObjMgr* CObjMgr::m_pInstance = nullptr;
@@ -38,34 +40,66 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(350.f, 580.f, TYPE_ITEM_BULLET, pObj));*/
 	
 		//MONSTER CREATE
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 575.f, TYPE_MONSTER_MOVE, pObj));
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(1000.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/FixHurdle.bmp", L"FixHurdle");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/FloatHurdle.bmp", L"FloatHurdle");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/ItemHurdle.bmp", L"ItemHurdle");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/GrowItem.bmp", L"GrowItem");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/ItemStar.bmp", L"ItemStar");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BulletItem.bmp", L"BulletItem");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/MoveMonster.bmp", L"MoveMonster");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BulletL.bmp", L"BulletL");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BulletR.bmp", L"BulletR");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/LOpenDoor.bmp", L"LOpenDoor");
+		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/ROpenDoor.bmp", L"ROpenDoor");
+		
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(-2000.f, 490.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(-2060.f, 490.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(-2120.f, 490.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(-2180.f, 490.f, TYPE_HUR_ITEM, pObj));
+
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(-1510.f, 570.f, TYPE_HUR_STACKL, pObj));
+		
+
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 570.f, TYPE_MONSTER_MOVE, pObj));
+		
     
 	    //HURDLE CREATE
 		//움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1480.f, 555.f, TYPE_HUR_FLOAT, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1080.f, 570.f, TYPE_HUR_FLOAT, pObj));
 
 		//움직이는 허들을 통해 점프하기
-    	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 555.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 465.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1330.f, 450.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1330.f, 510.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1330.f, 570.f, TYPE_HUR_FIXED, pObj));
+    	
+		
 		
 		//아이템 허들과 안움직이는 허들 ( 아이템 먹기 )
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1980.f, 425.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2070.f, 425.f, TYPE_HUR_ITEM, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2160.f, 425.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1710.f, 425.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1770.f, 425.f, TYPE_HUR_ITEM, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1830.f, 425.f, TYPE_HUR_FIXED, pObj));
 
 		//안움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2450.f, 555.f, TYPE_HUR_FLOAT, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2670.f, 555.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2670.f, 465.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2020.f, 570.f, TYPE_HUR_FLOAT, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2020.f, 510.f, TYPE_HUR_FLOAT, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2180.f, 570.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2180.f, 510.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2180.f, 450.f, TYPE_HUR_FIXED, pObj));
 
 		//거북이(허들 사이에 움직임)
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(3005.f, 566.f, TYPE_MONSTER_TURTLE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(2400.f, 570.f, TYPE_MONSTER_MOVE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(2400.f, 570.f, TYPE_MONSTER_MOVE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(2500.f, 570.f, TYPE_MONSTER_MOVE, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(2600.f, 570.f, TYPE_MONSTER_TURTLE, pObj));
 
 		//안움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3330.f, 555.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3420.f, 555.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3420.f, 465.f, TYPE_HUR_FIXED, pObj));
+		
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3090.f, 570.f, TYPE_HUR_FIXED, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(3090.f, 510.f, TYPE_HUR_FIXED, pObj));
+
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(5000.f, 570.f, TYPE_HUR_STACKL, pObj));
+
+
 		
 
 		
@@ -73,11 +107,11 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		//굴뚝(임시)
 		//m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2030.f, 575.f, TYPE_HUR_STACK, pObj));
 		//보스(임시)
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(6200.f, 510.f, TYPE_BOSS, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(6000.f, 510.f, TYPE_BOSS, pObj));
 
 		for (int i = 0; i < 8; ++i)
 		{
-			m_ObjList[OBJ_CLOUD].push_back(CAbstractFactory<CCloud>::Create(float((rand() % 600 + 1300.f)) + float((rand() % 400 + 100.f)) + 500.f, float((rand() % 60 + 300)), 0));
+			m_ObjList[OBJ_CLOUD].push_back(CAbstractFactory<CCloud>::Create(float((rand() % 600 + 1300.f)) + float((rand() % 400 + 100.f)) + 300.f, float((rand() % 60 + 100)), 0));
 		}
 	}
 
@@ -119,6 +153,8 @@ void CObjMgr::Update()
 
 void CObjMgr::Late_Update()
 {
+	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
+
 	for (int i = 0; i < OBJ_END; ++i)
 	{
 		for (auto& iter = m_ObjList[i].begin(); iter != m_ObjList[i].end();)
@@ -127,6 +163,9 @@ void CObjMgr::Late_Update()
 			++iter;
 		}
 	}
+	
+		
+	
   
 	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 

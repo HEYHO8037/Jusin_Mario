@@ -28,7 +28,7 @@ void CItem::Initialize(void)
 		
 		m_bDead = false;
 		 //占쏙옙占쏙옙占쏙옙占쏙옙肪占?占쌈듸옙占쌩곤옙
-		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/GrowItem.bmp", L"GrowItem");
+		
 
 
 	}
@@ -40,10 +40,16 @@ void CItem::Initialize(void)
 		m_tInfo.fCY = 53.f;
 	
 		m_bDead = false;
-		CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BulletItem.bmp", L"BulletItem");
+		
 	}
 
-	
+	if (m_tType == TYPE_ITEM_STAR)
+	{
+		m_tInfo.fCX = 250.f;
+		m_tInfo.fCY = 250.f;
+
+		m_bDead = false;
+	}
 
 }
 
@@ -122,6 +128,24 @@ void CItem::Render(HDC hDC)
 			RGB(0, 0, 255));			// 제거하고자 하는 색상
 	}
 		break;
+
+	case TYPE_ITEM_STAR: //占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"ItemStar");
+
+		GdiTransparentBlt(hDC, 					// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(m_tInfo.fCX),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(m_tInfo.fCY),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(0, 0, 255));			// 제거하고자 하는 색상
+	}
+	break;
 
 	default:
 		break;

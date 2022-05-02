@@ -60,5 +60,13 @@ public:
 		return pObj;
 	}
 
+	static CObj*	Create(float _fX, float _fY, TYPE _eType, bool _right)
+	{
+		CObj*	pObj = new T(_eType,_right);
+		pObj->Initialize();
+		pObj->Set_Pos(_fX, _fY);
+		return pObj;
+	}
+
 };
 
