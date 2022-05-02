@@ -235,7 +235,7 @@ void CPlayer::OffSet(void)
 
 	if (iOffSet - 200 > m_tInfo.fX + iScrollX)
 	{
-		//CScrollMgr::Get_Instance()->Set_ScrollX(m_tInfo.m_fSpeed);
+		CScrollMgr::Get_Instance()->Set_ScrollX(m_tInfo.m_fSpeed);
 	}
 	else if (iOffSet + 20 < m_tInfo.fX + iScrollX)
 	{

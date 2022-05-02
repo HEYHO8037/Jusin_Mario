@@ -48,6 +48,7 @@ public:
 	void Collision_Player_FloatHuddle();
 	void Collision_Bullet_Huddle();
 	void Collision_Huddle_Huddle();
+	void Collision_Item_Huddle();
 
 
 

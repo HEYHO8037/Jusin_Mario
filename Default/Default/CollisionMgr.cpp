@@ -3,6 +3,9 @@
 #include "Player.h"
 #include "Hurdle.h"
 #include "Monster.h"
+#include "ObjMgr.h"
+#include "AbstractFactory.h"
+#include "Item.h"
 
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 DWORD CCollisionMgr::CTime = 0;
@@ -501,3 +504,39 @@ void CCollisionMgr::Collision_Huddle_Huddle()
 	}
 }
 
+void CCollisionMgr::Collision_Item_Huddle()
+{
+	
+	for (auto& Dest : (*m_ObjList[OBJ_PLAYER]))
+	{
+		for (auto& iter = (*m_ObjList + OBJ_HURDLE)->begin(); iter != (*m_ObjList + OBJ_HURDLE)->end();)
+		{
+		
+			if ((*iter)->Get_Type() == TYPE_HUR_ITEM)
+			{
+				float fX = 0.f; float fY = 0.f;
+				if (Check_Rect(Dest, (*iter), &fX, &fY))
+				{
+					if (fX > fY)
+					{
+						if (Dest->Get_Rect().top < (*iter)->Get_Rect().bottom)
+						{
+							Dest->Set_PostY(fY);
+							if (CTime + 300 < GetTickCount())
+							{
+								CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(2080.f, 355.f, TYPE_ITEM_GROW));
+								CTime = GetTickCount();
+							}
+							/*m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 580.f, TYPE_ITEM_GROW, pObj));
+							m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(350.f, 580.f, TYPE_ITEM_BULLET, pObj));*/
+
+						}
+
+					}
+
+				}
+			}
+			++iter;
+		}
+	}
+}
