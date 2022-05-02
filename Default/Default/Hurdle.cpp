@@ -24,15 +24,19 @@ void CHurdle::Initialize(void)
 	{
 	case TYPE_HUR_FIXED:
 		m_bIsMove = false;
+		m_bIsItem = false;
 		break;
 	case TYPE_HUR_FLOAT:
 		m_bIsMove = true;
+		m_bIsItem = false;
 		break;
 	case TYPE_HUR_ITEM:
 		m_bIsMove = true;
+		m_bIsItem = false;
 		break;
 	case TYPE_HUR_STACK:
 		m_bIsMove = true;
+		m_bIsItem = false;
 		break;
 	}
 }

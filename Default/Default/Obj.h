@@ -21,6 +21,7 @@ public:
 	const RECT& Get_Rect() { return m_tRect; }
 	
 	void Set_Dead() { m_bDead = true; }
+	bool Get_Dead() { return m_bDead; }
 
 	const int& Get_Hp() { return m_tInfo.m_iHp; }
 	void Set_HpPlus() { m_tInfo.m_iHp += 1; }

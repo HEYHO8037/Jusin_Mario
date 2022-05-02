@@ -18,8 +18,10 @@ public:
 public:
 	bool GetIsMove() { return m_bIsMove; }
 	void SetMove(bool bIsMove) { m_bIsMove = bIsMove; }
-
+	bool GetIsItem() { return m_bIsItem; }
+	void SetIsItem(bool bIsItem) { m_bIsItem = bIsItem; }
 private:
 	bool m_bIsMove;
+	bool m_bIsItem;
 };
 

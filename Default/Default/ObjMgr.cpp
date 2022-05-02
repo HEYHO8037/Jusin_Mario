@@ -55,7 +55,7 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2160.f, 425.f, TYPE_HUR_FIXED, pObj));
 
 		//안움직이는 허들
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2480.f, 555.f, TYPE_HUR_FLOAT, pObj));
+		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2450.f, 555.f, TYPE_HUR_FLOAT, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2670.f, 555.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(2670.f, 465.f, TYPE_HUR_FIXED, pObj));
 
