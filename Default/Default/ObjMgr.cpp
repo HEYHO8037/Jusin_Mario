@@ -132,6 +132,7 @@ void CObjMgr::Late_Update()
 		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
 		CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
 		CCollisionMgr::Get_Instance()->Collision_Player_Item();
+		CCollisionMgr::Get_Instance()->Collision_Bullet_Huddle();
 		OTime = GetTickCount();
 	}
 	

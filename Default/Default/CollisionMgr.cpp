@@ -316,6 +316,29 @@ void CCollisionMgr::Collision_Player_Huddle()
 	}
 }
 
+void CCollisionMgr::Collision_Bullet_Huddle()
+{
+
+	float fX, fY;
+	
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_BULLET)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_BULLET)->end();
+	RECT rc{};
+
+	for (iter; iter != iterEnd; ++iter)
+	{
+		list<CObj*>::const_iterator Biter = (*m_ObjList + OBJ_HURDLE)->begin();
+		list<CObj*>::const_iterator BiterEnd = (*m_ObjList + OBJ_HURDLE)->end();
+
+		for (Biter; Biter != BiterEnd; ++Biter)
+		{
+			if (IntersectRect(&rc, &((*iter)->Get_Rect()), &((*Biter)->Get_Rect())))
+				(*iter)->Set_Dead();
+		}
+	}
+
+}
+
 void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sour)
 {
 	TYPE eType;
