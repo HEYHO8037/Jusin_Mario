@@ -46,7 +46,6 @@ public:
 	void Collision_Player_Item();
 	//void Collision_Player_FixedHuddle();
 	void Collision_Player_FloatHuddle();
-
 	void Collision_Bullet_Huddle();
 	void Collision_Huddle_Huddle();
 

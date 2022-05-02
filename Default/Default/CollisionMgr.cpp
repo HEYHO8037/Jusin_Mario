@@ -258,7 +258,6 @@ void CCollisionMgr::Collision_Player_Item()
 	}
 }
 
-
 void CCollisionMgr::Collision_Bullet_Huddle()
 {
 
@@ -330,6 +329,55 @@ void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sou
 		}
 	}
 }
+
+void CCollisionMgr::Collision_Player_FixedHuddle()
+{
+	float fX, fY;
+	TYPE	eType;
+
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_HURDLE)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_HURDLE)->end();
+
+	for (iter; iter != iterEnd; ++iter)
+	{
+		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		{
+			eType = (*iter)->Get_Type();
+
+			if (eType == TYPE_HUR_FIXED)
+			{
+				if (fX > fY)
+				{
+					if ((*iter)->Get_Info().fY >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
+					{
+						if ((*iter)->Get_Rect().left <= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX &&
+							(*iter)->Get_Rect().right >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+						{
+							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Rect().top);
+						}
+					}
+					else
+					{
+						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
+					}
+				}
+				else
+				{
+					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
+					}
+					else
+					{
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
+					}
+				}
+			}
+		}
+	}
+
+}
+
 
 void CCollisionMgr::Collision_Player_FloatHuddle()
 {
