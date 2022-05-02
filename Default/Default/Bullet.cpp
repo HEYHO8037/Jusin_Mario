@@ -63,7 +63,7 @@ void CBullet::Late_Update(void)
 void CBullet::Render(HDC hDC)
 {
 	int ScrollX = CScrollMgr::Get_Instance()->Get_ScrollX();
-	Ellipse(hDC, m_tRect.left + ScrollX, m_tRect.top, m_tRect.right + ScrollX, m_tRect.bottom);
+	Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 }
 
 void CBullet::Release(void)
