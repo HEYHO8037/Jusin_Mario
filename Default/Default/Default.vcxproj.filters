@@ -52,6 +52,12 @@
     <ClCompile Include="BossMonster.cpp">
       <Filter>01.Obj\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="BmpMgr.cpp">
+      <Filter>BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBmp.cpp">
+      <Filter>BmpMgr\MyBmp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LineMgr.h">
@@ -125,9 +131,15 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>JeongEun\UI</Filter>
-      </ClInclude>
+    </ClInclude>
     <ClInclude Include="BossMonster.h">
       <Filter>01.Obj\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="BmpMgr.h">
+      <Filter>BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBmp.h">
+      <Filter>BmpMgr\MyBmp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +213,12 @@
     </Filter>
     <Filter Include="JeongEun\Hurdle">
       <UniqueIdentifier>{d69a0272-bdcc-4e5f-98f8-1b19d0362321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BmpMgr">
+      <UniqueIdentifier>{847a5f53-d118-49ed-b782-981852bbb1f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BmpMgr\MyBmp">
+      <UniqueIdentifier>{27a4e5f1-68f2-43cc-ae30-038918c764f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

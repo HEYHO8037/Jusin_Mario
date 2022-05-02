@@ -33,7 +33,7 @@ public:
 	m_bJump = false;
 	}
 	bool Get_Jump() { return m_bJump;  }
-	void Draw_Character(HDC hDC);
+	
 
 private:
 	void OffSet();
@@ -44,6 +44,7 @@ private:
 	float m_fTime;
 	float m_mTime;
 	float m_fPower;
+	bool m_bRight;
 	TYPE m_tWeapon;
 	DWORD PTime;
 };
