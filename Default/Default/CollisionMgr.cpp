@@ -226,17 +226,28 @@ void CCollisionMgr::Collision_Monster_Bullet()
 void CCollisionMgr::Collision_Player_Item()
 {
 	float fX, fY;
+	TYPE eType;
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_ITEM)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_ITEM)->end();
+	RECT rc{};
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_ITEM]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_ITEM]->end();
-	
 	for (iter; iter != iterEnd; ++iter)
 	{
-		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
+		if (IntersectRect(&rc, &((*iter)->Get_Rect()), &(m_ObjList[OBJ_PLAYER]->front()->Get_Rect())))
 		{
+			eType = (*iter)->Get_Type();// 아이템 타입 얻어오기
+			if (eType == TYPE_ITEM_GROW)
+				//플레이어 성장 함수
+				m_ObjList[OBJ_PLAYER]->front()->Set_HpPlus();
+			else if (eType == TYPE_ITEM_BULLET)
+				//총알쏘는 함수
+				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Weapon(eType);
 		}
+
 	}
 }
+
+
 
 void CCollisionMgr::Collision_Player_Huddle()
 {

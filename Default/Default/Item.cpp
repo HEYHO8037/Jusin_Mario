@@ -50,15 +50,13 @@ int CItem::Update(void)
 	//성장 아이템
 	if (m_ItemType == TYPE_ITEM_GROW)
 	{
-		//성장아이템만 방향이동
-		m_tInfo.m_fSpeed = 4.f; //성장아이템만 속도추가
+		m_tInfo.m_fSpeed = 4.f; //성장아이템만 속도추가, 움직이게 만듦
+		m_tInfo.fX -= m_tInfo.m_fSpeed;
 	}
 
-	//총알 생성 아이템
-	if (m_ItemType == TYPE_ITEM_BULLET)
+	if (m_ItemType == TYPE_ITEM_BULLET) // 총알 아이템
 	{
-		m_tInfo.fCX = 30.f;
-		m_tInfo.fCY = 50.f;
+
 	}
 
 	Update_Rect();

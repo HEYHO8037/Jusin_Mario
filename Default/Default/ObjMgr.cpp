@@ -34,8 +34,8 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 	if (eID == OBJ_PLAYER)
 	{
 		//ITEM CREATE
-		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
-		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 200.f, TYPE_ITEM_GROW, pObj));
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(200.f, 550.f, TYPE_ITEM_GROW, pObj));
+		m_ObjList[OBJ_ITEM].push_back(CAbstractFactory<CItem>::Create(250.f, 550.f, TYPE_ITEM_BULLET, pObj));
 	
 		//MONSTER CREATE
 		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::Create(400.f, 575.f, TYPE_MONSTER_MOVE, pObj));
@@ -131,7 +131,7 @@ void CObjMgr::Late_Update()
 		CCollisionMgr::Collision_Monster_Huddle(m_ObjList[OBJ_HURDLE], m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
 		CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
-
+		CCollisionMgr::Get_Instance()->Collision_Player_Item();
 		OTime = GetTickCount();
 	}
 	
