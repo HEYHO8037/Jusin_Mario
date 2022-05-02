@@ -71,7 +71,7 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 
 		//Boss Create(임시)
 
-		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(600.f, 575.f, TYPE_BOSS, pObj));
+		m_ObjList[OBJ_MONSTER].push_back(CAbstractFactory<CBossMonster>::Create(4500.f, 575.f, TYPE_BOSS, pObj));
 
 	}
 
