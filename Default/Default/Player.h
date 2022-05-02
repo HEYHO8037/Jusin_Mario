@@ -34,6 +34,8 @@ public:
 	void Set_Jump() { m_mJump = true;
 	m_bJump = false;
 	}
+	bool Get_Jump() { return m_bJump;  }
+
 	void Draw_Character(HDC hDC);
 private:
 	void OffSet();

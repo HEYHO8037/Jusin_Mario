@@ -16,13 +16,10 @@ public:
 	virtual void Render(HDC hDC) override;
 
 public:
-	//충돌처리를 위해서 허들타입을 반환해줌
-	TYPE Get_type(void) { return m_eHurdleType; }
+	bool GetIsMove() { return m_bIsMove; }
+	void SetMove() { m_bIsMove = !m_bIsMove; }
 
 private:
-	TYPE m_eHurdleType;
-
-
-
+	bool m_bIsMove;
 };
 

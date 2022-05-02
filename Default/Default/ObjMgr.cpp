@@ -123,7 +123,7 @@ void CObjMgr::Late_Update()
 	}
   
 	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
-	
+
 	if (OTime + 30 < GetTickCount())
 	{
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
@@ -131,6 +131,7 @@ void CObjMgr::Late_Update()
 		CCollisionMgr::Collision_Monster_Huddle(m_ObjList[OBJ_HURDLE], m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
 		CCollisionMgr::Get_Instance()->Collision_Player_Huddle();
+		CCollisionMgr::Get_Instance()->Collision_Huddle_Huddle();
 
 		OTime = GetTickCount();
 	}
