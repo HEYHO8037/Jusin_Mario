@@ -46,6 +46,7 @@ void CPlayer::Initialize(void)
 
 void CPlayer::Release(void)
 {
+	CBmpMgr::Get_Instance()->Destroy_Instance();
 }
 
 int CPlayer::Update(void)
@@ -180,7 +181,7 @@ void CPlayer::Jumping(void)
 {
 	if (m_bJump)
 	{
-		m_tInfo.fY -= m_fPower * m_fTime - 2.f * m_fTime * m_fTime * 0.5f;
+		m_tInfo.fY -= m_fPower * m_fTime - 1.5f * m_fTime * m_fTime * 0.5f;
 		m_fTime += 0.2f;
 
 
