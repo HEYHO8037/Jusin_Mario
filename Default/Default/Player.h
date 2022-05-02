@@ -17,14 +17,7 @@ public:
 public:
 	void Set_Weapon(TYPE _Weapon) 
 	{ 
-		if (_Weapon == TYPE_NO_WEAPON)
-		{ 
-			m_bWeapon = false; 
-		}
-		else if (_Weapon == TYPE_GUN_WEAPON)
-		{
-			m_bWeapon = true;
-		}
+		m_tWeapon = _Weapon;
 	}
 
 
@@ -34,7 +27,7 @@ public:
 	void Set_Jump() { m_mJump = true;
 	m_bJump = false;
 	}
-	void Draw_Character(HDC hDC);
+
 private:
 	void OffSet();
 	void Key_Update(void);
@@ -44,7 +37,7 @@ private:
 	float m_fTime;
 	float m_mTime;
 	float m_fPower;
-	bool m_bWeapon;
+	TYPE m_tWeapon;
 	DWORD PTime;
 };
 
