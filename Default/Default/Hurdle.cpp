@@ -3,12 +3,11 @@
 
 
 CHurdle::CHurdle()
-	:m_eHurdleType(TYPE_END)
 {
 }
 CHurdle::CHurdle(TYPE e_Type) 
 {
-	m_eHurdleType = e_Type;
+	m_tType = e_Type;
 
 }
 CHurdle::~CHurdle()
@@ -21,15 +20,15 @@ void CHurdle::Initialize(void)
 	m_tInfo.fCX = 50.f;
 	m_tInfo.fCY = 50.f;
 
-	/*switch (m_eType)
+	switch (m_tType)
 	{
-	case HUR_FIXED:	
+	case TYPE_HUR_FIXED:
+		m_bIsMove = false;
 		break;
-	case HUR_FLOAT:
+	case TYPE_HUR_FLOAT:
+		m_bIsMove = true;
 		break;
-	case HUR_ITEM:
-		break;
-	}*/
+	}
 }
 
 int CHurdle::Update(void)
@@ -67,7 +66,7 @@ void CHurdle::Render(HDC hDC)
 	HBRUSH   brush;
 	HGDIOBJ h_old_brush;
 
-	switch (m_eHurdleType)
+	switch (m_tType)
 	{
 	case TYPE_HUR_FIXED://고정-갈색
 		brush = CreateSolidBrush(RGB(128, 64, 0));	//배경색

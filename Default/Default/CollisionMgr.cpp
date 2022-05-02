@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CollisionMgr.h"
 #include "Player.h"
+#include "Hurdle.h"
 #include "Monster.h"
 
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
@@ -254,38 +255,40 @@ void CCollisionMgr::Collision_Player_Huddle()
 			switch (eType)
 			{
 			case TYPE_HUR_FIXED:
-				if (fX > fY)  
-				{	
-					//»óÃæµ¹
-					if ((*iter)->Get_Info().fY > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
+			{
+				if (fX > fY)
+				{
+					if ((*iter)->Get_Info().fY >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fY)
 					{
-						if((*iter)->Get_Rect().left<=m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX&&
-							(*iter)->Get_Rect().right>= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
+						if ((*iter)->Get_Rect().left <= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX &&
+							(*iter)->Get_Rect().right >= m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
 						{
 							dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_PosY((*iter)->Get_Rect().top);
 						}
 					}
-					//ÇÏÃæµ¹
-					else					
+					else
 					{
 						dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Set_Power(0.f);
 					}
 				}
-				else 
+				else
 				{
 					if ((*iter)->Get_Info().fX > m_ObjList[OBJ_PLAYER]->front()->Get_Info().fX)
 					{
 						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
 					}
-					else 
+					else
 					{
-						//(*iter)->Set_PostX(fX);
+						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
 					}
 				}
 				break;
+			}
 			case TYPE_HUR_FLOAT:
-				Collision_RectEx_Push(*m_ObjList[OBJ_PLAYER], *m_ObjList[OBJ_HURDLE]);
+			{
+				Collision_RectEx_Push();
 				break;
+			}
 			case TYPE_HUR_ITEM:
 				break;
 			case TYPE_HUR_STACK:
@@ -345,28 +348,91 @@ void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sou
 	}
 }
 
-void CCollisionMgr::Collision_RectEx_Push(list<CObj*> _Dest, list<CObj*> _Sour)
+void CCollisionMgr::Collision_RectEx_Push()
 {
-	for (auto& Dest : _Dest)
+
+	for (auto& Dest : (*m_ObjList[OBJ_PLAYER]))
 	{
-		for (auto& Sour : _Sour)
+		list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_HURDLE)->begin();
+		list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_HURDLE)->end();
+
+		for (iter; iter != iterEnd; ++iter)
 		{
 			float	fX = 0.f, fY = 0.f;
 
-			if (Check_Rect(Dest, Sour, &fX, &fY))
+			if (Check_Rect(Dest, (*iter), &fX, &fY))
 			{
 				
-				if (fY > fX)
+				if (fY >= fX)
 				{
 					// ÁÂ Ãæµ¹
-					if (Dest->Get_Info().fX > Sour->Get_Info().fX)
-						Sour->Set_PosX(-fX);
+					if (Dest->Get_Info().fX > (*iter)->Get_Info().fX)
+						(*iter)->Set_PosX((*iter)->Get_Info().fX - fX);
 
 					// ¿ì Ãæµ¹
 					else
-						Sour->Set_PosX(fX);
+					{
+						if (!dynamic_cast<CHurdle*>(*iter)->GetIsMove())
+						{
+							Dest->Set_PosX(Dest->Get_Info().fX - fX);
+							return;
+						}
+
+						(*iter)->Set_PosX((*iter)->Get_Info().fX + fX);
+					}
+				}
+				else
+				{
+					if (Dest->Get_Info().fY <= (*iter)->Get_Info().fY && dynamic_cast<CPlayer*>(Dest)->Get_Jump())
+						Dest->Set_PosY((*iter)->Get_Info().fY - fY);
+
+					else
+						Dest->Set_PosY((*iter)->Get_Info().fY + fY);
 				}
 
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_Huddle_Huddle()
+{
+	float fX, fY;
+
+	list<CObj*>::const_iterator iter = (*m_ObjList + OBJ_HURDLE)->begin();
+	list<CObj*>::const_iterator iterEnd = (*m_ObjList + OBJ_HURDLE)->end();
+
+	for (iter; iter != iterEnd; ++iter)
+	{
+		list<CObj*>::const_iterator iterSec = (*m_ObjList + OBJ_HURDLE)->begin();
+		list<CObj*>::const_iterator iterSecEnd = (*m_ObjList + OBJ_HURDLE)->end();
+
+		for (iterSec; iterSec != iterSecEnd; ++iterSec)
+		{
+			if ((*iter) == (*iterSec))
+			{
+				continue;
+			}
+			else
+			{
+				if (Check_Rect((*iter), (*iterSec), &fX, &fY) && (*iter)->Get_Type() == TYPE_HUR_FLOAT)
+				{
+					if (fX <= fY)
+					{
+						if ((*iter)->Get_Info().fX <= (*iterSec)->Get_Info().fX)
+						{
+							(*iter)->Set_PosX((*iter)->Get_Info().fX - fX);
+							dynamic_cast<CHurdle*>((*iter))->SetMove();
+							return;
+						}
+						else
+						{
+							(*iter)->Set_PosX((*iter)->Get_Info().fX + fX);
+							dynamic_cast<CHurdle*>((*iter))->SetMove();
+							return;
+						}
+					}
+				}
 			}
 		}
 	}
