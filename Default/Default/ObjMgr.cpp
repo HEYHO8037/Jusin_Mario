@@ -48,7 +48,7 @@ void CObjMgr::Add_Object(OBJID eID, CObj* pObj)
 		//움직이는 허들을 통해 점프하기
     	m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 525.f, TYPE_HUR_FIXED, pObj));
 		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 575.f, TYPE_HUR_FIXED, pObj));
-		m_ObjList[OBJ_HURDLE].push_back(CAbstractFactory<CHurdle>::Create(1730.f, 475.f, TYPE_HUR_FIXED, pObj));
+		
 
 
 		//아이템 허들과 안움직이는 허들 ( 아이템 먹기 )

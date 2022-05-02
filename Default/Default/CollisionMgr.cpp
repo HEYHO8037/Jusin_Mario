@@ -236,8 +236,8 @@ void CCollisionMgr::Collision_Player_Item()
 	{
 		if (IntersectRect(&rc, &((*iter)->Get_Rect()), &(m_ObjList[OBJ_PLAYER]->front()->Get_Rect())))
 		{
-			eType = (*iter)->Get_Type(); // 아이템 타입 얻어오기
-			if (eType == TYPE_ITEM_GROW) //플레이어 성장 함수
+			eType = (*iter)->Get_Type(); // ?�이???�???�어?�기
+			if (eType == TYPE_ITEM_GROW) //?�레?�어 ?�장 ?�수
 			{				
 				if (m_ObjList[OBJ_PLAYER]->front()->Get_Hp() <= 2)
 				{
@@ -246,7 +246,7 @@ void CCollisionMgr::Collision_Player_Item()
 				}
 
 			}
-			else if (eType == TYPE_ITEM_BULLET)//총알쏘는 함수				
+			else if (eType == TYPE_ITEM_BULLET)//총알?�는 ?�수				
 			{
 				dynamic_cast<CPlayer*>(m_ObjList[OBJ_PLAYER]->front())->Equip_Weapon();
 				(*iter)->Set_Dead();
