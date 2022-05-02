@@ -5,6 +5,7 @@
 #include "ObjMgr.h"
 #include "AbstractFactory.h"
 #include "Bullet.h"
+#include "BmpMgr.h"
 
 
 CPlayer::CPlayer()
@@ -18,11 +19,12 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize(void)
 {
-	m_tInfo.fCX = 50.f;
-	m_tInfo.fCY = 50.f;
+	m_tInfo.fCX = 100.f;
+	m_tInfo.fCY = 100.f;
 	m_tInfo.fX = 100.f;
 	m_tInfo.fY = float(600) - m_tInfo.fCY*0.5;
-	
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/PlayerR.bmp", L"PlayerR");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/PlayerL.bmp", L"PlayerL");
 
 	m_tInfo.m_iHp = 1;
 	m_tInfo.m_fSpeed = 5.f;
@@ -34,6 +36,7 @@ void CPlayer::Initialize(void)
 	m_fTime = 0.f;
 	m_mTime = 0.f;
 	m_fPower = 5.f;
+	m_bRight = true;
 	int Level = 1;
 	PTime = GetTickCount();
 
@@ -69,8 +72,40 @@ void CPlayer::Render(HDC hDC)
 {
 	HBRUSH   brush;
 	HGDIOBJ h_old_brush;
+	if (m_bRight)
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerR");
 
-	if (m_tWeapon == TYPE_NO_WEAPON)
+		GdiTransparentBlt(hDC, 					// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(m_tInfo.fCX),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(m_tInfo.fCY),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(0, 255, 0));			// 제거하고자 하는 색상
+	}
+	else
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerL");
+
+		GdiTransparentBlt(hDC, 					// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(m_tInfo.fCX),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(m_tInfo.fCY),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(0, 255, 0));			// 제거하고자 하는 색상
+	}
+
+	/*if (m_tWeapon == TYPE_NO_WEAPON)
 	{
 		brush = CreateSolidBrush(RGB(0, 0, 0));
 		h_old_brush = SelectObject(hDC, brush);
@@ -85,7 +120,7 @@ void CPlayer::Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left + (m_tInfo.m_iHp - 1) * 2, m_tRect.top - (m_tInfo.m_iHp - 1) * 15, m_tRect.right - (m_tInfo.m_iHp - 1) * 2, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
-	}
+	}*/
 
 }
 
@@ -99,10 +134,12 @@ void CPlayer::Key_Update(void)
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
 		m_tInfo.fX -= m_tInfo.m_fSpeed;
+		m_bRight = false;
 	}
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
 	{
 		m_tInfo.fX += m_tInfo.m_fSpeed;
+		m_bRight = true;
 	}
 
 	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
