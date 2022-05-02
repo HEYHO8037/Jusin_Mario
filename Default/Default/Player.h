@@ -54,5 +54,6 @@ private:
 	TYPE m_tWeapon;
 	DWORD PTime;
 	float m_fGroundPoint;
+	TCHAR m_szFPS[64];
 };
 

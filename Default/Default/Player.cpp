@@ -36,7 +36,7 @@ void CPlayer::Initialize(void)
 	m_bJump = false;
 	m_fTime = 0.f;
 	m_mTime = 0.f;
-	m_fPower = 5.f;
+	m_fPower = 6.f;
 	m_bRight = true;
 	int Level = 1;
 	PTime = GetTickCount();
@@ -125,6 +125,12 @@ void CPlayer::Render(HDC hDC)
 		DeleteObject(brush);
 	}*/
 
+	 //되는지확인해주세여 . .  
+	if (0==m_tInfo.m_iHp )
+	{
+		lstrcpy(m_szFPS, L"GAMEOVER!");
+		TextOut(hDC, WINCX >> 1, WINCY >> 1, m_szFPS, lstrlen(m_szFPS));
+	}
 }
 
 
@@ -183,7 +189,7 @@ void CPlayer::Jumping(void)
 			m_bJump = false;
 			m_fTime = 0.f;
 			m_tInfo.fY = m_fGroundPoint;
-			m_fPower = 5.f;
+			m_fPower = 6.f;
 		}
 	}
 }
@@ -205,7 +211,7 @@ void CPlayer::MJump(void)
 	}
 	else
 	{
-		m_fPower = 5.f;
+		m_fPower = 6.f;
 	}
 }
 
