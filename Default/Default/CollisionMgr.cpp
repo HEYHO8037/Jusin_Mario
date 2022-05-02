@@ -7,6 +7,7 @@
 CCollisionMgr* CCollisionMgr::m_pInstance = nullptr;
 DWORD CCollisionMgr::CTime = 0;
 CCollisionMgr::CCollisionMgr()
+	: m_pSaveObj(nullptr)
 {
 }
 
@@ -239,7 +240,7 @@ void CCollisionMgr::Collision_Player_Item()
 	}
 }
 
-void CCollisionMgr::Collision_Player_Huddle()
+void CCollisionMgr::Collision_Player_FixedHuddle()
 {
 	float fX, fY;
 	TYPE	eType;
@@ -252,9 +253,8 @@ void CCollisionMgr::Collision_Player_Huddle()
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
 			eType = (*iter)->Get_Type();
-			switch (eType)
-			{
-			case TYPE_HUR_FIXED:
+
+			if (eType == TYPE_HUR_FIXED)
 			{
 				if (fX > fY)
 				{
@@ -282,21 +282,10 @@ void CCollisionMgr::Collision_Player_Huddle()
 						m_ObjList[OBJ_PLAYER]->front()->Set_PostX(-fX);
 					}
 				}
-				break;
-			}
-			case TYPE_HUR_FLOAT:
-			{
-				Collision_RectEx_Push();
-				break;
-			}
-			case TYPE_HUR_ITEM:
-				break;
-			case TYPE_HUR_STACK:
-				break;
 			}
 		}
-
 	}
+
 }
 
 void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sour)
@@ -348,7 +337,7 @@ void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sou
 	}
 }
 
-void CCollisionMgr::Collision_RectEx_Push()
+void CCollisionMgr::Collision_Player_FloatHuddle()
 {
 
 	for (auto& Dest : (*m_ObjList[OBJ_PLAYER]))
@@ -362,14 +351,19 @@ void CCollisionMgr::Collision_RectEx_Push()
 
 			if (Check_Rect(Dest, (*iter), &fX, &fY))
 			{
-				
 				if (fY >= fX)
 				{
-					// ÁÂ Ãæµ¹
 					if (Dest->Get_Info().fX > (*iter)->Get_Info().fX)
-						(*iter)->Set_PosX((*iter)->Get_Info().fX - fX);
+					{
+						if (!dynamic_cast<CHurdle*>(*iter)->GetIsMove())
+						{
+							Dest->Set_PosX(Dest->Get_Info().fX + fX);
+							return;
+						}
 
-					// ¿ì Ãæµ¹
+						(*iter)->Set_PosX((*iter)->Get_Info().fX - fX);
+					}
+						
 					else
 					{
 						if (!dynamic_cast<CHurdle*>(*iter)->GetIsMove())
@@ -383,13 +377,27 @@ void CCollisionMgr::Collision_RectEx_Push()
 				}
 				else
 				{
-					if (Dest->Get_Info().fY <= (*iter)->Get_Info().fY && dynamic_cast<CPlayer*>(Dest)->Get_Jump())
-						Dest->Set_PosY((*iter)->Get_Info().fY - fY);
+					if (Dest->Get_Info().fY <= (*iter)->Get_Info().fY )
+					{
+						dynamic_cast<CPlayer*>(Dest)->Set_PosY((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY );
+						dynamic_cast<CPlayer*>(Dest)->Set_GroundPoint((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
+						m_pSaveObj = (*iter);
+					}
 
 					else
+					{
 						Dest->Set_PosY((*iter)->Get_Info().fY + fY);
+					}
 				}
 
+			}
+			else if(m_pSaveObj && 
+				((Dest->Get_Rect().right < m_pSaveObj->Get_Rect().left)
+				|| (Dest->Get_Rect().left > m_pSaveObj->Get_Rect().right)))
+			{
+				dynamic_cast<CPlayer*>(Dest)->Set_GroundPoint(float(600) - Dest->Get_Info().fCY*0.5);
+				dynamic_cast<CPlayer*>(Dest)->Set_Falling(true);
+				m_pSaveObj = nullptr;
 			}
 		}
 	}
@@ -422,13 +430,13 @@ void CCollisionMgr::Collision_Huddle_Huddle()
 						if ((*iter)->Get_Info().fX <= (*iterSec)->Get_Info().fX)
 						{
 							(*iter)->Set_PosX((*iter)->Get_Info().fX - fX);
-							dynamic_cast<CHurdle*>((*iter))->SetMove();
+							dynamic_cast<CHurdle*>((*iter))->SetMove(false);
 							return;
 						}
 						else
 						{
 							(*iter)->Set_PosX((*iter)->Get_Info().fX + fX);
-							dynamic_cast<CHurdle*>((*iter))->SetMove();
+							dynamic_cast<CHurdle*>((*iter))->SetMove(false);
 							return;
 						}
 					}

@@ -27,6 +27,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.m_iHp = 3;
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
+	m_tType = TYPE_PLAYER;
 
 	m_bWeapon = false;
 	m_bDead = false;
@@ -36,6 +37,7 @@ void CPlayer::Initialize(void)
 	m_fPower = 5.f;
 	int Level = 1;
 	PTime = GetTickCount();
+	m_fGroundPoint = float(600) - m_tInfo.fCY*0.5;
 
 }
 
@@ -50,6 +52,7 @@ int CPlayer::Update(void)
 	OffSet();
 	Key_Update();
 	Jumping();
+	Falling();
 	MJump();
 	Update_Rect();
 
@@ -150,24 +153,25 @@ void CPlayer::Jumping(void)
 		m_tInfo.fY -= m_fPower * m_fTime - 2.f * m_fTime * m_fTime * 0.5f;
 		m_fTime += 0.2f;
 
-		if (m_tInfo.fY > float(600)-m_tInfo.fCY*0.5)
+
+		if (m_tInfo.fY > m_fGroundPoint)
 		{
 			m_bJump = false;
 			m_fTime = 0.f;
-			m_tInfo.fY = 600 - m_tInfo.fCY*0.5;
+			m_tInfo.fY = m_fGroundPoint;
+			m_fPower = 5.f;
 		}
 	}
 }
 
 void CPlayer::MJump(void)
 {
-	
 	if (m_mJump)
 	{
 		m_tInfo.fY -= m_fPower * m_mTime - 2.f * m_mTime * m_mTime * 0.5f;
 		m_mTime += 0.2f;
 
-		if (m_tInfo.fY > float(600) - m_tInfo.fCY*0.5)
+		if (m_tInfo.fY > m_fGroundPoint)
 		{
 			m_mJump = false;
 			m_mTime = 0.f;
@@ -178,6 +182,23 @@ void CPlayer::MJump(void)
 	else
 	{
 		m_fPower = 5.f;
+	}
+}
+
+void CPlayer::Falling()
+{
+	if (m_bIsFalling)
+	{
+		m_tInfo.fY += m_fPower * m_fTime * 0.5f;
+		m_fTime += 0.2f;
+
+
+		if (m_tInfo.fY > m_fGroundPoint)
+		{
+			m_fTime = 0.f;
+			m_tInfo.fY = m_fGroundPoint;
+			m_bIsFalling = false;
+		}
 	}
 }
 
@@ -195,12 +216,4 @@ void CPlayer::OffSet(void)
 	{
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_tInfo.m_fSpeed);
 	}
-
-
-
 }
-
-
-
-
-

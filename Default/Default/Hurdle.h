@@ -17,7 +17,7 @@ public:
 
 public:
 	bool GetIsMove() { return m_bIsMove; }
-	void SetMove() { m_bIsMove = !m_bIsMove; }
+	void SetMove(bool bIsMove) { m_bIsMove = bIsMove; }
 
 private:
 	bool m_bIsMove;
