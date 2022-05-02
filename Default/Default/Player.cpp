@@ -28,7 +28,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
 
-	m_tWeapon = TYPE_GUN_WEAPON;
+	m_tWeapon = TYPE_NO_WEAPON;
 	m_bDead = false;
 	m_bJump = false;
 	m_fTime = 0.f;

@@ -15,9 +15,14 @@ public:
 	virtual void Render(HDC hDC);
 
 public:
-	void Set_Weapon(TYPE _Weapon) 
+	void Equip_Weapon() 
 	{ 
-		m_tWeapon = _Weapon;
+		m_tWeapon = TYPE_GUN_WEAPON;
+	}
+
+	void UnEquip_Weapon()
+	{
+		m_tWeapon = TYPE_NO_WEAPON;
 	}
 
 
