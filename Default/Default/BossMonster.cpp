@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "ObjMgr.h"
 #include "ScrollMgr.h"
+#include "BmpMgr.h"
 
 
 CBossMonster::CBossMonster()
@@ -21,14 +22,15 @@ CBossMonster::~CBossMonster()
 
 void CBossMonster::Initialize(void)
 {
-	m_tInfo.fCX = 150.f;
-	m_tInfo.fCY = 150.f;
+	m_tInfo.fCX = 268.f;
+	m_tInfo.fCY = 255.f;
 
 	m_tInfo.m_fSpeed = 10.f;
 	m_tInfo.m_iHp = 10;
 	currentState = None;
 	behaviorState = Exit;
-
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BossR.bmp", L"BossR");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/BossL2.bmp", L"BossL");
 	QueryPerformanceFrequency(&timer);
 	QueryPerformanceCounter(&start);
 }
@@ -57,7 +59,22 @@ void CBossMonster::Late_Update(void)
 
 void CBossMonster::Render(HDC hDC)
 {
-	HBRUSH	brush;
+	
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"BossL");
+
+		GdiTransparentBlt(hDC, 					// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(m_tInfo.fCX),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(m_tInfo.fCY),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 255, 255));			// 제거하고자 하는 색상
+	
+	/*HBRUSH	brush;
 	HGDIOBJ h_old_brush;
 
 	brush = CreateSolidBrush(RGB(100, 100, 100));
@@ -68,7 +85,7 @@ void CBossMonster::Render(HDC hDC)
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 	
 	SelectObject(hDC, h_old_brush);
-	DeleteObject(brush);
+	DeleteObject(brush);*/
 }
 
 void CBossMonster::BehaviorUpdate() {
