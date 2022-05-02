@@ -32,8 +32,13 @@ public:
 	void Set_Jump() { m_mJump = true;
 	m_bJump = false;
 	}
+	void Draw_Character(HDC hDC);
+	float Get_Power() { return m_fPower; }
+	float Get_GroundPoint() { return m_fGroundPoint;  }
+	void Set_GroundPoint(float fPoint) { m_fGroundPoint = fPoint; }
+	void Set_Falling(bool bIsFalling) { m_bIsFalling = bIsFalling; }
+	void Falling();
 	bool Get_Jump() { return m_bJump;  }
-	
 
 private:
 	void OffSet();
@@ -41,11 +46,13 @@ private:
 	void Jumping(void);
 	bool m_bJump;
 	bool m_mJump;
+	bool m_bIsFalling;
 	float m_fTime;
 	float m_mTime;
 	float m_fPower;
 	bool m_bRight;
 	TYPE m_tWeapon;
 	DWORD PTime;
+	float m_fGroundPoint;
 };
 

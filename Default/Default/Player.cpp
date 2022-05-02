@@ -29,6 +29,7 @@ void CPlayer::Initialize(void)
 	m_tInfo.m_iHp = 1;
 	m_tInfo.m_fSpeed = 5.f;
 	m_tInfo.m_fAngle = 0.f;
+	m_tType = TYPE_PLAYER;
 
 	m_tWeapon = TYPE_NO_WEAPON;
 	m_bDead = false;
@@ -39,6 +40,7 @@ void CPlayer::Initialize(void)
 	m_bRight = true;
 	int Level = 1;
 	PTime = GetTickCount();
+	m_fGroundPoint = float(600) - m_tInfo.fCY*0.5;
 
 }
 
@@ -53,6 +55,7 @@ int CPlayer::Update(void)
 	OffSet();
 	Key_Update();
 	Jumping();
+	Falling();
 	MJump();
 	Update_Rect();
 
@@ -76,33 +79,33 @@ void CPlayer::Render(HDC hDC)
 	{
 		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerR");
 
-		GdiTransparentBlt(hDC, 					// º¹»ç ¹ÞÀ», ÃÖÁ¾ÀûÀ¸·Î ±×¸²À» ±×¸± DC
-			int(m_tRect.left),	// 2,3 ÀÎÀÚ :  º¹»ç¹ÞÀ» À§Ä¡ X, Y
+		GdiTransparentBlt(hDC, 					// ë³µì‚¬ ë°›ì„, ìµœì¢…ì ìœ¼ë¡œ ê·¸ë¦¼ì„ ê·¸ë¦´ DC
+			int(m_tRect.left),	// 2,3 ì¸ìž :  ë³µì‚¬ë°›ì„ ìœ„ì¹˜ X, Y
 			int(m_tRect.top),
-			int(m_tInfo.fCX),				// 4,5 ÀÎÀÚ : º¹»ç¹ÞÀ» °¡·Î, ¼¼·Î ±æÀÌ
+			int(m_tInfo.fCX),				// 4,5 ì¸ìž : ë³µì‚¬ë°›ì„ ê°€ë¡œ, ì„¸ë¡œ ê¸¸ì´
 			int(m_tInfo.fCY),
-			hMemDC,							// ºñÆ®¸ÊÀ» °¡Áö°í ÀÖ´Â DC
-			0,								// ºñÆ®¸Ê Ãâ·Â ½ÃÀÛ ÁÂÇ¥, X,Y
+			hMemDC,							// ë¹„íŠ¸ë§µì„ ê°€ì§€ê³  ìžˆëŠ” DC
+			0,								// ë¹„íŠ¸ë§µ ì¶œë ¥ ì‹œìž‘ ì¢Œí‘œ, X,Y
 			0,
-			(int)m_tInfo.fCX,				// º¹»çÇÒ ºñÆ®¸ÊÀÇ °¡·Î, ¼¼·Î ±æÀÌ
+			(int)m_tInfo.fCX,				// ë³µì‚¬í•  ë¹„íŠ¸ë§µì˜ ê°€ë¡œ, ì„¸ë¡œ ê¸¸ì´
 			(int)m_tInfo.fCY,
-			RGB(0, 255, 0));			// Á¦°ÅÇÏ°íÀÚ ÇÏ´Â »ö»ó
+			RGB(0, 255, 0));			// ì œê±°í•˜ê³ ìž í•˜ëŠ” ìƒ‰ìƒ
 	}
 	else
 	{
 		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"PlayerL");
 
-		GdiTransparentBlt(hDC, 					// º¹»ç ¹ÞÀ», ÃÖÁ¾ÀûÀ¸·Î ±×¸²À» ±×¸± DC
-			int(m_tRect.left),	// 2,3 ÀÎÀÚ :  º¹»ç¹ÞÀ» À§Ä¡ X, Y
+		GdiTransparentBlt(hDC, 					// ë³µì‚¬ ë°›ì„, ìµœì¢…ì ìœ¼ë¡œ ê·¸ë¦¼ì„ ê·¸ë¦´ DC
+			int(m_tRect.left),	// 2,3 ì¸ìž :  ë³µì‚¬ë°›ì„ ìœ„ì¹˜ X, Y
 			int(m_tRect.top),
-			int(m_tInfo.fCX),				// 4,5 ÀÎÀÚ : º¹»ç¹ÞÀ» °¡·Î, ¼¼·Î ±æÀÌ
+			int(m_tInfo.fCX),				// 4,5 ì¸ìž : ë³µì‚¬ë°›ì„ ê°€ë¡œ, ì„¸ë¡œ ê¸¸ì´
 			int(m_tInfo.fCY),
-			hMemDC,							// ºñÆ®¸ÊÀ» °¡Áö°í ÀÖ´Â DC
-			0,								// ºñÆ®¸Ê Ãâ·Â ½ÃÀÛ ÁÂÇ¥, X,Y
+			hMemDC,							// ë¹„íŠ¸ë§µì„ ê°€ì§€ê³  ìžˆëŠ” DC
+			0,								// ë¹„íŠ¸ë§µ ì¶œë ¥ ì‹œìž‘ ì¢Œí‘œ, X,Y
 			0,
-			(int)m_tInfo.fCX,				// º¹»çÇÒ ºñÆ®¸ÊÀÇ °¡·Î, ¼¼·Î ±æÀÌ
+			(int)m_tInfo.fCX,				// ë³µì‚¬í•  ë¹„íŠ¸ë§µì˜ ê°€ë¡œ, ì„¸ë¡œ ê¸¸ì´
 			(int)m_tInfo.fCY,
-			RGB(0, 255, 0));			// Á¦°ÅÇÏ°íÀÚ ÇÏ´Â »ö»ó
+			RGB(0, 255, 0));			// ì œê±°í•˜ê³ ìž í•˜ëŠ” ìƒ‰ìƒ
 	}
 
 	/*if (m_tWeapon == TYPE_NO_WEAPON)
@@ -174,24 +177,25 @@ void CPlayer::Jumping(void)
 		m_tInfo.fY -= m_fPower * m_fTime - 2.f * m_fTime * m_fTime * 0.5f;
 		m_fTime += 0.2f;
 
-		if (m_tInfo.fY > float(600)-m_tInfo.fCY*0.5)
+
+		if (m_tInfo.fY > m_fGroundPoint)
 		{
 			m_bJump = false;
 			m_fTime = 0.f;
-			m_tInfo.fY = 600 - m_tInfo.fCY*0.5;
+			m_tInfo.fY = m_fGroundPoint;
+			m_fPower = 5.f;
 		}
 	}
 }
 
 void CPlayer::MJump(void)
 {
-	
 	if (m_mJump)
 	{
 		m_tInfo.fY -= m_fPower * m_mTime - 2.f * m_mTime * m_mTime * 0.5f;
 		m_mTime += 0.2f;
 
-		if (m_tInfo.fY > float(600) - m_tInfo.fCY*0.5)
+		if (m_tInfo.fY > m_fGroundPoint)
 		{
 			m_mJump = false;
 			m_mTime = 0.f;
@@ -202,6 +206,23 @@ void CPlayer::MJump(void)
 	else
 	{
 		m_fPower = 5.f;
+	}
+}
+
+void CPlayer::Falling()
+{
+	if (m_bIsFalling)
+	{
+		m_tInfo.fY += m_fPower * m_fTime * 0.5f;
+		m_fTime += 0.2f;
+
+
+		if (m_tInfo.fY > m_fGroundPoint)
+		{
+			m_fTime = 0.f;
+			m_tInfo.fY = m_fGroundPoint;
+			m_bIsFalling = false;
+		}
 	}
 }
 
@@ -219,13 +240,6 @@ void CPlayer::OffSet(void)
 	{
 		CScrollMgr::Get_Instance()->Set_ScrollX(-m_tInfo.m_fSpeed);
 	}
-	
-
-
 
 }
-
-
-
-
 
