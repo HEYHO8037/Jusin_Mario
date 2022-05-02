@@ -10,7 +10,7 @@ typedef	struct tagInfo
 	int m_iHp;
 	float m_fSpeed;
 	float m_fAngle;
-
+	int m_ItemCheck;
 }INFO;
 
 
