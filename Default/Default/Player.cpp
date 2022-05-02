@@ -36,7 +36,7 @@ void CPlayer::Initialize(void)
 	m_bJump = false;
 	m_fTime = 0.f;
 	m_mTime = 0.f;
-	m_fPower = 6.f;
+	m_fPower = 5.f;
 	m_bRight = true;
 	int Level = 1;
 	PTime = GetTickCount();
@@ -189,7 +189,7 @@ void CPlayer::Jumping(void)
 			m_bJump = false;
 			m_fTime = 0.f;
 			m_tInfo.fY = m_fGroundPoint;
-			m_fPower = 6.f;
+			m_fPower = 5.f;
 		}
 	}
 }
@@ -211,7 +211,7 @@ void CPlayer::MJump(void)
 	}
 	else
 	{
-		m_fPower = 6.f;
+		m_fPower = 5.f;
 	}
 }
 
