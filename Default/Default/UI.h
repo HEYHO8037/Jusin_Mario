@@ -1,5 +1,6 @@
 #pragma once
 #include "Obj.h"
+#include "ObjMgr.h"
 class CUI
 	:public CObj
 {
@@ -13,8 +14,6 @@ public:
 	virtual int Update(void) override;
 	virtual void Late_Update(void) override;
 	virtual void Render(HDC hDC) override;
-
-
 
 };
 

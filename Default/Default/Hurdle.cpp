@@ -97,12 +97,12 @@ void CHurdle::Render(HDC hDC)
 		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
 		SelectObject(hDC, h_old_brush);
 		DeleteObject(brush);
-		MoveToEx(hDC, m_tRect.left + 15, m_tRect.top + 10,nullptr);
-		LineTo(hDC, m_tRect.right - 15, m_tRect.top + 10);
-		LineTo(hDC, m_tRect.right - 15, m_tRect.top + 23);
-		LineTo(hDC, m_tRect.right - 25, m_tRect.top + 23);
-		LineTo(hDC, m_tRect.right - 25, m_tRect.top+35);
-		Rectangle(hDC, m_tRect.left + 23, m_tRect.top + 38, m_tRect.right - 23, m_tRect.bottom -7 );
+		MoveToEx(hDC, m_tRect.left + 20, m_tRect.top + 20,nullptr);
+		LineTo(hDC, m_tRect.right - 20, m_tRect.top + 20);
+		LineTo(hDC, m_tRect.right - 20, m_tRect.top + 45);
+		LineTo(hDC, m_tRect.right - 50, m_tRect.top + 45);
+		LineTo(hDC, m_tRect.right - 50, m_tRect.top+60);
+		Rectangle(hDC, m_tRect.left + 48, m_tRect.top + 80, m_tRect.right - 48, m_tRect.bottom -16 );
 
 
 		break;
