@@ -69,8 +69,12 @@ void CCollisionMgr::Collision_Rect(list<CObj*> _Dest, list<CObj*> _Sour) // obj?
 			{
 				if (Sour->Get_Type() == TYPE_PBULLET)
 				{
-					Dest->Set_HpMinus();
 					Sour->Set_HpMinus();
+					if(Dest->Get_Info().m_iHp>=1)
+					{ 
+					Dest->Set_HpMinus();
+					
+					}
 				}
 
 
@@ -130,7 +134,6 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 			}
 		}
 	}
-
 }
 
 void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
@@ -171,7 +174,10 @@ void CCollisionMgr::Collision_Player_BossMonster()
 					}
 					else
 					{
-						m_ObjList[OBJ_PLAYER]->front()->Set_HpMinus(); //ï¿½ï¿½ ï¿½ï¿½ ï¿½æµ¹ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						if (m_ObjList[OBJ_PLAYER]->front()->Get_Info().m_iHp == 2)
+						{
+							m_ObjList[OBJ_PLAYER]->front()->Set_HpMinus();
+						}//ï¿½ï¿½ ï¿½ï¿½ ï¿½æµ¹ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					}
 				}
 				else
@@ -202,6 +208,7 @@ void CCollisionMgr::Collision_Player_Bullet()
 	{
 		if (Check_Rect(m_ObjList[OBJ_PLAYER]->front(), (*iter), &fX, &fY))
 		{
+
 		}
 	}
 }
@@ -218,23 +225,27 @@ void CCollisionMgr::Collision_Monster_Bullet()
 		{
 			if ((*iter)->Get_Type() == TYPE_BOSS)
 			{
-				if ((*Biter)->Get_Info().fX < ((*iter)->Get_Info().fX - 1000))
+				if ((*Biter)->Get_Type() == TYPE_MONSTER_BULLET)
 				{
-					(*Biter)->Set_Dead();
-				}
-				else if ((*Biter)->Get_Info().fX > ((*iter)->Get_Info().fX + 1000))
-				{
-					(*Biter)->Set_Dead();
-				}
+					if ((*Biter)->Get_Info().fX < ((*iter)->Get_Info().fX - 1000))
+					{
+						(*Biter)->Set_Dead();
+					}
+					else if ((*Biter)->Get_Info().fX > ((*iter)->Get_Info().fX + 1000))
+					{
+						(*Biter)->Set_Dead();
+					}
 
-				else if ((*Biter)->Get_Info().fY > WINCY)
-				{
-					(*Biter)->Set_Dead();
+					else if ((*Biter)->Get_Info().fY > WINCY)
+					{
+						(*Biter)->Set_Dead();
+					}
+					else if ((*Biter)->Get_Info().fY < 0)
+					{
+						(*Biter)->Set_Dead();
+					}
 				}
-				else if ((*Biter)->Get_Info().fY < 0)
-				{
-					(*Biter)->Set_Dead();
-				}
+				
 			}
 		}
 		++iter;
@@ -258,9 +269,10 @@ void CCollisionMgr::Collision_Player_Item()
 
  			if (eType == TYPE_ITEM_GROW && !(*iter)->Get_Dead()) 
 			{				
-  				if (m_ObjList[OBJ_PLAYER]->front()->Get_Hp() <= 2)
+  				if (m_ObjList[OBJ_PLAYER]->front()->Get_Hp() <= 1)
 				{
 					m_ObjList[OBJ_PLAYER]->front()->Set_HpPlus();
+					static_cast<CPlayer*>( *((*m_ObjList + OBJ_PLAYER))->begin() )->Set_Size();
 					(*iter)->Set_Dead();
 				}
 
@@ -576,8 +588,19 @@ void CCollisionMgr::Collision_Item_Huddle()
 							Dest->Set_PostY(fY);
 							if (CTime + 300 < GetTickCount() && !dynamic_cast<CHurdle*>((*iter))->GetIsItem())
 							{
-								CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create(2080.f, 355.f, TYPE_ITEM_GROW));
-								dynamic_cast<CHurdle*>((*iter))->SetIsItem(true);
+								if (rand() % 2 == 0)
+								{
+									CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create((*iter)->Get_Info().fX, (*iter)->Get_Info().fY - 50, TYPE_ITEM_GROW));
+									dynamic_cast<CHurdle*>((*iter))->SetIsItem(true);
+									
+								}
+								else
+								{
+									CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, CAbstractFactory<CItem>::Create((*iter)->Get_Info().fX, (*iter)->Get_Info().fY - 50, TYPE_ITEM_BULLET));
+									dynamic_cast<CHurdle*>((*iter))->SetIsItem(true);
+
+								}
+								(*iter)->Set_Type(TYPE_HUR_FIXED);
 								CTime = GetTickCount();
 							}
 						}

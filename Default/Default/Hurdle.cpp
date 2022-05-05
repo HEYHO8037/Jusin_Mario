@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Hurdle.h"
+#include "BmpMgr.h"
 
 
 CHurdle::CHurdle()
@@ -17,26 +18,42 @@ CHurdle::~CHurdle()
 
 void CHurdle::Initialize(void)
 {
-	m_tInfo.fCX = 90.f;
-	m_tInfo.fCY = 90.f;
-
+	
+	
 	switch (m_tType)
 	{
 	case TYPE_HUR_FIXED:
 		m_bIsMove = false;
 		m_bIsItem = false;
+		m_tInfo.fCX = 60.f;
+		m_tInfo.fCY = 60.f;
+		
 		break;
 	case TYPE_HUR_FLOAT:
 		m_bIsMove = true;
 		m_bIsItem = false;
+		m_tInfo.fCX = 60.f;
+		m_tInfo.fCY = 60.f;
+		
 		break;
 	case TYPE_HUR_ITEM:
 		m_bIsMove = true;
 		m_bIsItem = false;
+		m_tInfo.fCX = 60.f;
+		m_tInfo.fCY = 60.f;
+		
 		break;
-	case TYPE_HUR_STACK:
+	case TYPE_HUR_STACKL:
 		m_bIsMove = true;
 		m_bIsItem = false;
+		m_tInfo.fCX = 100.f;
+		m_tInfo.fCY = 200.f;
+		break;
+	case TYPE_HUR_STACKR:
+		m_bIsMove = true;
+		m_bIsItem = false;
+		m_tInfo.fCX = 100.f;
+		m_tInfo.fCY = 200.f;
 		break;
 	}
 }
@@ -79,45 +96,91 @@ void CHurdle::Render(HDC hDC)
 	switch (m_tType)
 	{
 	case TYPE_HUR_FIXED://고정-갈색
-		brush = CreateSolidBrush(RGB(128, 64, 0));	//배경색
-		h_old_brush = SelectObject(hDC, brush);		
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);//도형
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"FixHurdle");
+		GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(60),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(60),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 255, 255));
+	}
 		break;
 
 	case TYPE_HUR_FLOAT://움직임-밝은갈색
-		brush = CreateSolidBrush(RGB(193, 113, 17));
-		h_old_brush = SelectObject(hDC, brush);
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"FloatHurdle");
+		GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(60),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(60),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(0, 255, 255));
+	}
 		break;
 	
 	case TYPE_HUR_ITEM://아이템-노란색
 		
-		brush = CreateSolidBrush(RGB(255, 255, 0));
-		h_old_brush = SelectObject(hDC, brush);
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
-		MoveToEx(hDC, m_tRect.left + 20, m_tRect.top + 20,nullptr);
-		LineTo(hDC, m_tRect.right - 20, m_tRect.top + 20);
-		LineTo(hDC, m_tRect.right - 20, m_tRect.top + 45);
-		LineTo(hDC, m_tRect.right - 50, m_tRect.top + 45);
-		LineTo(hDC, m_tRect.right - 50, m_tRect.top+60);
-		Rectangle(hDC, m_tRect.left + 48, m_tRect.top + 80, m_tRect.right - 48, m_tRect.bottom -16 );
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"ItemHurdle");
+		GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(60),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(60),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(0, 255, 255));
+	}
 
 
 		break;
 
-	case TYPE_HUR_STACK://굴뚝-초록색
-		brush = CreateSolidBrush(RGB(0, 128, 0));
-		h_old_brush = SelectObject(hDC, brush);
-		Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	case TYPE_HUR_STACKL://굴뚝-초록색
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"LOpenDoor");
+		GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(100),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(200),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 0, 255));
+	}
 		break;
+	case TYPE_HUR_STACKR://굴뚝-초록색
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"ROpenDoor");
+		GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(100),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(200),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(255, 0, 255));
+	}
+	break;
 		
 	}
 }

@@ -39,7 +39,7 @@ private:
 		Pattern1,		// 총알 발사
 		Pattern2,		// 전방향 총알 발사
 		Pattern3,		// 플레이어 돌진.
-		Return,			// 돌진 복귀
+	
 		None,			// 아무상태도 아님
 	};
 
@@ -47,6 +47,7 @@ private:
 	LARGE_INTEGER start;
 	LARGE_INTEGER end;
 
+	DWORD MTime;
 
 	POINT originPosition; //현재 위치
 	POINT targetPosition; // 타겟 위치
@@ -54,6 +55,7 @@ private:
 	Behavior behaviorState; // 보스 상태
 	State currentState; // 현재 보스 세부상태
 	int iStatus;
+	bool m_bSearch;
 
 
 };

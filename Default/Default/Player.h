@@ -33,12 +33,19 @@ public:
 	m_bJump = false;
 	}
 
+	void Update_PRect();
 	float Get_Power() { return m_fPower; }
 	float Get_GroundPoint() { return m_fGroundPoint;  }
 	void Set_GroundPoint(float fPoint) { m_fGroundPoint = fPoint; }
 	void Set_Falling(bool bIsFalling) { m_bIsFalling = bIsFalling; }
 	void Falling();
 	bool Get_Jump() { return m_bJump;  }
+	bool Get_m_bRight() { return m_bRight; }
+	void Set_Size();
+	void Set_Kill() { m_bBossKill = true; }
+	bool Get_Kill() { return m_bBossKill; }
+	void Set_Star() { m_bStar = true; }
+	bool Get_Star() { return m_bStar; }
 
 private:
 	void OffSet();
@@ -51,9 +58,17 @@ private:
 	float m_mTime;
 	float m_fPower;
 	bool m_bRight;
+<<<<<<< HEAD
 	TYPE m_tWeapon;//무기상태
+=======
+	bool m_bBoss;
+	bool m_bBossKill;
+	bool m_bStar;
+	TYPE m_tWeapon;
+>>>>>>> 1286945b09ecf3fb9e52430677f90f49816e8612
 	DWORD PTime;
 	float m_fGroundPoint;
 	TCHAR m_szFPS[64];
+
 };
 

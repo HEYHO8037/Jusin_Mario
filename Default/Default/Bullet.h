@@ -6,7 +6,7 @@ class CBullet : public CObj
 {
 public:
 	CBullet();
-	CBullet(TYPE eType);
+	CBullet(TYPE eType,bool _right);
 	virtual ~CBullet();
 
 public:
@@ -23,5 +23,6 @@ public:
 
 private:
 	INFO m_tDir;
+	bool m_bRight;
 	
 };

@@ -32,6 +32,7 @@ public:
 	void Set_PosX(float _fX) { m_tInfo.fX = _fX; }
 	void Set_PosY(float _fY) { m_tInfo.fY = _fY; }
 	const TYPE Get_Type() { return m_tType; }
+	void Set_Type(TYPE _Type) { m_tType = _Type; }
 
 protected:
 	void Update_Rect();

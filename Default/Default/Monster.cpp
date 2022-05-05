@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Monster.h"
 #include "ScrollMgr.h"
+#include "BmpMgr.h"
 
 CMonster::CMonster()
 {
@@ -21,8 +22,9 @@ void CMonster::Initialize(void)
 {
 	if (m_tType == TYPE_MONSTER_MOVE)
 	{
-		m_tInfo.fCX = 50.f;
-		m_tInfo.fCY = 50.f;
+		
+		m_tInfo.fCX = 60.f;
+		m_tInfo.fCY = 60.f;
 		m_tInfo.m_fSpeed = 3.f;
 		m_tInfo.m_iHp = 1;
 		m_bDead = false;
@@ -129,16 +131,20 @@ void CMonster::Render(HDC hDC)
 	switch (m_tType)
 	{
 	case TYPE_MONSTER_MOVE:
-		brush = CreateSolidBrush(RGB(240, 219, 202));
-		h_old_brush = SelectObject(hDC, brush);
-		Ellipse(hDC, m_tRect.left +10, m_tRect.top+30, m_tRect.right-10, m_tRect.bottom);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
-		brush = CreateSolidBrush(RGB(255, 74, 6));
-		h_old_brush = SelectObject(hDC, brush);
-		Ellipse(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom -10);
-		SelectObject(hDC, h_old_brush);
-		DeleteObject(brush);
+	{
+		HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(L"MoveMonster");
+		GdiTransparentBlt(hDC, 				// 복사 받을, 최종적으로 그림을 그릴 DC
+			int(m_tRect.left),	// 2,3 인자 :  복사받을 위치 X, Y
+			int(m_tRect.top),
+			int(60),				// 4,5 인자 : 복사받을 가로, 세로 길이
+			int(60),
+			hMemDC,							// 비트맵을 가지고 있는 DC
+			0,								// 비트맵 출력 시작 좌표, X,Y
+			0,
+			(int)m_tInfo.fCX,				// 복사할 비트맵의 가로, 세로 길이
+			(int)m_tInfo.fCY,
+			RGB(0, 172, 255));
+	}
 		break;
 
 	case TYPE_MONSTER_TURTLE:
