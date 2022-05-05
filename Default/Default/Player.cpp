@@ -138,8 +138,6 @@ void CPlayer::Render(HDC hDC)
 void CPlayer::Key_Update(void)
 {
 	
-	
-
 	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
 	{
 		m_tInfo.fX -= m_tInfo.m_fSpeed;

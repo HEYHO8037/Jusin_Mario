@@ -58,4 +58,3 @@ private:
 	const list<CObj*> (*m_ObjList)[OBJ_END];
 	CObj* m_pSaveObj;
 };
-

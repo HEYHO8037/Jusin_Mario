@@ -32,7 +32,7 @@ public:
 			m_pInstance = nullptr;
 		}
 	}
-
+	
 private:
 	static CBmpMgr*		m_pInstance;
 	map<const TCHAR*, CMyBmp*>		m_mapBit;

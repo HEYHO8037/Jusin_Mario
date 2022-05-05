@@ -51,7 +51,7 @@ private:
 	float m_mTime;
 	float m_fPower;
 	bool m_bRight;
-	TYPE m_tWeapon;
+	TYPE m_tWeapon;//무기상태
 	DWORD PTime;
 	float m_fGroundPoint;
 	TCHAR m_szFPS[64];
