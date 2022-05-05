@@ -134,7 +134,6 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dest, list<CObj*> _Sour)
 			}
 		}
 	}
-
 }
 
 void CCollisionMgr::Collision_Sphere(list<CObj*> _Dest, list<CObj*> _Sour)
