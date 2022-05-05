@@ -208,24 +208,38 @@ void CCollisionMgr::Collision_Player_Bullet()
 
 void CCollisionMgr::Collision_Monster_Bullet()
 {
-	float fX, fY;
 
-	list<CObj*>::const_iterator iter = m_ObjList[OBJ_MONSTER]->begin();
-	list<CObj*>::const_iterator iterEnd = m_ObjList[OBJ_MONSTER]->end();
-	
-	for (iter; iter != iterEnd; ++iter)
+	for (auto& iter = (*m_ObjList + OBJ_MONSTER)->begin(); iter != (*m_ObjList + OBJ_MONSTER)->end();)
 	{
-		list<CObj*>::const_iterator Biter = m_ObjList[OBJ_BULLET]->begin();
-		list<CObj*>::const_iterator BiterEnd = m_ObjList[OBJ_BULLET]->end();
-		
+		list<CObj*>::const_iterator Biter = (*m_ObjList + OBJ_BULLET)->begin();
+		list<CObj*>::const_iterator BiterEnd = (*m_ObjList + OBJ_BULLET)->end();
+
 		for (Biter; Biter != BiterEnd; ++Biter)
 		{
-			if (Check_Rect((*iter), (*Biter),&fX, &fY))
+			if ((*iter)->Get_Type() == TYPE_BOSS)
 			{
-	
+				if ((*Biter)->Get_Info().fX < ((*iter)->Get_Info().fX - 1000))
+				{
+					(*Biter)->Set_Dead();
+				}
+				else if ((*Biter)->Get_Info().fX > ((*iter)->Get_Info().fX + 1000))
+				{
+					(*Biter)->Set_Dead();
+				}
+
+				else if ((*Biter)->Get_Info().fY > WINCY)
+				{
+					(*Biter)->Set_Dead();
+				}
+				else if ((*Biter)->Get_Info().fY < 0)
+				{
+					(*Biter)->Set_Dead();
+				}
 			}
 		}
+		++iter;
 	}
+	
 }
 
 void CCollisionMgr::Collision_Player_Item()
@@ -327,6 +341,43 @@ void CCollisionMgr::Collision_Monster_Huddle(list<CObj*> _Dest, list<CObj*> _Sou
 					if(eType == TYPE_MONSTER_TURTLE && 1 >= Sour->Get_Info().m_iHp)
 					{
 						Sour->Set_HpMinus();
+					}
+				}
+			}
+		}
+	}
+}
+
+void CCollisionMgr::Collision_Monster_Monster(list<CObj*> _Dest, list<CObj*> _Sour)
+{
+	TYPE eType;
+
+	for (auto& Dest : _Dest)
+	{
+		for (auto & Sour : _Sour)
+		{
+			float fX = 0.f, fY = 0.f;
+			if (Check_Rect(Dest, Sour, &fX, &fY))
+			{
+				if (Sour->Get_Type() == TYPE_BOSS)
+				{
+					continue;
+				}
+
+				if (fX < fY) //�¿��浹�� �ʿ�
+				{
+					//sour- monster, dest- hurdle
+
+					eType = Sour->Get_Type();
+
+					if (eType == TYPE_MONSTER_TURTLE && 1 >= Sour->Get_Info().m_iHp)
+					{					
+						if (eType != Dest->Get_Type())
+						{
+							Dest->Set_HpMinus();
+							Sour->Set_HpMinus();
+						}
+						
 					}
 				}
 			}
@@ -531,7 +582,7 @@ void CCollisionMgr::Collision_Item_Huddle()
 							}
 						}
 
-						if(Dest->Get_Info().fY <= (*iter)->Get_Info().fY)
+						else if(Dest->Get_Info().fY <= (*iter)->Get_Info().fY)
 						{
 							dynamic_cast<CPlayer*>(Dest)->Set_PosY((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);
 							dynamic_cast<CPlayer*>(Dest)->Set_GroundPoint((*iter)->Get_Info().fY - (*iter)->Get_Info().fCY);

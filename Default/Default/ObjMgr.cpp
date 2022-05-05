@@ -135,6 +135,8 @@ void CObjMgr::Late_Update()
 		CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 		CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_MONSTER]);
 		CCollisionMgr::Collision_Monster_Huddle(m_ObjList[OBJ_HURDLE], m_ObjList[OBJ_MONSTER]);
+		CCollisionMgr::Collision_Monster_Monster(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_MONSTER]);
+		CCollisionMgr::Get_Instance()->Collision_Monster_Bullet();
 		CCollisionMgr::Get_Instance()->Collision_Player_BossMonster();
 		CCollisionMgr::Get_Instance()->Collision_Player_FixedHuddle();
 		CCollisionMgr::Get_Instance()->Collision_Player_FloatHuddle();
